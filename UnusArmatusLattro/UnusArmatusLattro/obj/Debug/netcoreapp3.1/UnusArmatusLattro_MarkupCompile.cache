@@ -1,5 +1,5 @@
 ﻿UnusArmatusLattro
-1.0.0.0
+
 
 winexe
 C#
@@ -12,7 +12,7 @@ TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Emma\Source\Repos\SUP21_Grupp1\UnusArmatusLattro\UnusArmatusLattro\App.xaml
 2321661788
 
-101843928833
+8-1424999859
 192-1533232326
 MainWindow.xaml;Views\GameView.xaml;
 

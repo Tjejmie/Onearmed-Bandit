@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Joakim\\.nuget\\packages\\": {}
+    "C:\\Users\\Emma\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Joakim\\source\\repos\\SUP21_Grupp1\\UnusArmatusLattro\\UnusArmatusLattro\\UnusArmatusLattro.csproj",
+      "projectUniqueName": "C:\\Users\\Emma\\Source\\Repos\\SUP21_Grupp1\\UnusArmatusLattro\\UnusArmatusLattro\\UnusArmatusLattro.csproj",
       "projectName": "UnusArmatusLattro",
-      "projectPath": "C:\\Users\\Joakim\\source\\repos\\SUP21_Grupp1\\UnusArmatusLattro\\UnusArmatusLattro\\UnusArmatusLattro.csproj",
-      "packagesPath": "C:\\Users\\Joakim\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Joakim\\source\\repos\\SUP21_Grupp1\\UnusArmatusLattro\\UnusArmatusLattro\\obj\\",
+      "projectPath": "C:\\Users\\Emma\\Source\\Repos\\SUP21_Grupp1\\UnusArmatusLattro\\UnusArmatusLattro\\UnusArmatusLattro.csproj",
+      "packagesPath": "C:\\Users\\Emma\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Emma\\Source\\Repos\\SUP21_Grupp1\\UnusArmatusLattro\\UnusArmatusLattro\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Joakim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Emma\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
