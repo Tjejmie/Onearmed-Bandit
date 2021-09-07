@@ -26,7 +26,7 @@ namespace UnusArmatusLattro
             InitializeComponent();
 
             DataContext = new MainViewModel();
-            
+            //testing
         }
     }
 }
