@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Emma\Source\Repos\SUP21_Grupp1\UnusArmatusLattro\UnusArmatusLattro\obj\Debug\netcoreapp3.1\
+C:\Users\erik\Source\Repos\SUP21_Grupp1\UnusArmatusLattro\UnusArmatusLattro\obj\Debug\netcoreapp3.1\
 UnusArmatusLattro
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
-C:\Users\Emma\Source\Repos\SUP21_Grupp1\UnusArmatusLattro\UnusArmatusLattro\App.xaml
-2321661788
+C:\Users\erik\Source\Repos\SUP21_Grupp1\UnusArmatusLattro\UnusArmatusLattro\App.xaml
+3277369345
 
-8-1424999859
+9-1435037969
 192-1533232326
-MainWindow.xaml;Views\GameView.xaml;
+MainWindow.xaml;Views\GameView.xaml;Views\Slots.xaml;
 
-True
+False
 
