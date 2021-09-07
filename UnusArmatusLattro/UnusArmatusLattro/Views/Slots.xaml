@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderBrush="#4b4b4b" BorderThickness="2" >
-    <Grid Background="Aquamarine">
-            
+        <Grid Background="{Binding Slotcolor, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <TextBlock Text="{Binding number, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
     </Grid>
     </Border>
 </UserControl>
