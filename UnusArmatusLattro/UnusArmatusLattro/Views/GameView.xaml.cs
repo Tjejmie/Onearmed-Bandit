@@ -21,6 +21,7 @@ namespace UnusArmatusLattro.Views
         public GameView()
         {
             InitializeComponent();
+
         }
     }
 }
