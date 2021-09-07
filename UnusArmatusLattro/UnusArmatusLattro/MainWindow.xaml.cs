@@ -24,7 +24,6 @@ namespace UnusArmatusLattro
         {
             InitializeComponent();
 
-            //TESTING TESTING
         }
     }
 }
