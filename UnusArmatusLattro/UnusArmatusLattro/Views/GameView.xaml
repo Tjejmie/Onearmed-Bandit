@@ -25,6 +25,17 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
         <Button Grid.Column="1" Grid.Row="2" Content="Spin" Command="{Binding Spin}"/>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding User}"  Margin="0,0,200,0" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
+            
+        </TextBlock>
+            <TextBlock Text="{Binding Score}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
+                
+            </TextBlock>
+            <TextBlock Text="{Binding RemainingSpins}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
+                
+            </TextBlock>
+        </StackPanel>
     </Grid>
     
 </UserControl>

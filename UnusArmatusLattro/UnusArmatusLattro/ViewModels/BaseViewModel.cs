@@ -1,12 +1,14 @@
-﻿using System;
+﻿using PropertyChanged;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
 namespace UnusArmatusLattro.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    [AddINotifyPropertyChangedInterface]
+    public class BaseViewModel 
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        
     }
 }
