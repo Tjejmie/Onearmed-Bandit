@@ -23,6 +23,7 @@ namespace UnusArmatusLattro
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }
