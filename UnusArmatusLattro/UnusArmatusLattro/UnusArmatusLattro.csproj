@@ -7,7 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
+    <None Remove="Resources\Images\apple.png" />
+    <None Remove="Resources\Images\banana.png" />
+    <None Remove="Resources\Images\cherries.png" />
+    <None Remove="Resources\Images\grapes.png" />
+    <None Remove="Resources\Images\lemon.png" />
+    <None Remove="Resources\Images\strawberry.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\apple.png" />
+    <Resource Include="Resources\Images\banana.png" />
+    <Resource Include="Resources\Images\cherries.png" />
+    <Resource Include="Resources\Images\grapes.png" />
+    <Resource Include="Resources\Images\lemon.png" />
+    <Resource Include="Resources\Images\strawberry.png" />
   </ItemGroup>
 
   <ItemGroup>

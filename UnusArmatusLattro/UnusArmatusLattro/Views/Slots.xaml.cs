@@ -44,6 +44,19 @@ namespace UnusArmatusLattro.Views
             DependencyProperty.Register("Slotcolor", typeof(SolidColorBrush), typeof(Slots), new PropertyMetadata(Brushes.White));
 
 
+
+        public string ImageSource
+        {
+            get { return (string)GetValue(ImageSourceProperty); }
+            set { SetValue(ImageSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ImageSourceProperty =
+            DependencyProperty.Register("ImageSource", typeof(string), typeof(Slots), new PropertyMetadata(null));
+
+
+
         public Slots()
         {
             InitializeComponent();
