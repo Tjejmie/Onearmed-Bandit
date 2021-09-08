@@ -11,11 +11,21 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<Slots> SlotMachine { get; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
+        public string Score { get; set; }
+        public string User { get; set; }
+        public int RemainingSpins { get; set; } = 10;
+
+        public string GameOver { get; set; } = "Visible";
+
         public GameViewModel()
         {
             SlotMachine = new ObservableCollection<Slots>();
             FillSlots();
             Spin = new SpinCommand(this);
+            Score = ""; //metod
+            User = "user"; //metod
+            
+
         }
 
         private void FillSlots()
@@ -28,16 +38,37 @@ namespace UnusArmatusLattro.ViewModels
         }
         public void SpinSlots()
         {
+            RemainingSpins -= 1;
+
             foreach (var slot in SlotMachine)
             {
                 slot.number = GenerateRandomNumber();
+                
             }
+            Score = CalculateScore().ToString();
+
+            if (RemainingSpins == 0)
+                GameOver = "Hidden";
         }
 
         private string GenerateRandomNumber()
         {
             return $"{random.Next(1, 10)}";
         }
+
+        private int CalculateScore()
+        {
+            int total = 0;
+            foreach (var slot in SlotMachine)
+            {
+                int score = int.Parse(slot.number);
+                total += score;
+            }
+
+            return total;
+        }
+
+
 
     }
 }
