@@ -15,7 +15,7 @@ namespace UnusArmatusLattro.ViewModels
         public string User { get; set; }
         public int RemainingSpins { get; set; } = 10;
 
-        bool GameOver = false;
+        public string GameOver { get; set; } = "Visible";
 
         public GameViewModel()
         {
@@ -46,6 +46,9 @@ namespace UnusArmatusLattro.ViewModels
                 
             }
             Score = CalculateScore().ToString();
+
+            if (RemainingSpins == 0)
+                GameOver = "Hidden";
         }
 
         private string GenerateRandomNumber()
