@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UnusArmatusLattro"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="900">
-    <Grid Background="Blue">
+    <Grid Background="CadetBlue">
         <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>
