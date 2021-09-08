@@ -26,7 +26,7 @@ namespace UnusArmatusLattro.ViewModels
             SlotMachine = new ObservableCollection<Slots>();
             FillSlots();
             Spin = new SpinCommand(this);
-            Score = ""; //metod
+            Score = "0"; //metod
             User = "user"; //metod
 
         }
@@ -69,13 +69,13 @@ namespace UnusArmatusLattro.ViewModels
 
         private string GenerateRandomNumber()
         {
-            return $"{random.Next(1, 10)}";
+            return $"{random.Next(1, 7)}";
         }
 
         private int CalculateScore()
         {
             List<string> bestScore = new List<string>();
-            int total = 0;
+            int total = int.Parse(Score);
             foreach (var slot in SlotMachine)
             {
                 List<string> scoreList = new List<string>();
@@ -89,9 +89,30 @@ namespace UnusArmatusLattro.ViewModels
                 if (scoreList.Count > bestScore.Count)
                 {
                     bestScore = scoreList;
+
                 }
             }
-            total = bestScore.Count;
+            
+            if (bestScore.Count == 2)
+            {
+
+               total += int.Parse(bestScore[0]) *100; 
+
+            }
+
+            if (bestScore.Count == 3)
+            {
+
+                total += int.Parse(bestScore[0]) * 1000;
+
+            }
+
+            if (bestScore.Count == 4)
+            {
+
+                total += 1000000;
+
+            }
 
             return total;
         }
