@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+
     <None Remove="Resources\Images\apple.png" />
     <None Remove="Resources\Images\banana.png" />
     <None Remove="Resources\Images\cherries.png" />
@@ -30,6 +31,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+
+    <Folder Include="Data\" />
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="5.0.7" />
   </ItemGroup>
 
 </Project>
