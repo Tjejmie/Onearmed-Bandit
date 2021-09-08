@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnusArmatusLattro"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1300">
-    <Grid Background="Blue">
+
+  
+        Title="MainWindow" Height="450" Width="900">
+    <Grid Background="CadetBlue">
         <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

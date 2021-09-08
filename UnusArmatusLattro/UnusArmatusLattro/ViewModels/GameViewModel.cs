@@ -53,7 +53,7 @@ namespace UnusArmatusLattro.ViewModels
 
         private string GenerateRandomNumber()
         {
-            return $"{random.Next(1, 11)}";
+            return $"{random.Next(1, 10)}";
         }
 
         private int CalculateScore()
