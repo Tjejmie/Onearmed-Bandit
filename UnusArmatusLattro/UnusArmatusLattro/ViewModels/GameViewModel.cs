@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UnusArmatusLattro.Commands;
+using UnusArmatusLattro.Data;
 using UnusArmatusLattro.Views;
 
 namespace UnusArmatusLattro.ViewModels
@@ -14,25 +16,39 @@ namespace UnusArmatusLattro.ViewModels
         public string Score { get; set; }
         public string User { get; set; }
         public int RemainingSpins { get; set; } = 10;
-
         public string GameOver { get; set; } = "Visible";
+        public Dictionary<Symbol, string> symbols { get; set; } 
+
 
         public GameViewModel()
         {
+            GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
             FillSlots();
             Spin = new SpinCommand(this);
             Score = ""; //metod
             User = "user"; //metod
-            
 
+        }
+        private void GenerateDictionary()
+        {
+            symbols = new Dictionary<Symbol, string>();
+            symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
+            symbols.Add(Symbol.Lemon, "/Resources/Images/lemon.png");
+            symbols.Add(Symbol.Grapes, "/Resources/Images/grapes.png");
+            symbols.Add(Symbol.Banana, "/Resources/Images/banana.png");
+            symbols.Add(Symbol.Apple, "/Resources/Images/apple.png");
+            symbols.Add(Symbol.Strawberry, "/Resources/Images/strawberry.png");
         }
 
         private void FillSlots()
         {   
             for (int i = 0; i < 4; i++)
             {
-                Slots temp = new Slots() { number = GenerateRandomNumber() };
+                Slots temp = new Slots() {
+                    number = GenerateRandomNumber(),
+                    ImageSource = symbols[(Symbol)random.Next(6)]
+                };
                 SlotMachine.Add(temp);
             }
         }
@@ -43,7 +59,7 @@ namespace UnusArmatusLattro.ViewModels
             foreach (var slot in SlotMachine)
             {
                 slot.number = GenerateRandomNumber();
-                
+                slot.ImageSource = symbols[(Symbol)random.Next(6)];
             }
             Score = CalculateScore().ToString();
 

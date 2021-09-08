@@ -10,5 +10,6 @@
         Title="MainWindow" Height="450" Width="900">
     <Grid Background="CadetBlue">
         <ContentControl Content="{Binding CurrentViewModel}" />
+        <!--<Image Source="/Resources/Images/lemon.png"></Image>-->
     </Grid>
 </Window>
