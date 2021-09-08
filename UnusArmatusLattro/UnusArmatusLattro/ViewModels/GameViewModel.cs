@@ -43,11 +43,14 @@ namespace UnusArmatusLattro.ViewModels
 
         private void FillSlots()
         {   
+
             for (int i = 0; i < 4; i++)
             {
+                var enumValue = (Symbol)random.Next(1, 7);
+                int value = (int)enumValue;
                 Slots temp = new Slots() {
-                    number = GenerateRandomNumber(),
-                    ImageSource = symbols[(Symbol)random.Next(6)]
+                    number = value.ToString(),
+                    ImageSource = symbols[enumValue]
                 };
                 SlotMachine.Add(temp);
             }
@@ -58,8 +61,10 @@ namespace UnusArmatusLattro.ViewModels
 
             foreach (var slot in SlotMachine)
             {
-                slot.number = GenerateRandomNumber();
-                slot.ImageSource = symbols[(Symbol)random.Next(6)];
+                var enumValue = (Symbol)random.Next(1, 7);
+                int value = (int)enumValue;
+                slot.number = value.ToString();
+                slot.ImageSource = symbols[enumValue];
             }
             Score = CalculateScore().ToString();
 
@@ -67,10 +72,10 @@ namespace UnusArmatusLattro.ViewModels
                 GameOver = "Hidden";
         }
 
-        private string GenerateRandomNumber()
-        {
-            return $"{random.Next(1, 7)}";
-        }
+        //private string GenerateRandomNumber()
+        //{
+        //    return $"{random.Next(1, 4)}";
+        //}
 
         private int CalculateScore()
         {
@@ -90,6 +95,13 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     bestScore = scoreList;
 
+                }
+                else if (scoreList.Count == 2 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
+                {
+                    total += int.Parse(scoreList[0]) * 100;
+                    total += int.Parse(bestScore[0]) * 100;
+                    RemainingSpins++;
+                    return total;
                 }
             }
             

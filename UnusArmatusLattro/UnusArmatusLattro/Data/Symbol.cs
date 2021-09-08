@@ -6,6 +6,6 @@ namespace UnusArmatusLattro.Data
 {
     public enum Symbol
     {
-        Cherry, Lemon, Banana, Apple, Strawberry, Grapes
+        Cherry = 1, Lemon = 2, Banana = 3, Apple = 4, Strawberry = 5, Grapes = 6
     }
 }
