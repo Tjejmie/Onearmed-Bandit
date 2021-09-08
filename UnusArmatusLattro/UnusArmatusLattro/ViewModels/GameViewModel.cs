@@ -74,12 +74,24 @@ namespace UnusArmatusLattro.ViewModels
 
         private int CalculateScore()
         {
+            List<string> bestScore = new List<string>();
             int total = 0;
             foreach (var slot in SlotMachine)
             {
-                int score = int.Parse(slot.number);
-                total += score;
+                List<string> scoreList = new List<string>();
+                foreach (var slots in SlotMachine)
+                {
+                    if (slot.number.Equals(slots.number))
+                    {
+                        scoreList.Add(slot.number);
+                    }
+                }
+                if (scoreList.Count > bestScore.Count)
+                {
+                    bestScore = scoreList;
+                }
             }
+            total = bestScore.Count;
 
             return total;
         }

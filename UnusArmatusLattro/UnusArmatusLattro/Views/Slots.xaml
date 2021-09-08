@@ -8,8 +8,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderBrush="#4b4b4b" BorderThickness="2" >
         <Grid >
-            <!--<TextBlock Text="{Binding number, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="200" HorizontalAlignment="Center"></TextBlock>-->
-            <Image Source="{Binding ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="300" Height="300" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
+            <TextBlock Text="{Binding number, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="200" HorizontalAlignment="Center"></TextBlock>
+            <!--<Image Source="{Binding ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="300" Height="300" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>-->
         </Grid>
     </Border>
 </UserControl>
