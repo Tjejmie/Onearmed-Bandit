@@ -39,5 +39,32 @@ namespace UnusArmatusLattro.Repositories
             return users;
         }
 
+        public bool sendUser(User user)
+        {
+            try
+            {
+                string stmt = "insert into username(name, points) values(@Name, @Points) ";
+
+                using var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+                using var command = new NpgsqlCommand(stmt, conn);
+
+                command.Parameters.AddWithValue("Name", user.UserName);
+                command.Parameters.AddWithValue("Points", user.Points);
+
+                using var reader = command.ExecuteReader();
+
+                return true;
+            }
+            catch (PostgresException Ex)
+            {
+                string errorCode = Ex.SqlState;
+                throw new Exception(errorCode);
+            }
+            
+
+            
+        }
+
     }
 }

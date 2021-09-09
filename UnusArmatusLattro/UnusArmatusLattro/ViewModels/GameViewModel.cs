@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using UnusArmatusLattro.Commands;
 using UnusArmatusLattro.Data;
+using UnusArmatusLattro.Models;
+using UnusArmatusLattro.Repositories;
 using UnusArmatusLattro.Views;
 
 namespace UnusArmatusLattro.ViewModels
@@ -13,11 +15,13 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<Slots> SlotMachine { get; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
+        public ICommand sendToDatabase { get; }
         public string Score { get; set; }
         public string User { get; set; }
         public int RemainingSpins { get; set; } = 10;
         public string GameOver { get; set; } = "Visible";
-        public Dictionary<Symbol, string> symbols { get; set; } 
+        public Dictionary<Symbol, string> symbols { get; set; }
+        public UserRepository Repo { get; set; } = new UserRepository();
 
 
         public GameViewModel()
@@ -27,7 +31,8 @@ namespace UnusArmatusLattro.ViewModels
             FillSlots();
             Spin = new SpinCommand(this);
             Score = "0"; //metod
-            User = "user"; //metod
+            User = ""; //metod
+            sendToDatabase = new sendToDatabase(this);
 
         }
         private void GenerateDictionary()
@@ -129,7 +134,13 @@ namespace UnusArmatusLattro.ViewModels
             return total;
         }
 
+        public void SendUser()
+        {
+            User user = new User(User, int.Parse(Score));
 
+            Repo.sendUser(user);
+        
+        }
 
     }
 }
