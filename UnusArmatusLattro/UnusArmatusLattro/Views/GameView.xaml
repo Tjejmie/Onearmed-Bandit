@@ -29,11 +29,17 @@
             <TextBox Text="{Binding User}" Grid.Column="2" Grid.Row="0" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black">
 
             </TextBox>
-            <Button Width="200" Grid.Column="2" Grid.Row="0" Height="30" Command="{Binding sendToDatabase}">
+        <Button Width="200" Grid.Column="2" Grid.Row="0" Height="30" Command="{Binding sendToDatabase}" Visibility="{Binding NewHighScore}">
                 skicka
             </Button>
-        
-        
+
+        <ItemsControl Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HighScores}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
        
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center">
             

@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnusArmatusLattro.Models;
 
 namespace UnusArmatusLattro.Views
 {
@@ -18,6 +19,32 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class HighscoreView : UserControl
     {
+
+
+
+        public int Score
+        {
+            get { return (int)GetValue(ScoreProperty); }
+            set { SetValue(ScoreProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Score.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ScoreProperty =
+            DependencyProperty.Register("Score", typeof(int), typeof(HighscoreView), new PropertyMetadata(0));
+
+
+
+        public string Name
+        {
+            get { return (string)GetValue(NameProperty); }
+            set { SetValue(NameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Name.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NameProperty =
+            DependencyProperty.Register("Name", typeof(string), typeof(HighscoreView), new PropertyMetadata(""));
+
+
         public HighscoreView()
         {
             InitializeComponent();

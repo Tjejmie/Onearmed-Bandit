@@ -6,7 +6,11 @@
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="Green">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Name, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
+            <TextBlock Text="{Binding Score, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

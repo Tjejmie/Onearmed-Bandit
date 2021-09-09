@@ -13,27 +13,29 @@ namespace UnusArmatusLattro.ViewModels
     public class GameViewModel : BaseViewModel
     {
         public ObservableCollection<Slots> SlotMachine { get; }
+        public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
         public string Score { get; set; }
         public string User { get; set; }
-        public int RemainingSpins { get; set; } = 10;
+        public int RemainingSpins { get; set; } = 20;
         public string GameOver { get; set; } = "Visible";
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
-
+        public string NewHighScore { get; set; } = "Hidden";
 
         public GameViewModel()
         {
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
+           
             FillSlots();
+            GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
-
         }
         private void GenerateDictionary()
         {
@@ -59,7 +61,26 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 SlotMachine.Add(temp);
             }
+
         }
+
+        public void GetHighscores()
+        {
+            HighScores = new ObservableCollection<HighscoreView>();
+            List<Username> templist = Repo.GetUsers();
+
+            foreach (var user in templist)
+            {
+                HighscoreView temp = new HighscoreView
+                {
+                    Name = user.Name,
+                    Score = user.Points
+                };
+                HighScores.Add(temp);
+            }
+
+        }
+
         public void SpinSlots()
         {
             RemainingSpins -= 1;
@@ -74,7 +95,23 @@ namespace UnusArmatusLattro.ViewModels
             Score = CalculateScore().ToString();
 
             if (RemainingSpins == 0)
+            {
                 GameOver = "Hidden";
+                IsHighScore(int.Parse(Score));
+            }
+        }
+
+        private bool IsHighScore(int score)
+        {
+            foreach (var highScore in HighScores)
+            {
+                if (score > highScore.Score)
+                {
+                    NewHighScore = "Visible";
+                    return true;
+                }
+            }
+            return false;
         }
 
         //private string GenerateRandomNumber()

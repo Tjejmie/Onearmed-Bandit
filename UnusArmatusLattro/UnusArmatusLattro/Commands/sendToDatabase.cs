@@ -24,6 +24,7 @@ namespace UnusArmatusLattro.Commands
         public void Execute(object parameter)
         {
             gameViewModel.SendUser();
+            gameViewModel.GetHighscores();
         }
     }
 }
