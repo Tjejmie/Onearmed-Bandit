@@ -9,8 +9,9 @@ namespace UnusArmatusLattro.Repositories
 {
     public class UserRepository
     {
-        private static readonly string connectionString = "Server=localhost;Port=5432;Database=sup_db1;User ID= sup_g1; Password=Kosing;";
-        public List<Username> GetUsers() // List users
+        
+        private static readonly string connectionString= "Server=studentpsql.miun.se; Port=5432; Database=sup_db1; User Id=sup_g1; Password=Kosing; Trust Server Certificate=true; sslmode=Require";
+        public List<Username> GetUsers() 
         {
             string stmt = "select * from username order by username";
 
@@ -59,11 +60,13 @@ namespace UnusArmatusLattro.Repositories
             catch (PostgresException Ex)
             {
                 string errorCode = Ex.SqlState;
+                var test = Ex.Message;
                 throw new Exception(errorCode);
-            }
-            
 
-            
+            }
+
+
+
         }
 
     }
