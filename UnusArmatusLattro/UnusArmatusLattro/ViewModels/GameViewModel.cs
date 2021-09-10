@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Timers;
 using System.Windows.Input;
 using UnusArmatusLattro.Commands;
 using UnusArmatusLattro.Data;
@@ -29,8 +30,18 @@ namespace UnusArmatusLattro.ViewModels
             Score = "0"; //metod
             User = "user"; //metod
 
+            var timer = new System.Timers.Timer(1000);
+            timer.Elapsed += OnTimedEvent;
+            timer.AutoReset = true;
+            timer.Enabled = true;
         }
-        private void GenerateDictionary()
+
+    private void OnTimedEvent(Object source, ElapsedEventArgs e)
+    {
+        int temp = (int.Parse(Score));
+        Score = $"{temp + 1}";
+    }
+    private void GenerateDictionary()
         {
             symbols = new Dictionary<Symbol, string>();
             symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
