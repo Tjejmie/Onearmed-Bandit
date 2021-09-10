@@ -9,6 +9,7 @@ namespace UnusArmatusLattro.Commands
     class SpinCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
+
         private GameViewModel gameViewModel;
 
         public SpinCommand(GameViewModel gameViewModel)
@@ -21,6 +22,7 @@ namespace UnusArmatusLattro.Commands
         public void Execute(object parameter)
         {
             gameViewModel.SpinSlots();
+            
         }
     }
 }

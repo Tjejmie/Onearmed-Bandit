@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderBrush="{Binding BorderColor, RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="2" >
-        <Grid >
+        <Grid>
             <Image Source="{Binding ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="300" Height="300" Stretch="Fill" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
             <TextBlock Text="{Binding number, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="200" HorizontalAlignment="Center"></TextBlock>
             

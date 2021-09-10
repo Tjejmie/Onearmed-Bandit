@@ -47,13 +47,19 @@ namespace UnusArmatusLattro.ViewModels
         {
 
             SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
-            for (int i = CurrentSlot; i < SlotMachine.Count; i++)
-            {
-                var enumValue = (Symbol)random.Next(1, 7);
-                int value = (int)enumValue;
-                SlotMachine[i].number = value.ToString();
-                SlotMachine[i].ImageSource = symbols[enumValue];
-            }
+            
+            
+                int value = random.Next(1, 7);
+                int num = int.Parse(SlotMachine[CurrentSlot].number);
+                
+                while (num == value)
+                {
+                    value = random.Next(1, 7);
+                }
+                var enumValue = (Symbol)value;
+                SlotMachine[CurrentSlot].number = value.ToString();
+                SlotMachine[CurrentSlot].ImageSource = symbols[enumValue];
+            
         }
     private void GenerateDictionary()
         {
