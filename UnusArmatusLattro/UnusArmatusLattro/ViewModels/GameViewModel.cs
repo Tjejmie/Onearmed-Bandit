@@ -6,6 +6,8 @@ using System.Windows.Input;
 using UnusArmatusLattro.Commands;
 using UnusArmatusLattro.Data;
 using UnusArmatusLattro.Views;
+using System.Windows.Threading;
+using System.Windows.Media;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -18,9 +20,9 @@ namespace UnusArmatusLattro.ViewModels
         public string User { get; set; }
         public int RemainingSpins { get; set; } = 10;
         public string GameOver { get; set; } = "Visible";
-        public Dictionary<Symbol, string> symbols { get; set; } 
-
-
+        public Dictionary<Symbol, string> symbols { get; set; }
+        private int CurrentSlot { get; set; } = 0;
+        public DispatcherTimer Timer { get; set; }
         public GameViewModel()
         {
             GenerateDictionary();
@@ -30,17 +32,29 @@ namespace UnusArmatusLattro.ViewModels
             Score = "0"; //metod
             User = "user"; //metod
 
-            var timer = new System.Timers.Timer(1000);
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = true;
-            timer.Enabled = true;
+            //var timer = new System.Timers.Timer(1000);
+            //timer.Elapsed += OnTimedEvent;
+            //timer.AutoReset = true;
+            //timer.Enabled = true;
+
+            Timer = new DispatcherTimer();
+            Timer.Tick += new EventHandler(OnTimedEvent);
+            Timer.Interval = TimeSpan.FromMilliseconds(300);
+            Timer.Start();
         }
 
-    private void OnTimedEvent(Object source, ElapsedEventArgs e)
-    {
-        int temp = (int.Parse(Score));
-        Score = $"{temp + 1}";
-    }
+    private void OnTimedEvent(Object source, EventArgs e)
+        {
+
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+            for (int i = CurrentSlot; i < SlotMachine.Count; i++)
+            {
+                var enumValue = (Symbol)random.Next(1, 7);
+                int value = (int)enumValue;
+                SlotMachine[i].number = value.ToString();
+                SlotMachine[i].ImageSource = symbols[enumValue];
+            }
+        }
     private void GenerateDictionary()
         {
             symbols = new Dictionary<Symbol, string>();
@@ -68,19 +82,31 @@ namespace UnusArmatusLattro.ViewModels
         }
         public void SpinSlots()
         {
-            RemainingSpins -= 1;
 
-            foreach (var slot in SlotMachine)
+            //foreach (var slot in SlotMachine)
+            //{
+            //    var enumValue = (Symbol)random.Next(1, 7);
+            //    int value = (int)enumValue;
+            //    slot.number = value.ToString();
+            //    slot.ImageSource = symbols[enumValue];
+            //}
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+            CurrentSlot++;
+            if(CurrentSlot == SlotMachine.Count)
             {
-                var enumValue = (Symbol)random.Next(1, 7);
-                int value = (int)enumValue;
-                slot.number = value.ToString();
-                slot.ImageSource = symbols[enumValue];
-            }
-            Score = CalculateScore().ToString();
+                RemainingSpins -= 1;
+                Timer.Stop();
+                Score = CalculateScore().ToString();
 
-            if (RemainingSpins == 0)
-                GameOver = "Hidden";
+                CurrentSlot = 0;
+
+                if (RemainingSpins == 0)
+                    GameOver = "Hidden";
+
+                Timer.Start();
+            }
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+
         }
 
         //private string GenerateRandomNumber()
