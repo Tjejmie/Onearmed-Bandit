@@ -22,5 +22,8 @@ namespace UnusArmatusLattro.Views
         {
             InitializeComponent();
         }
+
+
+
     }
 }

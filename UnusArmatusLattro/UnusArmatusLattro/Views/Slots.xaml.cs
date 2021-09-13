@@ -33,6 +33,18 @@ namespace UnusArmatusLattro.Views
 
 
 
+        public SolidColorBrush BorderColor
+        {
+            get { return (SolidColorBrush)GetValue(BorderColorProperty); }
+            set { SetValue(BorderColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BorderColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BorderColorProperty =
+            DependencyProperty.Register("BorderColor", typeof(SolidColorBrush), typeof(Slots), new PropertyMetadata(Brushes.Gray));
+
+
+
         public SolidColorBrush Slotcolor
         {
             get { return (SolidColorBrush)GetValue(SlotcolorProperty); }
