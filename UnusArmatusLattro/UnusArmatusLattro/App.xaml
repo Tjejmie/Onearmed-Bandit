@@ -9,5 +9,9 @@
         <DataTemplate DataType="{x:Type viewmodels:GameViewModel}">
             <views:GameView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
+            <views:StartView />
+        </DataTemplate>
+        
     </Application.Resources>
 </Application>
