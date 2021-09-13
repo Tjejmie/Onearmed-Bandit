@@ -12,5 +12,6 @@
         <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
             <views:StartView />
         </DataTemplate>
+        
     </Application.Resources>
 </Application>
