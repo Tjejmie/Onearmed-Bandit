@@ -21,5 +21,10 @@ namespace UnusArmatusLattro.ViewModels
         {
             parent.CurrentViewModel = new GameViewModel();
         }
+
+        public void Rules()
+        {
+            parent.CurrentViewModel = new RulesViewModel(parent);
+        }
     }
 }

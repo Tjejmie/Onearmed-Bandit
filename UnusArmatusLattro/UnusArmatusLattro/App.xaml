@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:UnusArmatusLattro"
              xmlns:views="clr-namespace:UnusArmatusLattro.Views"
              xmlns:viewmodels="clr-namespace:UnusArmatusLattro.ViewModels"
+             xmlns:datan="clr-namespace:UnusArmatusLattro.Data"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <DataTemplate DataType="{x:Type viewmodels:GameViewModel}">
@@ -11,6 +12,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
             <views:StartView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:RulesViewModel}">
+            <views:Rules />
         </DataTemplate>
         
     </Application.Resources>

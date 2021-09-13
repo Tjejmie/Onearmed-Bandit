@@ -9,12 +9,13 @@ namespace UnusArmatusLattro.Commands
     public class ChangeViewCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private StartViewModel startViewModel;
+        private BaseViewModel baseViewModel;
         
 
-        public ChangeViewCommand(StartViewModel startViewModel)
+
+        public ChangeViewCommand(BaseViewModel startViewModel)
         {
-            this.startViewModel = startViewModel;
+            this.baseViewModel = startViewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -22,11 +23,43 @@ namespace UnusArmatusLattro.Commands
             return true;
         }
 
-        public void Execute(object parameter)
+        public void Execute(Object parameter)
         {
+            try
+            {
+                switch (parameter)
+                {
+                    case Data.GoToView.Menu:
+                        break;
+                    case Data.GoToView.Rules:
+                        (baseViewModel as StartViewModel).Rules();
+                        break;
+                    case Data.GoToView.HighScore:
+                        
+                        break;
+                    case Data.GoToView.Game:
+                        (baseViewModel as StartViewModel).StartGame();
+                        //baseViewModel.StartGame();
+                        break;
+                    case Data.GoToView.Exit:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
             if (parameter.ToString() == "game")
             {
-                startViewModel.StartGame();
+                
+            }
+            if (true)
+            {
+
             }
         }
     }
