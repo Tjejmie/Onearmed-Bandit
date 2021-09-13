@@ -35,7 +35,7 @@
                 </Hyperlink>
             </TextBlock>
             <TextBlock Margin="10,0,10,0" Padding="10">
-                <Hyperlink  Foreground="#000000" TextDecorations="None">
+                <Hyperlink Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Foreground="#000000" TextDecorations="None">
                     HighScore
                 </Hyperlink>
             </TextBlock>
@@ -45,9 +45,9 @@
                 </Hyperlink>
             </TextBlock>
         </StackPanel>
-        
-        
-        <Button Grid.Column="1" Grid.Row="2" Content="Starta spelet" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="game">
+
+
+        <Button Grid.Column="1" Grid.Row="2" Content="Starta spelet" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Game}">
                 
             </Button>
         

@@ -26,5 +26,9 @@ namespace UnusArmatusLattro.ViewModels
         {
             parent.CurrentViewModel = new RulesViewModel(parent);
         }
+        public void Highscore()
+        {
+            parent.CurrentViewModel = new HighScoreViewModel(parent);
+        }
     }
 }

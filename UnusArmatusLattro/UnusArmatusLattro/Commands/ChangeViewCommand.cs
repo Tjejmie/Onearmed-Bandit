@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Input;
 using UnusArmatusLattro.ViewModels;
 
+
 namespace UnusArmatusLattro.Commands
 {
     public class ChangeViewCommand : ICommand
@@ -35,7 +36,7 @@ namespace UnusArmatusLattro.Commands
                         (baseViewModel as StartViewModel).Rules();
                         break;
                     case Data.GoToView.HighScore:
-                        
+                        (baseViewModel as StartViewModel).Highscore();
                         break;
                     case Data.GoToView.Game:
                         (baseViewModel as StartViewModel).StartGame();
