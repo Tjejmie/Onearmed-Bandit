@@ -19,10 +19,11 @@ namespace UnusArmatusLattro.ViewModels
         public string Score { get; set; }
         public string User { get; set; }
         public int RemainingSpins { get; set; } = 10;
-        public string GameOver { get; set; } = "Visible";
+        public string GameOverState { get; set; } = "Visible";
         public Dictionary<Symbol, string> symbols { get; set; }
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
+        public bool IsGameOver { get; set; }
         public GameViewModel()
         {
             GenerateDictionary();
@@ -39,7 +40,7 @@ namespace UnusArmatusLattro.ViewModels
 
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
-            Timer.Interval = TimeSpan.FromMilliseconds(300);
+            Timer.Interval = TimeSpan.FromMilliseconds(1000);
             Timer.Start();
         }
 
@@ -96,25 +97,34 @@ namespace UnusArmatusLattro.ViewModels
             //    slot.number = value.ToString();
             //    slot.ImageSource = symbols[enumValue];
             //}
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-            CurrentSlot++;
-            if(CurrentSlot == SlotMachine.Count)
+            
+            if (!IsGameOver)
             {
-                RemainingSpins -= 1;
-                Timer.Stop();
-                Score = CalculateScore().ToString();
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+                CurrentSlot++;
+                if (CurrentSlot == SlotMachine.Count)
+                {
+                    RemainingSpins -= 1;
+                    Score = CalculateScore().ToString();
+                    CurrentSlot = 0;
 
-                CurrentSlot = 0;
-
-                if (RemainingSpins == 0)
-                    GameOver = "Hidden";
-
-                Timer.Start();
+                    if (RemainingSpins == 0)
+                        GameOver();
+                    else
+                    {
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                    }
+                }
             }
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+
 
         }
-
+        private void GameOver()
+        {
+            GameOverState = "Hidden";
+            IsGameOver = true;
+            Timer.Stop();
+        }
         //private string GenerateRandomNumber()
         //{
         //    return $"{random.Next(1, 4)}";
