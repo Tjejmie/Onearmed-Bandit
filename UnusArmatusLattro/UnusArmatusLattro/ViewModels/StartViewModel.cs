@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using UnusArmatusLattro.Commands;
+using UnusArmatusLattro.Data;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -16,10 +17,10 @@ namespace UnusArmatusLattro.ViewModels
             ChangeView = new ChangeViewCommand(this);
         }
         public ICommand ChangeView { get; set; }
-
-        public void StartGame()
+        
+        public void StartGame(Difficulties diff)
         {
-            parent.CurrentViewModel = new GameViewModel();
+            parent.CurrentViewModel = new GameViewModel(diff);
         }
 
         public void Rules()

@@ -24,7 +24,7 @@ namespace UnusArmatusLattro.ViewModels
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
-        public GameViewModel()
+        public GameViewModel(Difficulties diff)
         {
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
@@ -32,7 +32,7 @@ namespace UnusArmatusLattro.ViewModels
             Spin = new SpinCommand(this);
             Score = "0"; //metod
             User = "user"; //metod
-
+            
             //var timer = new System.Timers.Timer(1000);
             //timer.Elapsed += OnTimedEvent;
             //timer.AutoReset = true;
@@ -40,7 +40,7 @@ namespace UnusArmatusLattro.ViewModels
 
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
-            Timer.Interval = TimeSpan.FromMilliseconds(1000);
+            Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
             Timer.Start();
         }
 
