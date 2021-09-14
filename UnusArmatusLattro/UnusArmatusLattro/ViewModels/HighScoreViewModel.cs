@@ -8,7 +8,7 @@ namespace UnusArmatusLattro.ViewModels
 {
     public class HighscoreViewModel : BaseViewModel
     {
-       // public List<Username> ScoreList { get; set; }
+      //  public List<Username> ScoreList { get; set; }
         UserRepository db = new UserRepository();
 
         public HighscoreViewModel()
