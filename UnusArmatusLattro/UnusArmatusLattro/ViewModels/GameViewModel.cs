@@ -28,7 +28,6 @@ namespace UnusArmatusLattro.ViewModels
 
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
-        public Dictionary<Symbol, string> symbols { get; set; }
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
@@ -171,7 +170,7 @@ namespace UnusArmatusLattro.ViewModels
            
         }
 
-        }
+        
         private void GameOver()
         {
             GameOverState = "Hidden";
@@ -246,3 +245,4 @@ namespace UnusArmatusLattro.ViewModels
 
     }
 }
+

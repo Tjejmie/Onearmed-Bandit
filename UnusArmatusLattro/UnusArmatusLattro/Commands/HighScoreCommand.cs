@@ -9,9 +9,9 @@ namespace UnusArmatusLattro.Commands
     public class HighScoreCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private HighScoreViewModel highScoreViewModel;
+        private HighscoreViewModel highScoreViewModel;
 
-        public HighScoreCommand(HighScoreViewModel startViewModel)
+        public HighScoreCommand(HighscoreViewModel startViewModel)
         {
             this.highScoreViewModel = startViewModel;
         }
@@ -22,7 +22,7 @@ namespace UnusArmatusLattro.Commands
 
         public void Execute(object parameter)
         {
-            highScoreViewModel.GoToMenu();
+            //highScoreViewModel.GoToMenu();
         }
     }
 }

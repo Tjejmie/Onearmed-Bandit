@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Input;
-using UnusArmatusLattro.Commands;
+using UnusArmatusLattro.Models;
+using UnusArmatusLattro.Repositories;
 
 namespace UnusArmatusLattro.ViewModels
 {
-    public class HighScoreViewModel : BaseViewModel
+    public class HighscoreViewModel : BaseViewModel
     {
-        public ICommand HomeCommand { get; set; }
-        private readonly MainViewModel parent;
+        public List<Username> ScoreList { get; set; }
+        UserRepository db = new UserRepository();
 
-        public HighScoreViewModel(MainViewModel parent)
+        public HighscoreViewModel()
         {
-            this.parent = parent;
-            HomeCommand = new HighScoreCommand(this);
-        }
+            ScoreList = db.GetUsers();
 
-        public void GoToMenu()
-        {
-            parent.CurrentViewModel = new StartViewModel(parent);
         }
-
     }
 }

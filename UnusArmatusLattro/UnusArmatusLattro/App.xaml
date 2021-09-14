@@ -8,16 +8,16 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <DataTemplate DataType="{x:Type viewmodels:GameViewModel}">
-            <views:GameView />
+            <views:GameView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
-            <views:StartView />
+            <views:StartView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:RulesViewModel}">
             <views:Rules />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:HighScoreViewModel}">
-            <views:HighScoreView />
+        <DataTemplate DataType="{x:Type viewmodels:HighscoreViewModel}">
+            <views:HighscoreView />
         </DataTemplate>
         
     </Application.Resources>
