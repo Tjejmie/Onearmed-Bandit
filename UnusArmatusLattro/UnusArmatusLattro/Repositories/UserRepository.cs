@@ -13,7 +13,7 @@ namespace UnusArmatusLattro.Repositories
         private static readonly string connectionString= "Server=studentpsql.miun.se; Port=5432; Database=sup_db1; User Id=sup_g1; Password=Kosing; Trust Server Certificate=true; sslmode=Require";
         public List<Username> GetUsers() 
         {
-            string stmt = "select * from username order by points desc limit 10";
+            string stmt = "select * from highscore_easy order by points desc limit 10";
 
 
             using var conn = new NpgsqlConnection(connectionString);
@@ -44,7 +44,7 @@ namespace UnusArmatusLattro.Repositories
         {
             try
             {
-                string stmt = "insert into username(name, points) values(@Name, @Points) ";
+                string stmt = "insert into highscore_easy(name, points) values(@Name, @Points) ";
 
                 using var conn = new NpgsqlConnection(connectionString);
                 conn.Open();

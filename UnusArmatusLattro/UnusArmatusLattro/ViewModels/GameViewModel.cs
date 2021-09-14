@@ -110,8 +110,16 @@ namespace UnusArmatusLattro.ViewModels
                     NewHighScore = "Visible";
                     return true;
                 }
+
+            }
+            if (HighScores.Count == 0)
+            {
+                NewHighScore = "Visible";
+                return true;
             }
             return false;
+
+           
         }
 
         //private string GenerateRandomNumber()
