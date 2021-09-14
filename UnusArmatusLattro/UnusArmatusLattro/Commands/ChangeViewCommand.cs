@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using UnusArmatusLattro.Data;
 using UnusArmatusLattro.ViewModels;
+
 
 namespace UnusArmatusLattro.Commands
 {
     public class ChangeViewCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private StartViewModel startViewModel;
+        private StartViewModel baseViewModel;
         
+
 
         public ChangeViewCommand(StartViewModel startViewModel)
         {
-            this.startViewModel = startViewModel;
+            this.baseViewModel = startViewModel;
         }
 
         public bool CanExecute(object parameter)
@@ -22,12 +25,43 @@ namespace UnusArmatusLattro.Commands
             return true;
         }
 
-        public void Execute(object parameter)
+        public void Execute(Object parameter)
         {
-            if (parameter.ToString() == "game")
+            if (parameter.GetType() == typeof(Difficulties))
             {
-                startViewModel.StartGame();
+                baseViewModel.StartGame((Difficulties)parameter);
             }
+                try
+            {
+
+                
+                    switch (parameter)
+                    {
+                        case Data.GoToView.Menu:
+                            break;
+                        case Data.GoToView.Rules:
+                            baseViewModel.Rules();
+                            break;
+                        case Data.GoToView.HighScore:
+                            baseViewModel.Highscore();
+                            break;
+                        case Data.GoToView.Exit:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            break;
+                    }
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
+               
+            
+            
         }
     }
 }
