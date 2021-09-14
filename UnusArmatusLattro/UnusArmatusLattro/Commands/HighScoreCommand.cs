@@ -6,23 +6,23 @@ using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Commands
 {
-    class SpinCommand : ICommand
+    public class HighScoreCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
+        private HighScoreViewModel highScoreViewModel;
 
-        private GameViewModel gameViewModel;
-
-        public SpinCommand(GameViewModel gameViewModel)
+        public HighScoreCommand(HighScoreViewModel startViewModel)
         {
-            this.gameViewModel = gameViewModel;
+            this.highScoreViewModel = startViewModel;
         }
+
 
         public bool CanExecute(object parameter) => true;
 
+
         public void Execute(object parameter)
         {
-            gameViewModel.SpinSlots();
-            
+            highScoreViewModel.GoToMenu();
         }
     }
 }

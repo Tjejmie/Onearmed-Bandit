@@ -14,16 +14,13 @@ using System.Windows.Shapes;
 namespace UnusArmatusLattro.Views
 {
     /// <summary>
-    /// Interaction logic for GameView.xaml
+    /// Interaction logic for HighScoreView.xaml
     /// </summary>
-    public partial class GameView : UserControl
+    public partial class HighScoreView : UserControl
     {
-        public GameView()
+        public HighScoreView()
         {
             InitializeComponent();
         }
-
-
-
     }
 }

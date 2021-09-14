@@ -5,9 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnusArmatusLattro"
         mc:Ignorable="d"
-
-  
         Title="MainWindow" Height="450" Width="900">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CurrentViewModel.Spin}" Key="Space">
+            
+        </KeyBinding>
+    </Window.InputBindings>
     <Grid Background="CadetBlue">
         <ContentControl Content="{Binding CurrentViewModel}" />
         <!--<Image Source="/Resources/Images/lemon.png"></Image>-->

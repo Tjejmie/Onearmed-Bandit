@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Timers;
 using System.Windows.Input;
 using UnusArmatusLattro.Commands;
 using UnusArmatusLattro.Data;
 using UnusArmatusLattro.Models;
 using UnusArmatusLattro.Repositories;
 using UnusArmatusLattro.Views;
+using System.Windows.Threading;
+using System.Windows.Media;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -19,13 +22,18 @@ namespace UnusArmatusLattro.ViewModels
         public ICommand sendToDatabase { get; }
         public string Score { get; set; }
         public string User { get; set; }
-        public int RemainingSpins { get; set; } = 20;
-        public string GameOver { get; set; } = "Visible";
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
 
-        public GameViewModel()
+        public int RemainingSpins { get; set; } = 10;
+        public string GameOverState { get; set; } = "Visible";
+        public Dictionary<Symbol, string> symbols { get; set; }
+        private int CurrentSlot { get; set; } = 0;
+        public DispatcherTimer Timer { get; set; }
+        public bool IsGameOver { get; set; }
+        public GameViewModel(Difficulties diff)
+
         {
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
@@ -36,8 +44,37 @@ namespace UnusArmatusLattro.ViewModels
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
+            
+            //var timer = new System.Timers.Timer(1000);
+            //timer.Elapsed += OnTimedEvent;
+            //timer.AutoReset = true;
+            //timer.Enabled = true;
+
+            Timer = new DispatcherTimer();
+            Timer.Tick += new EventHandler(OnTimedEvent);
+            Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
+            Timer.Start();
         }
-        private void GenerateDictionary()
+
+    private void OnTimedEvent(Object source, EventArgs e)
+        {
+
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+            
+            
+                int value = random.Next(1, 7);
+                int num = int.Parse(SlotMachine[CurrentSlot].number);
+                
+                while (num == value)
+                {
+                    value = random.Next(1, 7);
+                }
+                var enumValue = (Symbol)value;
+                SlotMachine[CurrentSlot].number = value.ToString();
+                SlotMachine[CurrentSlot].ImageSource = symbols[enumValue];
+            
+        }
+    private void GenerateDictionary()
         {
             symbols = new Dictionary<Symbol, string>();
             symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
@@ -83,22 +120,34 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
-            RemainingSpins -= 1;
 
-            foreach (var slot in SlotMachine)
+            //foreach (var slot in SlotMachine)
+            //{
+            //    var enumValue = (Symbol)random.Next(1, 7);
+            //    int value = (int)enumValue;
+            //    slot.number = value.ToString();
+            //    slot.ImageSource = symbols[enumValue];
+            //}
+            
+            if (!IsGameOver)
             {
-                var enumValue = (Symbol)random.Next(1, 7);
-                int value = (int)enumValue;
-                slot.number = value.ToString();
-                slot.ImageSource = symbols[enumValue];
-            }
-            Score = CalculateScore().ToString();
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+                CurrentSlot++;
+                if (CurrentSlot == SlotMachine.Count)
+                {
+                    RemainingSpins -= 1;
+                    Score = CalculateScore().ToString();
+                    CurrentSlot = 0;
 
-            if (RemainingSpins == 0)
-            {
-                GameOver = "Hidden";
-                IsHighScore(int.Parse(Score));
+                    if (RemainingSpins == 0)
+                        GameOver();
+                    else
+                    {
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                    }
+                }
             }
+
         }
 
         private bool IsHighScore(int score)
@@ -122,6 +171,14 @@ namespace UnusArmatusLattro.ViewModels
            
         }
 
+        }
+        private void GameOver()
+        {
+            GameOverState = "Hidden";
+            IsGameOver = true;
+          IsHighScore(int.Parse(Score));
+            Timer.Stop();
+        }
         //private string GenerateRandomNumber()
         //{
         //    return $"{random.Next(1, 4)}";

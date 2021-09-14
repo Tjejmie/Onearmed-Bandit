@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
+using UnusArmatusLattro.Commands;
 
 namespace UnusArmatusLattro.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        public BaseViewModel CurrentViewModel { get; set; } = new GameViewModel();
+        public MainViewModel()
+        {
+            
+        }
+
+        public BaseViewModel CurrentViewModel { get; set; }
+
     }
 }

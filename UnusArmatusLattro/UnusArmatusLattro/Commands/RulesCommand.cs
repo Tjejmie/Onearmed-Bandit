@@ -1,28 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Commands
 {
-    class SpinCommand : ICommand
+    public class RulesCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
+        private RulesViewModel ruleViewModel;
 
-        private GameViewModel gameViewModel;
-
-        public SpinCommand(GameViewModel gameViewModel)
+        public RulesCommand(RulesViewModel startViewModel)
         {
-            this.gameViewModel = gameViewModel;
+            this.ruleViewModel = startViewModel;
         }
 
+
         public bool CanExecute(object parameter) => true;
+        
 
         public void Execute(object parameter)
         {
-            gameViewModel.SpinSlots();
-            
+            ruleViewModel.GoToMenu();
         }
     }
 }

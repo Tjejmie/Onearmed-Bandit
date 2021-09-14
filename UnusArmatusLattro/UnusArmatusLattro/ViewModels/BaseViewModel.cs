@@ -7,7 +7,7 @@ using System.Text;
 namespace UnusArmatusLattro.ViewModels
 {
     [AddINotifyPropertyChangedInterface]
-    public class BaseViewModel 
+    public class BaseViewModel
     {
         
     }

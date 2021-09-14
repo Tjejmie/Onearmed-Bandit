@@ -10,20 +10,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Views
 {
     /// <summary>
-    /// Interaction logic for GameView.xaml
+    /// Interaction logic for StartView.xaml
     /// </summary>
-    public partial class GameView : UserControl
+    public partial class StartView : UserControl
     {
-        public GameView()
+        public StartView()
         {
             InitializeComponent();
         }
-
-
-
     }
 }

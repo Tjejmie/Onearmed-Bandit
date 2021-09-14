@@ -24,9 +24,12 @@ namespace UnusArmatusLattro
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new MainViewModel();
+            MainViewModel mainView = new MainViewModel();
+            mainView.CurrentViewModel = new StartViewModel(mainView);
+            DataContext = mainView;
             
         }
+
+       
     }
 }

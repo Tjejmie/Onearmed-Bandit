@@ -24,7 +24,6 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        
             <Button Grid.Column="1" Grid.Row="2" Content="Spin" Command="{Binding Spin}" Visibility="{Binding GameOver}"/>
             <TextBox Text="{Binding User}" Grid.Column="2" Grid.Row="0" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black">
 
@@ -41,6 +40,7 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
        
+        <Button Grid.Column="1" Grid.Row="2" Content="Spin" Command="{Binding Spin}" Visibility="{Binding GameOverState}"/>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center">
             
             <TextBlock Text="{Binding Score}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
