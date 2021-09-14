@@ -4,6 +4,7 @@ using System.Text;
 using UnusArmatusLattro.Models;
 using System.Linq;
 using Npgsql;
+using UnusArmatusLattro.Data;
 
 namespace UnusArmatusLattro.Repositories
 {
@@ -11,9 +12,9 @@ namespace UnusArmatusLattro.Repositories
     {
         
         private static readonly string connectionString= "Server=studentpsql.miun.se; Port=5432; Database=sup_db1; User Id=sup_g1; Password=Kosing; Trust Server Certificate=true; sslmode=Require";
-        public List<Username> GetUsers() 
+        public List<Username> GetUsers(Difficulties difficulty) 
         {
-            string stmt = "select * from highscore_easy order by points desc limit 10";
+            string stmt = $"select * from highscore_{difficulty} order by points desc limit 10";
 
 
             using var conn = new NpgsqlConnection(connectionString);
@@ -40,11 +41,11 @@ namespace UnusArmatusLattro.Repositories
             return users;
         }
 
-        public bool sendUser(User user)
+        public bool sendUser(User user, Difficulties difficulty)
         {
             try
             {
-                string stmt = "insert into highscore_easy(name, points) values(@Name, @Points) ";
+                string stmt = $"insert into highscore_{difficulty}(name, points) values(@Name, @Points) ";
 
                 using var conn = new NpgsqlConnection(connectionString);
                 conn.Open();

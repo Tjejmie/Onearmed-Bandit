@@ -31,6 +31,7 @@ namespace UnusArmatusLattro.ViewModels
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
+        public Difficulties Difficulty { get; set; }
         public GameViewModel(Difficulties diff)
 
         {
@@ -38,11 +39,13 @@ namespace UnusArmatusLattro.ViewModels
             SlotMachine = new ObservableCollection<Slots>();
            
             FillSlots();
+            Difficulty = diff;
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
+           
             
             //var timer = new System.Timers.Timer(1000);
             //timer.Elapsed += OnTimedEvent;
@@ -103,7 +106,7 @@ namespace UnusArmatusLattro.ViewModels
         public void GetHighscores()
         {
             HighScores = new ObservableCollection<HighscoreView>();
-            List<Username> templist = Repo.GetUsers();
+            List<Username> templist = Repo.GetUsers(Difficulty);
 
             foreach (var user in templist)
             {
@@ -239,7 +242,7 @@ namespace UnusArmatusLattro.ViewModels
         {
             User user = new User(User, int.Parse(Score));
 
-            Repo.sendUser(user);
+            Repo.sendUser(user, Difficulty);
         
         }
 
