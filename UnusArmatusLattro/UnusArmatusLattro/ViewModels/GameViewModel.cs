@@ -5,6 +5,8 @@ using System.Timers;
 using System.Windows.Input;
 using UnusArmatusLattro.Commands;
 using UnusArmatusLattro.Data;
+using UnusArmatusLattro.Models;
+using UnusArmatusLattro.Repositories;
 using UnusArmatusLattro.Views;
 using System.Windows.Threading;
 using System.Windows.Media;
@@ -14,10 +16,16 @@ namespace UnusArmatusLattro.ViewModels
     public class GameViewModel : BaseViewModel
     {
         public ObservableCollection<Slots> SlotMachine { get; }
+        public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
+        public ICommand sendToDatabase { get; }
         public string Score { get; set; }
         public string User { get; set; }
+        public Dictionary<Symbol, string> symbols { get; set; }
+        public UserRepository Repo { get; set; } = new UserRepository();
+        public string NewHighScore { get; set; } = "Hidden";
+
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
         public Dictionary<Symbol, string> symbols { get; set; }
@@ -25,13 +33,17 @@ namespace UnusArmatusLattro.ViewModels
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public GameViewModel(Difficulties diff)
+
         {
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
+           
             FillSlots();
+            GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0"; //metod
-            User = "user"; //metod
+            User = ""; //metod
+            sendToDatabase = new sendToDatabase(this);
             
             //var timer = new System.Timers.Timer(1000);
             //timer.Elapsed += OnTimedEvent;
@@ -86,7 +98,26 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 SlotMachine.Add(temp);
             }
+
         }
+
+        public void GetHighscores()
+        {
+            HighScores = new ObservableCollection<HighscoreView>();
+            List<Username> templist = Repo.GetUsers();
+
+            foreach (var user in templist)
+            {
+                HighscoreView temp = new HighscoreView
+                {
+                    Name = user.Name,
+                    Score = user.Points
+                };
+                HighScores.Add(temp);
+            }
+
+        }
+
         public void SpinSlots()
         {
 
@@ -117,12 +148,35 @@ namespace UnusArmatusLattro.ViewModels
                 }
             }
 
+        }
+
+        private bool IsHighScore(int score)
+        {
+            foreach (var highScore in HighScores)
+            {
+                if (score > highScore.Score)
+                {
+                    NewHighScore = "Visible";
+                    return true;
+                }
+
+            }
+            if (HighScores.Count == 0)
+            {
+                NewHighScore = "Visible";
+                return true;
+            }
+            return false;
+
+           
+        }
 
         }
         private void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
+          IsHighScore(int.Parse(Score));
             Timer.Stop();
         }
         //private string GenerateRandomNumber()
@@ -182,7 +236,13 @@ namespace UnusArmatusLattro.ViewModels
             return total;
         }
 
+        public void SendUser()
+        {
+            User user = new User(User, int.Parse(Score));
 
+            Repo.sendUser(user);
+        
+        }
 
     }
 }

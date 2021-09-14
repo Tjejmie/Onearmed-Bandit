@@ -9,10 +9,11 @@ namespace UnusArmatusLattro.Repositories
 {
     public class UserRepository
     {
-        private static readonly string connectionString = "Server=localhost;Port=5432;Database=sup_db1;User ID= sup_g1; Password=Kosing;";
-        public List<Username> GetUsers() // List users
+        
+        private static readonly string connectionString= "Server=studentpsql.miun.se; Port=5432; Database=sup_db1; User Id=sup_g1; Password=Kosing; Trust Server Certificate=true; sslmode=Require";
+        public List<Username> GetUsers() 
         {
-            string stmt = "select * from username order by username";
+            string stmt = "select * from highscore_easy order by points desc limit 10";
 
 
             using var conn = new NpgsqlConnection(connectionString);
@@ -37,6 +38,35 @@ namespace UnusArmatusLattro.Repositories
 
             }
             return users;
+        }
+
+        public bool sendUser(User user)
+        {
+            try
+            {
+                string stmt = "insert into highscore_easy(name, points) values(@Name, @Points) ";
+
+                using var conn = new NpgsqlConnection(connectionString);
+                conn.Open();
+                using var command = new NpgsqlCommand(stmt, conn);
+
+                command.Parameters.AddWithValue("Name", user.UserName);
+                command.Parameters.AddWithValue("Points", user.Points);
+
+                using var reader = command.ExecuteReader();
+
+                return true;
+            }
+            catch (PostgresException Ex)
+            {
+                string errorCode = Ex.SqlState;
+                var test = Ex.Message;
+                throw new Exception(errorCode);
+
+            }
+
+
+
         }
 
     }
