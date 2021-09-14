@@ -10,6 +10,7 @@ using UnusArmatusLattro.Repositories;
 using UnusArmatusLattro.Views;
 using System.Windows.Threading;
 using System.Windows.Media;
+using System.Linq;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -184,67 +185,121 @@ namespace UnusArmatusLattro.ViewModels
 
         private int CalculateScore()
         {
-            List<string> bestScore = new List<string>();
+            //List<string> bestScore = new List<string>();
             int total = int.Parse(Score);
-            foreach (var slot in SlotMachine)
+            Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
+            scoreDictionary.Add("1", 0);
+            scoreDictionary.Add("2", 0);
+            scoreDictionary.Add("3", 0);
+            scoreDictionary.Add("4", 0);
+            scoreDictionary.Add("5", 0);
+            scoreDictionary.Add("6", 0);
+
+            for (int i = 1; i < scoreDictionary.Count+1; i++)
             {
-                List<string> scoreList = new List<string>();
-                foreach (var slots in SlotMachine)
+                var currentCount = SlotMachine.Where(t => t.number == $"{i}");
+                scoreDictionary[$"{i}"] = currentCount.Count();
+            }
+
+            bool hasPair = false;
+            bool hasThreeOfAKind = false;
+            int tempScore = 0;
+            foreach (var item in scoreDictionary)
+            {
+                if(item.Value == 2)
                 {
-                    if (slot.number.Equals(slots.number))
+                    if (hasPair)
                     {
-                        scoreList.Add(slot.number);
+                        RemainingSpins++;
                     }
+                    else
+                    {
+                        hasPair = true;
+                    }
+                    tempScore += int.Parse(item.Key) * 100;
                 }
-                if (scoreList.Count > bestScore.Count)
+                else if (item.Value == Cols)
                 {
-                    bestScore = scoreList;
+                    return total += 1000000;
                 }
-                else if (scoreList.Count == 2 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
+                else if (item.Value == 3)
                 {
-                    total += int.Parse(scoreList[0]) * 100;
-                    total += int.Parse(bestScore[0]) * 100;
-                    RemainingSpins++;
-                    return total;
+                    hasThreeOfAKind = true;
+                    tempScore += int.Parse(item.Key) * 1000;
                 }
-
-                //else if (scoreList.Count == 3 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
-                //{
-                //    total += int.Parse(scoreList[0]) * 100;
-                //    total += int.Parse(bestScore[0]) * 100;
-                //    RemainingSpins++;
-                //    return total;
-                //}
-                else if (scoreList.Count == 2 && bestScore.Count == 3 && !bestScore.Contains(scoreList[0]))
+                else if (item.Value == 4)
                 {
-                    total += int.Parse(scoreList[0]) * 100;
-                    total += int.Parse(bestScore[0]) * 100;
-                    RemainingSpins++;
-                    return total;
+                    tempScore += int.Parse(item.Key) * 10000;
                 }
             }
+
+            if(hasPair && hasThreeOfAKind)
+            {
+                RemainingSpins++;
+                return total += tempScore * 2;
+            }
+
+            return total += tempScore;
+
+            //foreach (var slot in SlotMachine)
+            //{
+            //    List<string> scoreList = new List<string>();
+            //    foreach (var slots in SlotMachine)
+            //    {
+            //        if (slot.number.Equals(slots.number))
+            //        {
+            //            scoreList.Add(slot.number);
+            //        }
+            //    }
+            //    if (scoreList.Count > bestScore.Count)
+            //    {
+            //        bestScore = scoreList;
+            //    }
+            //    else if (scoreList.Count == 2 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
+            //    {
+            //        total += int.Parse(scoreList[0]) * 100;
+            //        total += int.Parse(bestScore[0]) * 100;
+            //        RemainingSpins++;
+            //        return total;
+            //    }
+
+            //    //else if (scoreList.Count == 3 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
+            //    //{
+            //    //    total += int.Parse(scoreList[0]) * 100;
+            //    //    total += int.Parse(bestScore[0]) * 100;
+            //    //    RemainingSpins++;
+            //    //    return total;
+            //    //}
+            //    else if (scoreList.Count == 2 && bestScore.Count == 3 && !bestScore.Contains(scoreList[0]))
+            //    {
+            //        total += int.Parse(scoreList[0]) * 100;
+            //        total += int.Parse(bestScore[0]) * 100;
+            //        RemainingSpins++;
+            //        return total;
+            //    }
+            //}
             
-            if (bestScore.Count == 2)
-            {
-                total += int.Parse(bestScore[0]) * 100;
-            }
+            //if (bestScore.Count == 2)
+            //{
+            //    total += int.Parse(bestScore[0]) * 100;
+            //}
 
-            if (bestScore.Count == Cols)
-            {
-                return total += 1000000;
-            }
+            //if (bestScore.Count == Cols)
+            //{
+            //    return total += 1000000;
+            //}
 
-            if (bestScore.Count == 3)
-            {
-                total += int.Parse(bestScore[0]) * 1000;
-            }
+            //if (bestScore.Count == 3)
+            //{
+            //    total += int.Parse(bestScore[0]) * 1000;
+            //}
 
-            if (bestScore.Count == 4)
-            {
-                total += int.Parse(bestScore[0]) * 100000;
-            }
+            //if (bestScore.Count == 4)
+            //{
+            //    total += int.Parse(bestScore[0]) * 100000;
+            //}
 
-            return total;
+            //return total;
         }
 
         public void SendUser()
