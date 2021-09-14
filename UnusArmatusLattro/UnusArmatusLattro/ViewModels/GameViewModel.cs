@@ -32,25 +32,21 @@ namespace UnusArmatusLattro.ViewModels
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
+        public int Cols { get; set; }
         public GameViewModel(Difficulties diff)
+          
 
         {
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
-           
-            FillSlots();
             Difficulty = diff;
+            FillSlots();
+            
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
-           
-            
-            //var timer = new System.Timers.Timer(1000);
-            //timer.Elapsed += OnTimedEvent;
-            //timer.AutoReset = true;
-            //timer.Enabled = true;
 
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
@@ -88,9 +84,9 @@ namespace UnusArmatusLattro.ViewModels
         }
 
         private void FillSlots()
-        {   
-
-            for (int i = 0; i < 4; i++)
+        {
+            FillSlotsByDifficulty();
+            for (int i = 0; i < Cols; i++)
             {
                 var enumValue = (Symbol)random.Next(1, 7);
                 int value = (int)enumValue;
@@ -100,7 +96,24 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 SlotMachine.Add(temp);
             }
+        }
 
+        public void FillSlotsByDifficulty()
+        {
+            switch (Difficulty)
+            {
+                case Difficulties.Easy:
+                    Cols = 3;
+                    break;
+                case Difficulties.Normal:
+                    Cols = 4;
+                    break;
+                case Difficulties.Hard:
+                    Cols = 5;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void GetHighscores()
@@ -122,15 +135,6 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
-
-            //foreach (var slot in SlotMachine)
-            //{
-            //    var enumValue = (Symbol)random.Next(1, 7);
-            //    int value = (int)enumValue;
-            //    slot.number = value.ToString();
-            //    slot.ImageSource = symbols[enumValue];
-            //}
-            
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
@@ -149,7 +153,6 @@ namespace UnusArmatusLattro.ViewModels
                     }
                 }
             }
-
         }
 
         private bool IsHighScore(int score)
@@ -169,22 +172,15 @@ namespace UnusArmatusLattro.ViewModels
                 return true;
             }
             return false;
-
-           
         }
 
-        
         private void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
-          IsHighScore(int.Parse(Score));
+            IsHighScore(int.Parse(Score));
             Timer.Stop();
         }
-        //private string GenerateRandomNumber()
-        //{
-        //    return $"{random.Next(1, 4)}";
-        //}
 
         private int CalculateScore()
         {
@@ -203,9 +199,23 @@ namespace UnusArmatusLattro.ViewModels
                 if (scoreList.Count > bestScore.Count)
                 {
                     bestScore = scoreList;
-
                 }
                 else if (scoreList.Count == 2 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
+                {
+                    total += int.Parse(scoreList[0]) * 100;
+                    total += int.Parse(bestScore[0]) * 100;
+                    RemainingSpins++;
+                    return total;
+                }
+
+                //else if (scoreList.Count == 3 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
+                //{
+                //    total += int.Parse(scoreList[0]) * 100;
+                //    total += int.Parse(bestScore[0]) * 100;
+                //    RemainingSpins++;
+                //    return total;
+                //}
+                else if (scoreList.Count == 2 && bestScore.Count == 3 && !bestScore.Contains(scoreList[0]))
                 {
                     total += int.Parse(scoreList[0]) * 100;
                     total += int.Parse(bestScore[0]) * 100;
@@ -216,23 +226,22 @@ namespace UnusArmatusLattro.ViewModels
             
             if (bestScore.Count == 2)
             {
+                total += int.Parse(bestScore[0]) * 100;
+            }
 
-               total += int.Parse(bestScore[0]) *100; 
-
+            if (bestScore.Count == Cols)
+            {
+                return total += 1000000;
             }
 
             if (bestScore.Count == 3)
             {
-
                 total += int.Parse(bestScore[0]) * 1000;
-
             }
 
             if (bestScore.Count == 4)
             {
-
-                total += 1000000;
-
+                total += int.Parse(bestScore[0]) * 100000;
             }
 
             return total;
