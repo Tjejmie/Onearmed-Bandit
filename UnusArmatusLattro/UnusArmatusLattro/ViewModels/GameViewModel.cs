@@ -174,7 +174,7 @@ namespace UnusArmatusLattro.ViewModels
                 }
 
             }
-            if (HighScores.Count == 0)
+            if (HighScores.Count < 10)
             {
                 NewHighScore = "Visible";
                 return true;
