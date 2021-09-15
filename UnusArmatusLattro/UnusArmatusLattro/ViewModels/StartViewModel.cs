@@ -29,7 +29,7 @@ namespace UnusArmatusLattro.ViewModels
         }
         public void Highscore()
         {
-            //parent.CurrentViewModel = new HighScoreViewModel(parent);
+            parent.CurrentViewModel = new MainMenuHighScoreViewModel(parent);
         }
     }
 }
