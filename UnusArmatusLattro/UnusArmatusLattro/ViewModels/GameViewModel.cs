@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using System.Linq;
 
+
 namespace UnusArmatusLattro.ViewModels
 {
     public class GameViewModel : BaseViewModel
@@ -21,14 +22,17 @@ namespace UnusArmatusLattro.ViewModels
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
+        public ICommand BetCommand { get; set; }
         public string Score { get; set; }
         public string User { get; set; }
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
-
-        public int RemainingSpins { get; set; } = 10;
-        public string GameOverState { get; set; } = "Visible";
+        public bool BettingEnabled { get; set; } = true; 
+        public int Wallet { get; set; } = 100;
+        public int CurrentBet { get; set; }
+        public string GameOverState { get; set; } = "Hidden";
+        public string BetBtn { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
@@ -39,6 +43,7 @@ namespace UnusArmatusLattro.ViewModels
 
         {
             GenerateDictionary();
+            BetCommand = new BetCommand(this);
             SlotMachine = new ObservableCollection<Slots>();
             Difficulty = diff;
             FillSlots();
@@ -52,7 +57,7 @@ namespace UnusArmatusLattro.ViewModels
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            Timer.Start();
+            
         }
 
     private void OnTimedEvent(Object source, EventArgs e)
@@ -142,11 +147,11 @@ namespace UnusArmatusLattro.ViewModels
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
-                    RemainingSpins -= 1;
-                    Score = CalculateScore().ToString();
-                    CurrentSlot = 0;
+                    Wallet -= CurrentBet;
+                    Wallet = CalculateScore();
+                    NewRound();
 
-                    if (RemainingSpins == 0)
+                    if (Wallet == 0)
                         GameOver();
                     else
                     {
@@ -167,7 +172,7 @@ namespace UnusArmatusLattro.ViewModels
                 }
 
             }
-            if (HighScores.Count == 0)
+            if (HighScores.Count < 10)
             {
                 NewHighScore = "Visible";
                 return true;
@@ -179,14 +184,14 @@ namespace UnusArmatusLattro.ViewModels
         {
             GameOverState = "Hidden";
             IsGameOver = true;
-            IsHighScore(int.Parse(Score));
+            IsHighScore(Wallet);
             Timer.Stop();
         }
 
         private int CalculateScore()
         {
             //List<string> bestScore = new List<string>();
-            int total = int.Parse(Score);
+            int total = Wallet;
             Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
             scoreDictionary.Add("1", 0);
             scoreDictionary.Add("2", 0);
@@ -210,32 +215,31 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     if (hasPair)
                     {
-                        RemainingSpins++;
+                        tempScore += CurrentBet * 10;
                     }
                     else
                     {
                         hasPair = true;
                     }
-                    tempScore += int.Parse(item.Key) * 100;
+                    tempScore += int.Parse(item.Key) * CurrentBet;
                 }
                 else if (item.Value == Cols)
                 {
-                    return total += 1000000;
+                    return total = CurrentBet + 1000000;
                 }
                 else if (item.Value == 3)
                 {
                     hasThreeOfAKind = true;
-                    tempScore += int.Parse(item.Key) * 1000;
+                    tempScore += int.Parse(item.Key) * CurrentBet + 100;
                 }
                 else if (item.Value == 4)
                 {
-                    tempScore += int.Parse(item.Key) * 10000;
+                    tempScore += int.Parse(item.Key) * CurrentBet + 1000;
                 }
             }
 
             if(hasPair && hasThreeOfAKind)
             {
-                RemainingSpins++;
                 return total += tempScore * 2;
             }
 
@@ -310,6 +314,35 @@ namespace UnusArmatusLattro.ViewModels
         
         }
 
+        public void ConfirmBet()
+        {
+            if (CurrentBet != 0 && CurrentBet <= Wallet)
+            {
+                BettingEnabled = false;
+                GameOverState = "Visible";
+                BetBtn = "Hidden";
+                Timer.Start();
+
+            }
+            
+        }
+        private void NewRound()
+        {
+            if (Wallet <= 0)
+            {
+                GameOver();
+            }
+            else
+            {
+                CurrentBet = 0;
+                CurrentSlot = 0;
+                BettingEnabled = true;
+                GameOverState = "Hidden";
+                BetBtn = "Visible";
+                Timer.Stop();
+            }
+            
+        }
     }
 }
 

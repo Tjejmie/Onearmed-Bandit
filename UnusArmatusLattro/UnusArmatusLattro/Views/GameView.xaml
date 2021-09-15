@@ -24,7 +24,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-            <Button Grid.Column="1" Grid.Row="2" Content="Spin" Command="{Binding Spin}" Visibility="{Binding GameOver}"/>
+            
             <TextBox Text="{Binding User}" Grid.Column="2" Grid.Row="0" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black">
 
             </TextBox>
@@ -39,17 +39,28 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-       
+
         <Button Grid.Column="1" Grid.Row="2" Content="Spin" Command="{Binding Spin}" Visibility="{Binding GameOverState}"/>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center">
-            
-            <TextBlock Text="{Binding Score}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+
+                <TextBlock Text="{Binding Score}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
+
+                </TextBlock>
+                <TextBlock Text="{Binding RemainingSpins}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
+
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="10,0,10,0">PiggyBank:</Label>
+                <TextBlock Text="{Binding Wallet}" Width="150" Margin="10,0,30,0"></TextBlock>
+                <Label Margin="10,0,10,0">Current bet</Label>
+                <TextBox Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" Width="150" Margin="10,0,30,0"></TextBox>
+                <Button Width="50" Command="{Binding BetCommand}" Visibility="{Binding BetBtn}">betta</Button>
                 
-            </TextBlock>
-            <TextBlock Text="{Binding RemainingSpins}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
-                
-            </TextBlock>
+            </StackPanel>
         </StackPanel>
+        
     </Grid>
     
 </UserControl>
