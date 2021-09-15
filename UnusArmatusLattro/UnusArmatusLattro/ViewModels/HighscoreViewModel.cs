@@ -15,5 +15,10 @@ namespace UnusArmatusLattro.ViewModels
         {
           //  ScoreList = db.GetUsers();
         }
+
+        //internal void GoToMenu()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

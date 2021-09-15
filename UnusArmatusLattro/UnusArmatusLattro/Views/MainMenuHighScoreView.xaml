@@ -30,39 +30,28 @@
 
         </StackPanel>
 
-        <StackPanel>
-            <TextBlock Grid.Row="2" Grid.Column="2">
-            <TextBlock Text="{Binding Name, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
-            <TextBlock Text="{Binding Score, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
-             <TextBlock Margin="10,0,10,0" Padding="10" >
-                
-            </TextBlock>
-        </TextBlock>
+        
 
-           
-
-        </StackPanel>
-
-        <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding HighScores}">
+        <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Easy}" >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="2" Rows="10" Height="300" Width="auto"/>
+                    <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <ItemsControl Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HighScores}">
+        <ItemsControl Grid.Column="2" Grid.Row="1" ItemsSource="{Binding Normal}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="2" Rows="10" Height="300" Width="auto"/>
+                    <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <ItemsControl Grid.Column="3" Grid.Row="1" ItemsSource="{Binding HighScores}">
+        <ItemsControl Grid.Column="3" Grid.Row="1" ItemsSource="{Binding Hard}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="2" Rows="10" Height="300" Width="auto"/>
+                    <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
