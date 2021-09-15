@@ -28,32 +28,44 @@
                 </Hyperlink>
             </TextBlock>
 
-            
-
-
         </StackPanel>
 
         <StackPanel>
-            <!--<TextBlock Grid.Row="2" Grid.Column="2">
+            <TextBlock Grid.Row="2" Grid.Column="2">
             <TextBlock Text="{Binding Name, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
             <TextBlock Text="{Binding Score, RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
              <TextBlock Margin="10,0,10,0" Padding="10" >
                 
             </TextBlock>
-        </TextBlock>-->
+        </TextBlock>
 
-            <ItemsControl Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HighScores}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
-
-
-
+           
 
         </StackPanel>
+
+        <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding HighScores}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" Rows="10" Height="300" Width="auto"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <ItemsControl Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HighScores}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" Rows="10" Height="300" Width="auto"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <ItemsControl Grid.Column="3" Grid.Row="1" ItemsSource="{Binding HighScores}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" Rows="10" Height="300" Width="auto"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
 
     </Grid>
 </UserControl>
