@@ -13,13 +13,16 @@ using System.Windows.Media;
 
 namespace UnusArmatusLattro.ViewModels
 {
+
     public class GameViewModel : BaseViewModel
     {
+        private readonly MainViewModel parent;
         public ObservableCollection<Slots> SlotMachine { get; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
+        public ICommand HomeCommand { get; set; }
         public string Score { get; set; }
         public string User { get; set; }
         public Dictionary<Symbol, string> symbols { get; set; }
@@ -32,9 +35,12 @@ namespace UnusArmatusLattro.ViewModels
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
-        public GameViewModel(Difficulties diff)
+        public GameViewModel(MainViewModel parent, Difficulties diff)
 
         {
+            this.parent = parent;
+            HomeCommand = new GameToHomeCommand(this);
+
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
            
@@ -58,7 +64,12 @@ namespace UnusArmatusLattro.ViewModels
             Timer.Start();
         }
 
-    private void OnTimedEvent(Object source, EventArgs e)
+        public void GoToMenu()
+        {
+            parent.CurrentViewModel = new StartViewModel(parent);
+        }
+
+        private void OnTimedEvent(Object source, EventArgs e)
         {
 
             SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
