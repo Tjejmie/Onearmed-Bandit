@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UnusArmatusLattro.ViewModels
 {
-    public class GameOverViewModel
+    public class GameOverViewModel : BaseViewModel
     {
     }
 }

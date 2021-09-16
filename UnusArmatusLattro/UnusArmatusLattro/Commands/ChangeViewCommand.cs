@@ -45,9 +45,13 @@ namespace UnusArmatusLattro.Commands
                         case Data.GoToView.HighScore:
                             baseViewModel.Highscore();
                             break;
-                        case Data.GoToView.Exit:
+                    case Data.GoToView.SpinGame:
+                        baseViewModel.SpinGame();
+                        break;
+                    case Data.GoToView.Exit:
                             Environment.Exit(0);
                             break;
+
                    
                     default:
                             break;

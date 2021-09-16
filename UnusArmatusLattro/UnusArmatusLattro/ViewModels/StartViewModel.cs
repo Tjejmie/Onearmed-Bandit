@@ -31,5 +31,10 @@ namespace UnusArmatusLattro.ViewModels
         {
             parent.CurrentViewModel = new MainMenuHighScoreViewModel(parent);
         }
+
+        public void SpinGame()
+        {
+            parent.CurrentViewModel = new SpinGameViewModel(parent);
+        }
     }
 }
