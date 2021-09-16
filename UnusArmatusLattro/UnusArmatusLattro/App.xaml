@@ -22,6 +22,9 @@
         <DataTemplate DataType="{x:Type viewmodels:MainMenuHighScoreViewModel}">
             <views:MainMenuHighScoreView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:GameOverViewModel}">
+            <views:GameOverView />
+        </DataTemplate>
         
     </Application.Resources>
 </Application>

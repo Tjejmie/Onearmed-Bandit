@@ -33,8 +33,6 @@ namespace UnusArmatusLattro.Commands
             }
                 try
             {
-
-                
                     switch (parameter)
                     {
                         case Data.GoToView.Menu:
