@@ -68,6 +68,7 @@ namespace UnusArmatusLattro.ViewModels
         {
             parent.CurrentViewModel = new StartViewModel(parent);
         }
+        
 
         private void OnTimedEvent(Object source, EventArgs e)
         {
@@ -184,14 +185,24 @@ namespace UnusArmatusLattro.ViewModels
            
         }
 
-        
+
+        public void GoToGameOver()
+        {
+            parent.CurrentViewModel = new GameOverViewModel(parent);
+        }
+
+
         private void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
-          IsHighScore(int.Parse(Score));
+            IsHighScore(int.Parse(Score));
             Timer.Stop();
+            GoToGameOver();
         }
+
+
+
         //private string GenerateRandomNumber()
         //{
         //    return $"{random.Next(1, 4)}";
