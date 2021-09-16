@@ -13,6 +13,7 @@
     <None Remove="Resources\Images\cherries.png" />
     <None Remove="Resources\Images\grapes.png" />
     <None Remove="Resources\Images\lemon.png" />
+    <None Remove="Resources\Images\slot.png" />
     <None Remove="Resources\Images\strawberry.png" />
   </ItemGroup>
 
@@ -22,6 +23,7 @@
     <Resource Include="Resources\Images\cherries.png" />
     <Resource Include="Resources\Images\grapes.png" />
     <Resource Include="Resources\Images\lemon.png" />
+    <Resource Include="Resources\Images\slot.png" />
     <Resource Include="Resources\Images\strawberry.png" />
   </ItemGroup>
 

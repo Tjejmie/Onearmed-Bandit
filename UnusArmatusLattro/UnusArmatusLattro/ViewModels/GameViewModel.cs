@@ -28,7 +28,7 @@ namespace UnusArmatusLattro.ViewModels
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
-
+        public LeverButton LeverObj { get; set; } = new LeverButton();
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;

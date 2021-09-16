@@ -23,7 +23,34 @@ namespace UnusArmatusLattro.Views
             InitializeComponent();
         }
 
+        
 
+        private void LeverCanvas_DragOver(object sender, DragEventArgs e)
+        {
+            object data = e.Data.GetData(DataFormats.Serializable);
+            //if (data is LeverButton btn)
+            //{
 
+            //    Point dropPosition = e.GetPosition(LeverCanvas);
+                
+            //    Canvas.SetTop(btn, e.GetPosition(LeverCanvas).Y);
+
+                
+            //}
+            Canvas.SetTop(Lever, e.GetPosition(LeverCanvas).Y);
+        }
+
+        private void Lever_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragDrop.DoDragDrop(this, new DataObject(DataFormats.Serializable, this), DragDropEffects.Move);
+            }
+        }
+
+        private void Lever_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Canvas.SetTop(Lever, 300);
+        }
     }
 }
