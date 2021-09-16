@@ -48,7 +48,8 @@ namespace UnusArmatusLattro.Commands
                         case Data.GoToView.Exit:
                             Environment.Exit(0);
                             break;
-                        default:
+                   
+                    default:
                             break;
                     }
                 
