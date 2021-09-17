@@ -41,7 +41,7 @@ namespace UnusArmatusLattro.Repositories
             return users;
         }
 
-        public bool sendUser(User user, Difficulties difficulty)
+        public void sendUser(User user, Difficulties difficulty)
         {
             try
             {
@@ -56,14 +56,12 @@ namespace UnusArmatusLattro.Repositories
 
                 using var reader = command.ExecuteReader();
 
-                return true;
             }
             catch (PostgresException Ex)
             {
                 string errorCode = Ex.SqlState;
                 var test = Ex.Message;
                 throw new Exception(errorCode);
-
             }
 
 
