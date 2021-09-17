@@ -20,7 +20,7 @@ namespace UnusArmatusLattro.ViewModels
         
         public void StartGame(Difficulties diff)
         {
-            parent.CurrentViewModel = new GameViewModel(diff);
+            parent.CurrentViewModel = new GameViewModel(parent, diff);
         }
 
         public void Rules()
@@ -29,7 +29,7 @@ namespace UnusArmatusLattro.ViewModels
         }
         public void Highscore()
         {
-            //parent.CurrentViewModel = new HighScoreViewModel(parent);
+            parent.CurrentViewModel = new MainMenuHighScoreViewModel(parent);
         }
     }
 }

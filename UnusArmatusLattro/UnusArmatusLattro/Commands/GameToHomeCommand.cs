@@ -8,26 +8,21 @@ using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Commands
 {
-    public class RulesCommand : ICommand
+    public class GameToHomeCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private RulesViewModel ruleViewModel;
-        
+        private GameViewModel gameViewModel;
 
-        public RulesCommand(RulesViewModel startViewModel)
+        public GameToHomeCommand(GameViewModel gameViewModel)
         {
-            this.ruleViewModel = startViewModel;
-            
+            this.gameViewModel = gameViewModel;
         }
-
 
         public bool CanExecute(object parameter) => true;
         
-
         public void Execute(object parameter)
         {
-            ruleViewModel.GoToMenu();
-            
+            gameViewModel.GoToMenu();
         }
     }
 }

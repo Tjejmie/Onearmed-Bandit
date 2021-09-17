@@ -14,30 +14,37 @@ using System.Linq;
 
 namespace UnusArmatusLattro.ViewModels
 {
+
     public class GameViewModel : BaseViewModel
     {
+        private readonly MainViewModel parent;
         public ObservableCollection<Slots> SlotMachine { get; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
+        public ICommand HomeCommand { get; set; }
         public string Score { get; set; }
         public string User { get; set; }
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
-
+        public LeverButton LeverObj { get; set; } = new LeverButton();
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
+        public string ShowScoreToAdd { get; set; } = "Hidden";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
+        public string ScoreToAdd { get; set; }
+        public GameViewModel(MainViewModel parent, Difficulties diff)
         public int Cols { get; set; }
-        public GameViewModel(Difficulties diff)
-          
 
         {
+            this.parent = parent;
+            HomeCommand = new GameToHomeCommand(this);
+
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
             Difficulty = diff;
@@ -48,14 +55,25 @@ namespace UnusArmatusLattro.ViewModels
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
+            
+            
+            //var timer = new System.Timers.Timer(1000);
+            //timer.Elapsed += OnTimedEvent;
+            //timer.AutoReset = true;
+            //timer.Enabled = true;
 
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            Timer.Start();
+            //Timer.Start();
         }
 
-    private void OnTimedEvent(Object source, EventArgs e)
+        public void GoToMenu()
+        {
+            parent.CurrentViewModel = new StartViewModel(parent);
+        }
+
+        private void OnTimedEvent(Object source, EventArgs e)
         {
 
             SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
@@ -142,8 +160,10 @@ namespace UnusArmatusLattro.ViewModels
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
+                    Timer.Stop();
                     RemainingSpins -= 1;
-                    Score = CalculateScore().ToString();
+                    ScoreToAdd = $"+{CalculateScore()}";
+                    Score = $"{int.Parse(Score) + CalculateScore()}";
                     CurrentSlot = 0;
 
                     if (RemainingSpins == 0)
@@ -167,7 +187,7 @@ namespace UnusArmatusLattro.ViewModels
                 }
 
             }
-            if (HighScores.Count == 0)
+            if (HighScores.Count < 10)
             {
                 NewHighScore = "Visible";
                 return true;
@@ -185,6 +205,9 @@ namespace UnusArmatusLattro.ViewModels
 
         private int CalculateScore()
         {
+            List<string> bestScore = new List<string>();
+            int total = 0;
+
             //List<string> bestScore = new List<string>();
             int total = int.Parse(Score);
             Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
@@ -308,6 +331,11 @@ namespace UnusArmatusLattro.ViewModels
 
             Repo.sendUser(user, Difficulty);
         
+        }
+
+        public void StartTimer()
+        {
+            Timer.Start();
         }
 
     }
