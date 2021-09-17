@@ -38,9 +38,8 @@ namespace UnusArmatusLattro.ViewModels
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
         public string ScoreToAdd { get; set; }
-        public GameViewModel(MainViewModel parent, Difficulties diff)
         public int Cols { get; set; }
-
+        public GameViewModel(MainViewModel parent, Difficulties diff)
         {
             this.parent = parent;
             HomeCommand = new GameToHomeCommand(this);
@@ -208,8 +207,6 @@ namespace UnusArmatusLattro.ViewModels
             List<string> bestScore = new List<string>();
             int total = 0;
 
-            //List<string> bestScore = new List<string>();
-            int total = int.Parse(Score);
             Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
             scoreDictionary.Add("1", 0);
             scoreDictionary.Add("2", 0);
