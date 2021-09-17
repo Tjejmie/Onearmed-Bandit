@@ -17,6 +17,7 @@ namespace UnusArmatusLattro.ViewModels
 {
     public class BettingGameViewModel : BaseViewModel
     {
+        private readonly MainViewModel parent;
         public ObservableCollection<Slots> SlotMachine { get; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
@@ -38,9 +39,7 @@ namespace UnusArmatusLattro.ViewModels
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
         public int Cols { get; set; }
-        public BettingGameViewModel(Difficulties diff)
-
-
+        public BettingGameViewModel(MainViewModel parent, Difficulties diff)
         {
             GenerateDictionary();
             BetCommand = new BetCommand(this);
@@ -48,6 +47,7 @@ namespace UnusArmatusLattro.ViewModels
             Difficulty = diff;
             FillSlots();
 
+            this.parent = parent;
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0"; //metod
