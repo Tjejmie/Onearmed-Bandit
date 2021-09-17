@@ -23,7 +23,7 @@ namespace UnusArmatusLattro.Commands
 
         public void Execute(object parameter)
         {
-            gameViewModel.ConfirmBet();
+            gameViewModel.ConfirmBet("temp", "temp");
         }
     }
 }

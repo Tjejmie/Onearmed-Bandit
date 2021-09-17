@@ -20,8 +20,8 @@
             <RowDefinition Height="240" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image Source="/Resources/Images/SlotMachineLayout.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
-        <Image Source="/Resources/Images/Highscore.png" Grid.Column="4" Grid.Row="0" Grid.RowSpan="4"></Image>
+        <Image Source="/Resources/Images/SlotMachineView.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
+        <Image Source="/Resources/Images/HighScoreView.png" Grid.Column="4" Grid.Row="0" Grid.RowSpan="4"></Image>
 
         <Image Source="/Resources/Images/cherries.png" Width="25" Height="25">
 
@@ -71,7 +71,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <Canvas Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
+        <Canvas Name="LeverCanvas" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
             <Ellipse Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="139" Canvas.Top="0" >
@@ -110,12 +110,12 @@
             <Button Grid.Column="3" Grid.Row="1" Width="340" Grid.RowSpan="3" Height="142" Background="Transparent" Command="{Binding Spin}" Opacity="0" Cursor="Hand"/>
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
-                <TextBlock Text="{Binding Score}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
-            <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Bet: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-                <TextBlock Text="{Binding CurrentBet}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
-                </TextBlock>
+            <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal">
+                <!--<TextBlock Text="Bet: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>-->
+                <TextBox Name="BettingBox" Text="{Binding CurrentBet}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black">
+                </TextBox>
             </StackPanel>
         </Grid>
         <Grid Grid.Column="4" Grid.Row="4">

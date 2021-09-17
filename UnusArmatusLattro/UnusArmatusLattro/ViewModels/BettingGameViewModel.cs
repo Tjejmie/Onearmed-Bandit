@@ -31,12 +31,13 @@ namespace UnusArmatusLattro.ViewModels
         public string NewHighScore { get; set; } = "Hidden";
         public bool BettingEnabled { get; set; } = true;
         public int Wallet { get; set; } = 100;
-        public int CurrentBet { get; set; }
+        public string CurrentBet { get; set; } = "0";
         public string GameOverState { get; set; } = "Hidden";
         public string BetBtn { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
+        public string ScoreToAdd { get; set; }
         public Difficulties Difficulty { get; set; }
         public int Cols { get; set; }
         public BettingGameViewModel(MainViewModel parent, Difficulties diff)
@@ -148,8 +149,9 @@ namespace UnusArmatusLattro.ViewModels
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
-                    Wallet -= CurrentBet;
-                    Wallet = CalculateScore();
+                    Wallet -= int.Parse(CurrentBet);
+                    ScoreToAdd = $"+{CalculateScore()}";
+                    Wallet = Wallet + CalculateScore();
                     NewRound();
 
                     if (Wallet == 0)
@@ -194,6 +196,7 @@ namespace UnusArmatusLattro.ViewModels
             //List<string> bestScore = new List<string>();
             int total = Wallet;
             Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
+            int tempBet = int.Parse(CurrentBet);
             scoreDictionary.Add("1", 0);
             scoreDictionary.Add("2", 0);
             scoreDictionary.Add("3", 0);
@@ -216,26 +219,26 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     if (hasPair)
                     {
-                        tempScore += CurrentBet * 10;
+                        tempScore += tempBet * 10;
                     }
                     else
                     {
                         hasPair = true;
                     }
-                    tempScore += int.Parse(item.Key) * CurrentBet;
+                    tempScore += int.Parse(item.Key) * tempBet;
                 }
                 else if (item.Value == Cols)
                 {
-                    return total = CurrentBet + 1000000;
+                    return total = tempBet + 1000000;
                 }
                 else if (item.Value == 3)
                 {
                     hasThreeOfAKind = true;
-                    tempScore += int.Parse(item.Key) * CurrentBet + 100;
+                    tempScore += int.Parse(item.Key) * tempBet + 100;
                 }
                 else if (item.Value == 4)
                 {
-                    tempScore += int.Parse(item.Key) * CurrentBet + 1000;
+                    tempScore += int.Parse(item.Key) * tempBet + 1000;
                 }
             }
 
@@ -315,34 +318,41 @@ namespace UnusArmatusLattro.ViewModels
 
         }
 
-        public void ConfirmBet()
+        public bool ConfirmBet(String bet, string wallet)
         {
-            if (CurrentBet != 0 && CurrentBet <= Wallet)
+            int tempBet = int.Parse(bet);
+            if (tempBet != 0 && tempBet <= int.Parse(wallet))
             {
                 BettingEnabled = false;
                 GameOverState = "Visible";
                 BetBtn = "Hidden";
                 Timer.Start();
-
+                return true;
             }
+            return false;
 
         }
         private void NewRound()
         {
+                CurrentSlot = 0;
             if (Wallet <= 0)
             {
                 GameOver();
             }
             else
             {
-                CurrentBet = 0;
-                CurrentSlot = 0;
+                CurrentBet = "0";
                 BettingEnabled = true;
                 GameOverState = "Hidden";
                 BetBtn = "Visible";
                 Timer.Stop();
             }
 
+        }
+
+        public void StartTimer()
+        {
+            Timer.Start();
         }
     }
 }
