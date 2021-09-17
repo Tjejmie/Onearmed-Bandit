@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Views
 {
@@ -51,6 +52,19 @@ namespace UnusArmatusLattro.Views
         private void Lever_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Canvas.SetTop(Lever, 300);
+        }
+
+        private void DoubleAnimation_Completed2(object sender, EventArgs e)
+        {
+            GameViewModel gameViewModel = (GameViewModel)DataContext;
+            if(gameViewModel.ScoreToAdd != null)
+                gameViewModel.StartTimer();
+        }
+
+        private void DoubleAnimation_Completed(object sender, EventArgs e)
+        {
+            GameViewModel gameViewModel = (GameViewModel)DataContext;
+            gameViewModel.StartTimer();
         }
     }
 }

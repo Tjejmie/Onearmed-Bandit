@@ -31,10 +31,12 @@ namespace UnusArmatusLattro.ViewModels
         public LeverButton LeverObj { get; set; } = new LeverButton();
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
+        public string ShowScoreToAdd { get; set; } = "Hidden";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
+        public string ScoreToAdd { get; set; }
         public GameViewModel(MainViewModel parent, Difficulties diff)
 
         {
@@ -51,7 +53,7 @@ namespace UnusArmatusLattro.ViewModels
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
-           
+            
             
             //var timer = new System.Timers.Timer(1000);
             //timer.Elapsed += OnTimedEvent;
@@ -61,7 +63,7 @@ namespace UnusArmatusLattro.ViewModels
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            Timer.Start();
+            //Timer.Start();
         }
 
         public void GoToMenu()
@@ -148,8 +150,10 @@ namespace UnusArmatusLattro.ViewModels
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
+                    Timer.Stop();
                     RemainingSpins -= 1;
-                    Score = CalculateScore().ToString();
+                    ScoreToAdd = $"+{CalculateScore()}";
+                    Score = $"{int.Parse(Score) + CalculateScore()}";
                     CurrentSlot = 0;
 
                     if (RemainingSpins == 0)
@@ -160,7 +164,6 @@ namespace UnusArmatusLattro.ViewModels
                     }
                 }
             }
-
         }
 
         private bool IsHighScore(int score)
@@ -200,7 +203,7 @@ namespace UnusArmatusLattro.ViewModels
         private int CalculateScore()
         {
             List<string> bestScore = new List<string>();
-            int total = int.Parse(Score);
+            int total = 0;
             foreach (var slot in SlotMachine)
             {
                 List<string> scoreList = new List<string>();
@@ -255,6 +258,11 @@ namespace UnusArmatusLattro.ViewModels
 
             Repo.sendUser(user, Difficulty);
         
+        }
+
+        public void StartTimer()
+        {
+            Timer.Start();
         }
 
     }
