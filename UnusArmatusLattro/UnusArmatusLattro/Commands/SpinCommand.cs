@@ -11,18 +11,28 @@ namespace UnusArmatusLattro.Commands
         public event EventHandler CanExecuteChanged;
 
         private GameViewModel gameViewModel;
+        private BettingGameViewModel bettingGameViewModel;
+
+        public SpinCommand(BettingGameViewModel bettingGameViewModel)
+        {
+            this.bettingGameViewModel = bettingGameViewModel;
+        }
 
         public SpinCommand(GameViewModel gameViewModel)
         {
             this.gameViewModel = gameViewModel;
         }
+        
 
         public bool CanExecute(object parameter) => true;
 
         public void Execute(object parameter)
         {
-            gameViewModel.SpinSlots();
-            
+
+            if (gameViewModel != null)
+                gameViewModel.SpinSlots();
+            else
+                bettingGameViewModel.SpinSlots();
         }
     }
 }
