@@ -28,8 +28,10 @@
         <Label Content="Game over" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"  HorizontalAlignment="Center" FontSize="45" FontFamily="georgia bold"></Label>
         <TextBlock Grid.Column="1" Grid.Row="1" Text="Din poäng är: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
 
-        <TextBlock Text="{Binding Points}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
+        <TextBlock Text="{Binding Points}" FontSize="25" FontFamily="calibri-bold" FontWeight="Black" Grid.Column="1" Grid.Row="1" Margin="179,0,84,40" >
         </TextBlock>
+        
+        
 
         <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
 

@@ -190,7 +190,7 @@ namespace UnusArmatusLattro.ViewModels
 
         public void GoToGameOver()
         {
-            parent.CurrentViewModel = new GameOverViewModel(parent);
+            parent.CurrentViewModel = new GameOverViewModel(parent, Score);
         }
 
 

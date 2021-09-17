@@ -13,18 +13,13 @@ namespace UnusArmatusLattro.ViewModels
         public string Points { get; set; }
 
         GameViewModel gameViewModel;
-        public GameOverViewModel(MainViewModel parent)
+        public GameOverViewModel(MainViewModel parent, string score)
         {
             this.parent = parent;
             GameOverCommand = new GameOverCommand(this);
-            
+            Points = score; 
         }
 
-
-        public void GetPoints()
-        {
-            
-        }
         public void SpinGame()
         {
             parent.CurrentViewModel = new SpinGameViewModel(parent);
