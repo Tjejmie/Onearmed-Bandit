@@ -12,6 +12,7 @@ namespace UnusArmatusLattro.Commands
     {
         public event EventHandler CanExecuteChanged;
         private GameViewModel gameViewModel;
+        private GameOverViewModel gameOverViewModel;
 
         public sendToDatabase(GameViewModel gameViewModel)
         {
@@ -23,6 +24,7 @@ namespace UnusArmatusLattro.Commands
 
         public void Execute(object parameter)
         {
+            
             gameViewModel.SendUser();
             gameViewModel.GetHighscores();
         }

@@ -190,7 +190,7 @@ namespace UnusArmatusLattro.ViewModels
 
         public void GoToGameOver()
         {
-            parent.CurrentViewModel = new GameOverViewModel(parent, Score, HighScores);
+            parent.CurrentViewModel = new GameOverViewModel(parent, Score, Difficulty);
         }
 
 
@@ -270,6 +270,8 @@ namespace UnusArmatusLattro.ViewModels
             Repo.sendUser(user, Difficulty);
         
         }
+
+        
 
     }
 }
