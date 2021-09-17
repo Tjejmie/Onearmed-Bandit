@@ -8,12 +8,14 @@ namespace UnusArmatusLattro.ViewModels
 {
     public class GameOverViewModel : BaseViewModel
     {
-        public ICommand ChangeView { get; set; }
+        public ICommand GameOverCommand { get; set; }
         private readonly MainViewModel parent;
+       
 
         public GameOverViewModel(MainViewModel parent)
         {
-            
+            this.parent = parent;
+            GameOverCommand = new GameOverCommand(this);
         }
 
     }

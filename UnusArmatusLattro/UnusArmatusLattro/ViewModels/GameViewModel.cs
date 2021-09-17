@@ -192,6 +192,7 @@ namespace UnusArmatusLattro.ViewModels
         }
 
 
+
         private void GameOver()
         {
             GameOverState = "Hidden";
