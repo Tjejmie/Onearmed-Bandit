@@ -35,6 +35,7 @@ namespace UnusArmatusLattro.ViewModels
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
+        
         public GameViewModel(MainViewModel parent, Difficulties diff)
 
         {
@@ -51,7 +52,8 @@ namespace UnusArmatusLattro.ViewModels
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
-           
+            
+
             
             //var timer = new System.Timers.Timer(1000);
             //timer.Elapsed += OnTimedEvent;
@@ -209,7 +211,7 @@ namespace UnusArmatusLattro.ViewModels
         //    return $"{random.Next(1, 4)}";
         //}
 
-        private int CalculateScore()
+        public int CalculateScore()
         {
             List<string> bestScore = new List<string>();
             int total = int.Parse(Score);

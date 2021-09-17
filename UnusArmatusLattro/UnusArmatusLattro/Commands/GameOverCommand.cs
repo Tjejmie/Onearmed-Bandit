@@ -13,7 +13,7 @@ namespace UnusArmatusLattro.Commands
 
         public GameOverCommand(GameOverViewModel gameOverViewModel)
         {
-            //this.gameOverModel = gameOverViewModel;
+            this.baseViewModel = gameOverViewModel;
         }
 
         public bool CanExecute(object parameter) => true;
@@ -29,7 +29,9 @@ namespace UnusArmatusLattro.Commands
                     case Data.GoToView.Exit:
                         Environment.Exit(0);
                         break;
-
+                    case Data.GoToView.SpinGame:
+                        baseViewModel.SpinGame();
+                        break;
 
                     default:
                         break;

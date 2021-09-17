@@ -28,25 +28,25 @@
         <Label Content="Game over" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"  HorizontalAlignment="Center" FontSize="45" FontFamily="georgia bold"></Label>
         <TextBlock Grid.Column="1" Grid.Row="1" Text="Din poäng är: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
 
-        <TextBlock Text="{Binding Score}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
+        <TextBlock Text="{Binding Points}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
         </TextBlock>
 
         <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
 
         </TextBox>
         <TextBlock Grid.Column="1" Grid.Row="2" Text="Namn: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="20" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-        <Button Width="200" Grid.Column="1" Grid.Row="2" Height="30" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom" Visibility="{Binding NewHighScore}">
+        <Button Width="200" Grid.Column="1" Grid.Row="2" Height="30" Command="{Binding GameOverCommand}" VerticalAlignment="Bottom" Visibility="{Binding NewHighScore}">
             skicka
         </Button>
         <Button Width="168" Grid.Column="1" Grid.Row="3" Height="30" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.Exit}">
             Avsluta
         </Button>
-        <Button Width="168" Grid.Column="1" Grid.Row="3" Height="30" Command="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="{Binding }">
+        <Button Width="168" Grid.Column="1" Grid.Row="3" Height="30" Command="{Binding GameOverCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.SpinGame}">
             Spela igen
         </Button>
 
 
-        <ItemsControl Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HighScores}">
+        <ItemsControl Grid.Column="2" Grid.Row="2" ItemsSource="{Binding }">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" Rows="10" Height="300" Width="auto" Margin="0,-15,0,-230"/>
