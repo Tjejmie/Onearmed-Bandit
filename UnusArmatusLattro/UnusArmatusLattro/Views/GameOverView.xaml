@@ -33,11 +33,11 @@
         
         
 
-        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
+        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black">
 
         </TextBox>
         <TextBlock Grid.Column="1" Grid.Row="2" Text="Namn: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="20" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-        <Button Width="200" Grid.Column="1" Grid.Row="2" Height="30" Command="{Binding GameOverCommand}" VerticalAlignment="Bottom" Visibility="{Binding NewHighScore}">
+        <Button Width="200" Grid.Column="1" Grid.Row="2" Height="30" Command="{Binding GameOverCommand}" VerticalAlignment="Bottom">
             skicka
         </Button>
         <Button Width="168" Grid.Column="1" Grid.Row="3" Height="30" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.Exit}">
@@ -48,7 +48,7 @@
         </Button>
 
 
-        <ItemsControl Grid.Column="2" Grid.Row="2" ItemsSource="{Binding }">
+        <ItemsControl Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding HighScores}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" Rows="10" Height="300" Width="auto" Margin="0,-15,0,-230"/>
