@@ -24,6 +24,7 @@ namespace UnusArmatusLattro.ViewModels
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
         public ICommand BetCommand { get; set; }
+        public ICommand FinishGame { get; set; }
         public string Score { get; set; }
         public string User { get; set; }
         public Dictionary<Symbol, string> symbols { get; set; }
@@ -183,7 +184,7 @@ namespace UnusArmatusLattro.ViewModels
             return false;
         }
 
-        private void GameOver()
+        public void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
@@ -335,6 +336,7 @@ namespace UnusArmatusLattro.ViewModels
         private void NewRound()
         {
                 CurrentSlot = 0;
+            
             if (Wallet <= 0)
             {
                 GameOver();

@@ -26,8 +26,8 @@ namespace UnusArmatusLattro.Views
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
-            if (gameViewModel.ScoreToAdd != null)
-                gameViewModel.StartTimer();
+            //if (gameViewModel.ScoreToAdd != null);
+               //gameViewModel.StartTimer();
         }
 
         private void DoubleAnimation_Completed(object sender, EventArgs e)
