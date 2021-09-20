@@ -222,7 +222,7 @@ namespace UnusArmatusLattro.ViewModels
             GameOverState = "Hidden";
             IsGameOver = true;
 
-            IsHighScore(int.Parse(Score));
+            //IsHighScore(int.Parse(Score));
             Timer.Stop();
             GoToGameOver();
         }

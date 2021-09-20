@@ -25,6 +25,10 @@ namespace UnusArmatusLattro.Commands
             this.gameOverViewModel = gameOverViewModel;
         }
 
+        public sendToDatabase(GameViewModel bettingGameViewModel)
+        {
+            this.gameViewModel = bettingGameViewModel;
+        }
         public bool CanExecute(object parameter) => true;
         
 
@@ -35,7 +39,7 @@ namespace UnusArmatusLattro.Commands
 
             if (gameViewModel != null)
             {
-                gameViewModel.SendUser();
+                //gameViewModel.SendUser();
                 gameViewModel.GetHighscores();
             }
             else
