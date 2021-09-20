@@ -43,6 +43,9 @@ namespace UnusArmatusLattro.Commands
                         case Data.GoToView.HighScore:
                             baseViewModel.Highscore();
                             break;
+                        case Data.GoToView.BettingGame:
+                            baseViewModel.BettingGame();
+                        break;
                     case Data.GoToView.SpinGame:
                         baseViewModel.SpinGame();
                         break;

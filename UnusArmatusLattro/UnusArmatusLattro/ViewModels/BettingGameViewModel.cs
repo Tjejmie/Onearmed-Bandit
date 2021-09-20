@@ -41,12 +41,11 @@ namespace UnusArmatusLattro.ViewModels
         public string ScoreToAdd { get; set; }
         public Difficulties Difficulty { get; set; }
         public int Cols { get; set; }
-        public BettingGameViewModel(MainViewModel parent, Difficulties diff)
+        public BettingGameViewModel(MainViewModel parent)
         {
             GenerateDictionary();
             BetCommand = new BetCommand(this);
             SlotMachine = new ObservableCollection<Slots>();
-            Difficulty = diff;
             FillSlots();
 
             this.parent = parent;
@@ -58,8 +57,8 @@ namespace UnusArmatusLattro.ViewModels
 
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
-            Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-
+            Timer.Interval = TimeSpan.FromMilliseconds((int)500);
+            
         }
 
         private void OnTimedEvent(Object source, EventArgs e)
