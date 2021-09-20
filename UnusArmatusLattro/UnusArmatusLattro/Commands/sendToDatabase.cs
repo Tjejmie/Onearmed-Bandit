@@ -37,16 +37,16 @@ namespace UnusArmatusLattro.Commands
             gameOverViewModel.SendUser();
             gameOverViewModel.GetHighscores();
 
-            if (gameViewModel != null)
-            {
-                //gameViewModel.SendUser();
-                gameViewModel.GetHighscores();
-            }
-            else
-            {
-                bettingGameViewModel.SendUser();
-                bettingGameViewModel.GetHighscores();
-            }
+            //if (gameViewModel != null)
+            //{
+            //    //gameViewModel.SendUser();
+            //    gameViewModel.GetHighscores();
+            //}
+            //else
+            //{
+            //    bettingGameViewModel.SendUser();
+            //    bettingGameViewModel.GetHighscores();
+            //}
             
         }
     }

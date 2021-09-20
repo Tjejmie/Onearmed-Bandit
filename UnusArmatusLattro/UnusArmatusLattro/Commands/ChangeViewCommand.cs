@@ -45,11 +45,11 @@ namespace UnusArmatusLattro.Commands
                             break;
                         case Data.GoToView.BettingGame:
                             baseViewModel.BettingGame(Difficulties.Betting);
-                        break;
-                    case Data.GoToView.SpinGame:
-                        baseViewModel.SpinGame();
-                        break;
-                    case Data.GoToView.Exit:
+                            break;
+                        case Data.GoToView.SpinGame:
+                            baseViewModel.SpinGame();
+                            break;
+                        case Data.GoToView.Exit:
                             Environment.Exit(0);
                             break;
 

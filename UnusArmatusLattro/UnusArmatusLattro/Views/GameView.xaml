@@ -51,7 +51,7 @@
                 <EventTrigger RoutedEvent="Binding.TargetUpdated">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="ScoreAddBox" Storyboard.TargetProperty="(TextBlock.Opacity)" From="1" To="0" Duration="0:0:1" Completed="DoubleAnimation_Completed2"></DoubleAnimation>
+                            <DoubleAnimation Storyboard.Target="{Binding ElementName=ScoreAddBox}" Storyboard.TargetProperty="(TextBlock.Opacity)" From="1" To="0" Duration="0:0:1" Completed="DoubleAnimation_Completed2"></DoubleAnimation>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
