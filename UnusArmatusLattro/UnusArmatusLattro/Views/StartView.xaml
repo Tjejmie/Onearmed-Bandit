@@ -7,65 +7,52 @@
              xmlns:viewmodels="clr-namespace:UnusArmatusLattro.ViewModels"
              xmlns:datan="clr-namespace:UnusArmatusLattro.Data"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="700" d:DesignWidth="1520"
              >
-    <Grid Background ="Turquoise">
+    
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/MainMenue.png" />
+        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="193" />
+            <ColumnDefinition Width="303" />
+            <ColumnDefinition Width="370" />
+            <ColumnDefinition Width="536" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="345" />
+            <RowDefinition Height="81" />
+            <RowDefinition Height="39" />
+            <RowDefinition Height="81" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="81" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="5" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="5" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="5" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="5" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            
         </Grid.RowDefinitions>
-        <Image Source="/Resources/Images/cherries.png" Width="25" Height="25"/>
-        <!--<ContentControl Content="{Binding SelectedView}"/>-->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center">
-            
-        </StackPanel>
 
-        <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" Height="100" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.SpinGame}"  >
-            Starta Spinspel
-        </Button>
+        <Button Grid.Column="1" Grid.Row="1" Opacity="0"   Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}" Cursor="Hand"/>
 
-        <Button Grid.Column="2" Grid.Row="4" VerticalAlignment="Center" Height="100" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.BettingGame}"  >
-           Starta Bettingspel
-        </Button>
+        <Button Grid.Column="1" Grid.Row="3" Opacity="0"  Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Cursor="Hand"/>
 
-        <Button Grid.Column="2" Grid.Row="6" VerticalAlignment="Center" Height="100" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}">
-            Spelregler
-        </Button>
-        <Button Grid.Column="2" Grid.Row="8" VerticalAlignment="Center" Height="100" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}">
-            HighScore
-        </Button>
+        <Button Grid.Column="1" Grid.Row="5" Opacity="0" Background="AliceBlue" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}" Cursor="Hand"/>
 
-        <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Height="100" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.SpinGame}">
-            Normal
-
-        </Button>
-        <Button Grid.Column="2" Grid.Row="10" VerticalAlignment="Center" Height="100" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}">
-            Avsluta
-        </Button>
+        <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="153" />
+                <RowDefinition Height="31" />
+                <RowDefinition Height="154" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Opacity="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.SpinGame}" Cursor="Hand" />
+            <Button Grid.Row="2" Opacity="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand" />
 
 
-        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="Unus Armatus Latro" FontSize="40" FontFamily ="Georgia bold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center" >
-            
-        </Label>
-       
+
+        </Grid>
         
          
     </Grid>
+   
 </UserControl>
