@@ -19,7 +19,7 @@
         <DataTemplate DataType="{x:Type viewmodels:RulesViewModel}">
             <views:Rules />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:HighscoreViewModel}">
+        <DataTemplate DataType="{x:Type viewmodels:TopListViewModel}">
             <views:HighscoreView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:MainMenuHighScoreViewModel}">
