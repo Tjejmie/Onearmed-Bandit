@@ -6,24 +6,25 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using UnusArmatusLattro.ViewModels;
 
+
 namespace UnusArmatusLattro.Commands
 {
-    public class BetCommand : ICommand
+    public class FinishGame : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private BettingGameViewModel gameViewModel;
+        public BettingGameViewModel bettingGameView;
 
-        public BetCommand(BettingGameViewModel gameViewModel)
+        public FinishGame(BettingGameViewModel bettingGameView)
         {
-            this.gameViewModel = gameViewModel;
+            this.bettingGameView = bettingGameView;
         }
 
         public bool CanExecute(object parameter) => true;
-
-
+        
         public void Execute(object parameter)
         {
-            gameViewModel.ConfirmBet("temp", "temp");
+            bettingGameView.GameOver();
+
         }
     }
 }

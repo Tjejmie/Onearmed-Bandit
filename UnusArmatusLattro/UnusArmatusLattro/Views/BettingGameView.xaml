@@ -4,63 +4,137 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1000">
+             mc:Ignorable="d"   
+             d:DesignHeight="700" d:DesignWidth="1500">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="113" />
+            <ColumnDefinition Width="757" />
+            <ColumnDefinition Width="316" />
+            <ColumnDefinition Width="5" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
+            <RowDefinition Height="156" />
+            <RowDefinition Height="240" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="1" >
+        <Image Source="/Resources/Images/SlotMachineView.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
+        <Image Source="/Resources/Images/HighScoreView.png" Grid.Column="4" Grid.Row="0" Grid.RowSpan="4"></Image>
+
+        <Image Source="/Resources/Images/cherries.png" Width="25" Height="25">
+
+        </Image>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+            <TextBlock Margin="10,0,10,0" Padding="10">
+                <Hyperlink Command="{Binding HomeCommand}" Foreground="#000000" TextDecorations="None">
+                    Hem
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+
+        <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="2">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="{Binding Cols}" Rows="1" Height="300" Width="auto"/>
+
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-
-        <TextBox Text="{Binding User}" Grid.Column="2" Grid.Row="0" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black">
+        <TextBlock Name="ScoreAddBox" Grid.Column="1" Grid.Row="2"  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="200" FontSize="130" TextAlignment="Center">
+            <TextBlock.Text>
+                <Binding Path="ScoreToAdd" NotifyOnTargetUpdated="True"></Binding>
+            </TextBlock.Text>
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ScoreAddBox" Storyboard.TargetProperty="(TextBlock.Opacity)" From="1" To="0" Duration="0:0:1" Completed="DoubleAnimation_Completed2"></DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <!--<TextBox Text="{Binding User}" Grid.Column="3" Grid.Row="1" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
 
         </TextBox>
-        <Button Width="200" Grid.Column="2" Grid.Row="0" Height="30" Command="{Binding sendToDatabase}" Visibility="{Binding NewHighScore}">
+        <Button Width="200" Grid.Column="3" Grid.Row="1" Height="30" Command="{Binding sendToDatabase}" Visibility="{Binding NewHighScore}">
             skicka
-        </Button>
+        </Button>-->
+        <!--<Label Content="Highscore" Grid.Column="4" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>-->
 
-        <ItemsControl Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HighScores}">
+        <ItemsControl Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Margin="0,20,0,20" ItemsSource="{Binding HighScores}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <Canvas Name="LeverCanvas" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
+            <!--<ContentControl Content="{Binding LeverObj}">-->
+            <!--</ContentControl>-->
+            <Ellipse Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="139" Canvas.Top="0" >
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Ellipse.MouseDown">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="Lever" Storyboard.TargetProperty="(Canvas.Top)" From="0" To="300" AccelerationRatio=".5" Duration="0:0:1" AutoReverse="true" Completed="DoubleAnimation_Completed">
 
-        <Button Grid.Column="1" Grid.Row="2" Content="Spin" Command="{Binding Spin}" Visibility="{Binding GameOverState}"/>
-        <StackPanel Grid.Row="0" Grid.Column="1">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
 
-                <TextBlock Text="{Binding Score}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
+            </Ellipse>
+        </Canvas>
 
-                </TextBlock>
-                <TextBlock Text="{Binding RemainingSpins}" FontSize="20" FontFamily="calibri-bold" FontWeight="Black">
-
-                </TextBlock>
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="53"/>
+                <ColumnDefinition Width="229"/>
+                <ColumnDefinition Width="33"/>
+                <ColumnDefinition Width="352"/>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="229"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="66"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="66"/>
+                <RowDefinition Height="34"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="3" Grid.Row="1" Width="340" Grid.RowSpan="3" Height="142" Background="Transparent" Command="{Binding Spin}" Opacity="0" Cursor="Hand"/>
+            <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding Home}" Opacity="1" Cursor="Hand"/>
+            <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
+                <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Margin="10,0,10,0">PiggyBank:</Label>
-                <TextBlock Text="{Binding Wallet}" Width="150" Margin="10,0,30,0"></TextBlock>
-                <Label Margin="10,0,10,0">Current bet</Label>
-                <TextBox Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" Width="150" Margin="10,0,30,0"></TextBox>
-                <Button Width="50" Command="{Binding BetCommand}" Visibility="{Binding BetBtn}">betta</Button>
-
+            <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
+                <!--<TextBlock Text="Bet: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>-->
+                <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black">
+                </TextBox>
             </StackPanel>
-        </StackPanel>
+        </Grid>
+        <Grid Grid.Column="4" Grid.Row="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="34"/>
+                <RowDefinition Height="67"/>
+                <RowDefinition Height="14"/>
+                <RowDefinition Height="67"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="37"/>
+                <ColumnDefinition Width="229"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding FinishGame}" Opacity="1" Cursor="Hand"/>
 
+        </Grid>
     </Grid>
 
 </UserControl>

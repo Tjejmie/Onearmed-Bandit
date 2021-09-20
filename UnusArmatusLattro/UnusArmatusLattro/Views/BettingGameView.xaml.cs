@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Views
 {
@@ -21,6 +22,19 @@ namespace UnusArmatusLattro.Views
         public BettingGameView()
         {
             InitializeComponent();
+        }
+        private void DoubleAnimation_Completed2(object sender, EventArgs e)
+        {
+            BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
+            //if (gameViewModel.ScoreToAdd != null);
+               //gameViewModel.StartTimer();
+        }
+
+        private void DoubleAnimation_Completed(object sender, EventArgs e)
+        {
+            BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
+            if(gameViewModel.ConfirmBet(BettingBox.Text, Wallet.Text))
+            gameViewModel.StartTimer();
         }
     }
 }
