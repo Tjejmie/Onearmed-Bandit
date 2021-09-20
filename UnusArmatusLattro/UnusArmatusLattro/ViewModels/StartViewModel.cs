@@ -37,9 +37,9 @@ namespace UnusArmatusLattro.ViewModels
             parent.CurrentViewModel = new SpinGameViewModel(parent);
         }
 
-        public void BettingGame()
+        public void BettingGame(Difficulties diff)
         {
-            parent.CurrentViewModel = new BettingGameViewModel(parent);
+            parent.CurrentViewModel = new BettingGameViewModel(parent, diff);
         }
 
 

@@ -41,23 +41,23 @@ namespace UnusArmatusLattro.ViewModels
         public string ScoreToAdd { get; set; }
         public Difficulties Difficulty { get; set; }
         public int Cols { get; set; }
-        public BettingGameViewModel(MainViewModel parent)
+        public BettingGameViewModel(MainViewModel parent, Difficulties diff)
         {
             GenerateDictionary();
             BetCommand = new BetCommand(this);
             SlotMachine = new ObservableCollection<Slots>();
             FillSlots();
-
+            Difficulty = diff;
             this.parent = parent;
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
-
+            
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
-            Timer.Interval = TimeSpan.FromMilliseconds((int)500);
+            Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
             
         }
 
@@ -92,8 +92,8 @@ namespace UnusArmatusLattro.ViewModels
 
         private void FillSlots()
         {
-            FillSlotsByDifficulty();
-            for (int i = 0; i < Cols; i++)
+            
+            for (int i = 0; i < 4; i++)
             {
                 var enumValue = (Symbol)random.Next(1, 7);
                 int value = (int)enumValue;
@@ -103,24 +103,6 @@ namespace UnusArmatusLattro.ViewModels
                     ImageSource = symbols[enumValue]
                 };
                 SlotMachine.Add(temp);
-            }
-        }
-
-        public void FillSlotsByDifficulty()
-        {
-            switch (Difficulty)
-            {
-                case Difficulties.Easy:
-                    Cols = 3;
-                    break;
-                case Difficulties.Normal:
-                    Cols = 4;
-                    break;
-                case Difficulties.Hard:
-                    Cols = 5;
-                    break;
-                default:
-                    break;
             }
         }
 

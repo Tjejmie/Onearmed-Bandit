@@ -11,6 +11,7 @@ using UnusArmatusLattro.Views;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -32,7 +33,7 @@ namespace UnusArmatusLattro.ViewModels
         public string Score { get; set; }
 
         public LeverButton LeverObj { get; set; } = new LeverButton();
-        public int RemainingSpins { get; set; } = 10;
+        public int RemainingSpins { get; set; } = 1;
         public string GameOverState { get; set; } = "Visible";
         public string ShowScoreToAdd { get; set; } = "Hidden";
         private int CurrentSlot { get; set; } = 0;
