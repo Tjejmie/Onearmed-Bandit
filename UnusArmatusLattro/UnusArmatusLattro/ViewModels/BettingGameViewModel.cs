@@ -12,93 +12,73 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using System.Linq;
 
+
 namespace UnusArmatusLattro.ViewModels
 {
-
-    public class GameViewModel : BaseViewModel
+    public class BettingGameViewModel : BaseViewModel
     {
-        private readonly MainViewModel parent;
         public ObservableCollection<Slots> SlotMachine { get; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
-        public ICommand HomeCommand { get; set; }
-        
-        
+        public ICommand BetCommand { get; set; }
+        public string Score { get; set; }
+        public string User { get; set; }
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
-        public string Score { get; set; }
-
-        public LeverButton LeverObj { get; set; } = new LeverButton();
-        public int RemainingSpins { get; set; } = 10;
-        public string GameOverState { get; set; } = "Visible";
-        public string ShowScoreToAdd { get; set; } = "Hidden";
+        public bool BettingEnabled { get; set; } = true;
+        public int Wallet { get; set; } = 100;
+        public int CurrentBet { get; set; }
+        public string GameOverState { get; set; } = "Hidden";
+        public string BetBtn { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
-        public string User { get; set; }
-
-        public string ScoreToAdd { get; set; }
         public int Cols { get; set; }
-        public GameViewModel(MainViewModel parent, Difficulties diff)
-        {
-            this.parent = parent;
-            HomeCommand = new GameToHomeCommand(this);
+        public BettingGameViewModel(Difficulties diff)
 
+
+        {
             GenerateDictionary();
+            BetCommand = new BetCommand(this);
             SlotMachine = new ObservableCollection<Slots>();
             Difficulty = diff;
             FillSlots();
-            
+
             GetHighscores();
             Spin = new SpinCommand(this);
-
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
-            
-            
-            //var timer = new System.Timers.Timer(1000);
-            //timer.Elapsed += OnTimedEvent;
-            //timer.AutoReset = true;
-            //timer.Enabled = true;
 
-            Score = "0";
-            
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            //Timer.Start();
-        }
 
-        public void GoToMenu()
-        {
-            parent.CurrentViewModel = new StartViewModel(parent);
         }
-        
 
         private void OnTimedEvent(Object source, EventArgs e)
         {
 
             SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
-            
-            
-                int value = random.Next(1, 7);
-                int num = int.Parse(SlotMachine[CurrentSlot].number);
-                
-                while (num == value)
-                {
-                    value = random.Next(1, 7);
-                }
-                var enumValue = (Symbol)value;
-                SlotMachine[CurrentSlot].number = value.ToString();
-                SlotMachine[CurrentSlot].ImageSource = symbols[enumValue];
-            
+
+
+            int value = random.Next(1, 7);
+            int num = int.Parse(SlotMachine[CurrentSlot].number);
+
+            while (num == value)
+            {
+                value = random.Next(1, 7);
+            }
+            var enumValue = (Symbol)value;
+            SlotMachine[CurrentSlot].number = value.ToString();
+            SlotMachine[CurrentSlot].ImageSource = symbols[enumValue];
+
         }
-    private void GenerateDictionary()
+        private void GenerateDictionary()
         {
             symbols = new Dictionary<Symbol, string>();
             symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
@@ -116,7 +96,8 @@ namespace UnusArmatusLattro.ViewModels
             {
                 var enumValue = (Symbol)random.Next(1, 7);
                 int value = (int)enumValue;
-                Slots temp = new Slots() {
+                Slots temp = new Slots()
+                {
                     number = value.ToString(),
                     ImageSource = symbols[enumValue]
                 };
@@ -161,20 +142,17 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
-
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
-                    Timer.Stop();
-                    RemainingSpins -= 1;
-                    ScoreToAdd = $"+{CalculateScore()}";
-                    Score = $"{int.Parse(Score) + CalculateScore()}";
-                    CurrentSlot = 0;
+                    Wallet -= CurrentBet;
+                    Wallet = CalculateScore();
+                    NewRound();
 
-                    if (RemainingSpins == 0)
+                    if (Wallet == 0)
                         GameOver();
                     else
                     {
@@ -184,30 +162,16 @@ namespace UnusArmatusLattro.ViewModels
             }
         }
 
-        //private bool IsHighScore(int score)
-        //{
-        //    foreach (var highScore in HighScores)
-        //    {
-        //        if (score > highScore.Score)
-        //        {
-        //            NewHighScore = "Visible";
-        //            return true;
-        //        }
-        //    }
-        //    if (HighScores.Count < 10)
-        //    {
-        //        NewHighScore = "Visible";
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
-        public void GoToGameOver()
+        private bool IsHighScore(int score)
         {
-            parent.CurrentViewModel = new GameOverViewModel(parent, Score, Difficulty);
-        }
+            foreach (var highScore in HighScores)
+            {
+                if (score > highScore.Score)
+                {
+                    NewHighScore = "Visible";
+                    return true;
+                }
 
-/*
             }
             if (HighScores.Count < 10)
             {
@@ -215,23 +179,20 @@ namespace UnusArmatusLattro.ViewModels
                 return true;
             }
             return false;
-        }*/
+        }
 
         private void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
-
-            IsHighScore(int.Parse(Score));
+            IsHighScore(Wallet);
             Timer.Stop();
-            GoToGameOver();
         }
 
-        public int CalculateScore()
+        private int CalculateScore()
         {
-            List<string> bestScore = new List<string>();
-            int total = 0;
-
+            //List<string> bestScore = new List<string>();
+            int total = Wallet;
             Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
             scoreDictionary.Add("1", 0);
             scoreDictionary.Add("2", 0);
@@ -240,7 +201,7 @@ namespace UnusArmatusLattro.ViewModels
             scoreDictionary.Add("5", 0);
             scoreDictionary.Add("6", 0);
 
-            for (int i = 1; i < scoreDictionary.Count+1; i++)
+            for (int i = 1; i < scoreDictionary.Count + 1; i++)
             {
                 var currentCount = SlotMachine.Where(t => t.number == $"{i}");
                 scoreDictionary[$"{i}"] = currentCount.Count();
@@ -251,36 +212,35 @@ namespace UnusArmatusLattro.ViewModels
             int tempScore = 0;
             foreach (var item in scoreDictionary)
             {
-                if(item.Value == 2)
+                if (item.Value == 2)
                 {
                     if (hasPair)
                     {
-                        RemainingSpins++;
+                        tempScore += CurrentBet * 10;
                     }
                     else
                     {
                         hasPair = true;
                     }
-                    tempScore += int.Parse(item.Key) * 100;
+                    tempScore += int.Parse(item.Key) * CurrentBet;
                 }
                 else if (item.Value == Cols)
                 {
-                    return total += 1000000;
+                    return total = CurrentBet + 1000000;
                 }
                 else if (item.Value == 3)
                 {
                     hasThreeOfAKind = true;
-                    tempScore += int.Parse(item.Key) * 1000;
+                    tempScore += int.Parse(item.Key) * CurrentBet + 100;
                 }
                 else if (item.Value == 4)
                 {
-                    tempScore += int.Parse(item.Key) * 10000;
+                    tempScore += int.Parse(item.Key) * CurrentBet + 1000;
                 }
             }
 
-            if(hasPair && hasThreeOfAKind)
+            if (hasPair && hasThreeOfAKind)
             {
-                RemainingSpins++;
                 return total += tempScore * 2;
             }
 
@@ -323,7 +283,7 @@ namespace UnusArmatusLattro.ViewModels
             //        return total;
             //    }
             //}
-            
+
             //if (bestScore.Count == 2)
             //{
             //    total += int.Parse(bestScore[0]) * 100;
@@ -347,15 +307,43 @@ namespace UnusArmatusLattro.ViewModels
             //return total;
         }
 
-        
-
-        
-
-        public void StartTimer()
+        public void SendUser()
         {
-            Timer.Start();
+            User user = new User(User, int.Parse(Score));
+
+            Repo.sendUser(user, Difficulty);
+
         }
 
+        public void ConfirmBet()
+        {
+            if (CurrentBet != 0 && CurrentBet <= Wallet)
+            {
+                BettingEnabled = false;
+                GameOverState = "Visible";
+                BetBtn = "Hidden";
+                Timer.Start();
+
+            }
+
+        }
+        private void NewRound()
+        {
+            if (Wallet <= 0)
+            {
+                GameOver();
+            }
+            else
+            {
+                CurrentBet = 0;
+                CurrentSlot = 0;
+                BettingEnabled = true;
+                GameOverState = "Hidden";
+                BetBtn = "Visible";
+                Timer.Stop();
+            }
+
+        }
     }
 }
 

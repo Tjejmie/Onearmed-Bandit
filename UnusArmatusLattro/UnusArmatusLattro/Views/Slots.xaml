@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="350" d:DesignWidth="800">
     <Border BorderBrush="{Binding BorderColor, RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="2" Margin="5,0,5,0">
-        <Grid Background="#fff">
+        <Grid Background="#fff" Height="235">
             <Image Source="{Binding ImageSource, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="100" Height="100" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
             <!--<TextBlock Text="{Binding number, RelativeSource={RelativeSource AncestorType=UserControl}}" FontSize="200" HorizontalAlignment="Center"></TextBlock>-->
             

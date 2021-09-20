@@ -6,22 +6,26 @@
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              xmlns:controls="using:microsoft.toolkit.uwp.ui.controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1000">
+             d:DesignHeight="700" d:DesignWidth="1500">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="113" />
+            <ColumnDefinition Width="757" />
+            <ColumnDefinition Width="316" />
+            <ColumnDefinition Width="5" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
             <RowDefinition Height="100" />
+            <RowDefinition Height="156" />
+            <RowDefinition Height="240" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
+        <Image Source="/Resources/Images/SlotMachineLayout.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
+        <Image Source="/Resources/Images/Highscore.png" Grid.Column="4" Grid.Row="0" Grid.RowSpan="4"></Image>
         
         <Image Source="/Resources/Images/cherries.png" Width="25" Height="25">
-          
+
         </Image>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Margin="10,0,10,0" Padding="10">
@@ -30,46 +34,91 @@
                 </Hyperlink>
             </TextBlock>
         </StackPanel>
+        
         <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="2">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="4" Rows="1" Height="300" Width="auto">
-                        
-                    </UniformGrid>
+                    <UniformGrid Columns="{Binding Cols}" Rows="1" Height="300" Width="auto"/>
+
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <TextBlock Name="ScoreAddBox" Grid.Column="1" Grid.Row="2"  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="200" FontSize="130" TextAlignment="Center">
+            <TextBlock.Text>
+                <Binding Path="ScoreToAdd" NotifyOnTargetUpdated="True"></Binding>
+            </TextBlock.Text>
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="ScoreAddBox" Storyboard.TargetProperty="(TextBlock.Opacity)" From="1" To="0" Duration="0:0:1" Completed="DoubleAnimation_Completed2"></DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <!--<TextBox Text="{Binding User}" Grid.Column="3" Grid.Row="1" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
 
-        <TextBox Text="{Binding User}" Grid.Column="2" Grid.Row="1" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
+        </TextBox>
+        <Button Width="200" Grid.Column="3" Grid.Row="1" Height="30" Command="{Binding sendToDatabase}" Visibility="{Binding NewHighScore}">
+            skicka
+        </Button>-->
+        <!--<Label Content="Highscore" Grid.Column="4" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>-->
 
-            </TextBox>
-        <Button Width="200" Grid.Column="2" Grid.Row="1" Height="30" Command="{Binding sendToDatabase}" Visibility="{Binding NewHighScore}">
-                skicka
-            </Button>
-        <Label Content="Highscore" Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>
-
-        <ItemsControl Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HighScores}">
+        <ItemsControl Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Margin="0,20,0,20" ItemsSource="{Binding HighScores}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-       
-        <Button Grid.Column="1" Grid.Row="3" Content="Spin" Command="{Binding Spin}" Visibility="{Binding GameOverState}"/>
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
+        <Canvas Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
+            <!--<ContentControl Content="{Binding LeverObj}">-->
+            <!--</ContentControl>-->
+            <Ellipse Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="139" Canvas.Top="0" >
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Ellipse.MouseDown">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="Lever" Storyboard.TargetProperty="(Canvas.Top)" From="0" To="300" AccelerationRatio=".5" Duration="0:0:1" AutoReverse="true" Completed="DoubleAnimation_Completed">
+                                    
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
                 
-                <TextBlock Text="{Binding Score}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
-                </TextBlock>
+            </Ellipse>
+        </Canvas>
+        
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="53"/>
+                <ColumnDefinition Width="229"/>
+                <ColumnDefinition Width="33"/>
+                <ColumnDefinition Width="352"/>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="229"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="66"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="66"/>
+                <RowDefinition Height="34"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="3" Grid.Row="1" Width="340" Grid.RowSpan="3" Height="142" Background="Transparent" Command="{Binding Spin}" Opacity="0" Cursor="Hand"/>
+            <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
+                <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Text="{Binding Score}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Spins: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
                 <TextBlock Text="{Binding RemainingSpins}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
                 </TextBlock>
             </StackPanel>
-        </StackPanel>
+        </Grid>
     </Grid>
-    
+
 </UserControl>

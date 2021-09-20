@@ -12,6 +12,13 @@ namespace UnusArmatusLattro.Commands
     {
         public event EventHandler CanExecuteChanged;
         private GameOverViewModel gameOverViewModel;
+        private GameViewModel gameViewModel;
+        private BettingGameViewModel bettingGameViewModel;
+
+        public sendToDatabase(BettingGameViewModel bettingGameViewModel)
+        {
+            this.bettingGameViewModel = bettingGameViewModel;
+        }
 
         public sendToDatabase(GameOverViewModel gameOverViewModel)
         {
@@ -25,6 +32,18 @@ namespace UnusArmatusLattro.Commands
         {
             gameOverViewModel.SendUser();
             gameOverViewModel.GetHighscores();
+
+            if (gameViewModel != null)
+            {
+                gameViewModel.SendUser();
+                gameViewModel.GetHighscores();
+            }
+            else
+            {
+                bettingGameViewModel.SendUser();
+                bettingGameViewModel.GetHighscores();
+            }
+            
         }
     }
 }
