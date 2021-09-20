@@ -39,7 +39,15 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinGame()
         {
-            parent.CurrentViewModel = new SpinGameViewModel(parent);
+            if (Difficulty != Difficulties.Betting)
+            {
+                parent.CurrentViewModel = new SpinGameViewModel(parent);
+            }
+            else
+            {
+                parent.CurrentViewModel = new BettingGameViewModel(parent, Difficulty);
+            }
+            
         }
 
         public void GetHighscores()

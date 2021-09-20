@@ -9,17 +9,18 @@ namespace UnusArmatusLattro.ViewModels
 {
     public class SpinGameViewModel : BaseViewModel
     {
-        public ICommand HomeCommand { get; set; }
-        public ICommand SpinView { get; set; }
+        public ICommand Home { get; }
+        public ICommand SpinView { get; }
         private readonly MainViewModel parent;
 
         public SpinGameViewModel(MainViewModel parent)
         {
             this.parent = parent;
             SpinView = new StartNewGameCommand(this);
+            Home = new GoToHomeCommand(this);
         }
 
-        public void GoToMenu()
+        public void GoHome()
         {
             parent.CurrentViewModel = new StartViewModel(parent);
         }

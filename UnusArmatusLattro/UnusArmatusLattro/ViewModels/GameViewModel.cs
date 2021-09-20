@@ -11,6 +11,7 @@ using UnusArmatusLattro.Views;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -23,62 +24,45 @@ namespace UnusArmatusLattro.ViewModels
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
-        public ICommand HomeCommand { get; set; }
+        public ICommand Home { get; }
         
         
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
-        public string NewHighScore { get; set; } = "Hidden";
+       
         public string Score { get; set; }
 
         public LeverButton LeverObj { get; set; } = new LeverButton();
-        public int RemainingSpins { get; set; } = 10;
+        public int RemainingSpins { get; set; } = 1;
         public string GameOverState { get; set; } = "Visible";
         public string ShowScoreToAdd { get; set; } = "Hidden";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
-        public string User { get; set; }
+        
+        public bool StopBtnEnabled { get; set; } = false;
 
         public string ScoreToAdd { get; set; }
         public int Cols { get; set; }
         public GameViewModel(MainViewModel parent, Difficulties diff)
         {
             this.parent = parent;
-            HomeCommand = new GameToHomeCommand(this);
-
+            Home = new GoToHomeCommand(this);
             GenerateDictionary();
             SlotMachine = new ObservableCollection<Slots>();
             Difficulty = diff;
             FillSlots();
-            
             GetHighscores();
             Spin = new SpinCommand(this);
-
-            Score = "0"; //metod
-            User = ""; //metod
-            sendToDatabase = new sendToDatabase(this);
-            
-            
-            //var timer = new System.Timers.Timer(1000);
-            //timer.Elapsed += OnTimedEvent;
-            //timer.AutoReset = true;
-            //timer.Enabled = true;
-
             Score = "0";
-            
+            sendToDatabase = new sendToDatabase(this);
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            //Timer.Start();
+            
         }
 
-        public void GoToMenu()
-        {
-            parent.CurrentViewModel = new StartViewModel(parent);
-        }
-        
 
         private void OnTimedEvent(Object source, EventArgs e)
         {
@@ -183,46 +167,19 @@ namespace UnusArmatusLattro.ViewModels
                 }
             }
         }
-
-        //private bool IsHighScore(int score)
-        //{
-        //    foreach (var highScore in HighScores)
-        //    {
-        //        if (score > highScore.Score)
-        //        {
-        //            NewHighScore = "Visible";
-        //            return true;
-        //        }
-        //    }
-        //    if (HighScores.Count < 10)
-        //    {
-        //        NewHighScore = "Visible";
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
         public void GoToGameOver()
         {
             parent.CurrentViewModel = new GameOverViewModel(parent, Score, Difficulty);
         }
 
-/*
-            }
-            if (HighScores.Count < 10)
-            {
-                NewHighScore = "Visible";
-                return true;
-            }
-            return false;
-        }*/
+
+    
 
         private void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
 
-            //IsHighScore(int.Parse(Score));
             Timer.Stop();
             GoToGameOver();
         }
@@ -286,74 +243,16 @@ namespace UnusArmatusLattro.ViewModels
 
             return total += tempScore;
 
-            //foreach (var slot in SlotMachine)
-            //{
-            //    List<string> scoreList = new List<string>();
-            //    foreach (var slots in SlotMachine)
-            //    {
-            //        if (slot.number.Equals(slots.number))
-            //        {
-            //            scoreList.Add(slot.number);
-            //        }
-            //    }
-            //    if (scoreList.Count > bestScore.Count)
-            //    {
-            //        bestScore = scoreList;
-            //    }
-            //    else if (scoreList.Count == 2 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
-            //    {
-            //        total += int.Parse(scoreList[0]) * 100;
-            //        total += int.Parse(bestScore[0]) * 100;
-            //        RemainingSpins++;
-            //        return total;
-            //    }
-
-            //    //else if (scoreList.Count == 3 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
-            //    //{
-            //    //    total += int.Parse(scoreList[0]) * 100;
-            //    //    total += int.Parse(bestScore[0]) * 100;
-            //    //    RemainingSpins++;
-            //    //    return total;
-            //    //}
-            //    else if (scoreList.Count == 2 && bestScore.Count == 3 && !bestScore.Contains(scoreList[0]))
-            //    {
-            //        total += int.Parse(scoreList[0]) * 100;
-            //        total += int.Parse(bestScore[0]) * 100;
-            //        RemainingSpins++;
-            //        return total;
-            //    }
-            //}
-            
-            //if (bestScore.Count == 2)
-            //{
-            //    total += int.Parse(bestScore[0]) * 100;
-            //}
-
-            //if (bestScore.Count == Cols)
-            //{
-            //    return total += 1000000;
-            //}
-
-            //if (bestScore.Count == 3)
-            //{
-            //    total += int.Parse(bestScore[0]) * 1000;
-            //}
-
-            //if (bestScore.Count == 4)
-            //{
-            //    total += int.Parse(bestScore[0]) * 100000;
-            //}
-
-            //return total;
         }
-
-        
-
-        
 
         public void StartTimer()
         {
             Timer.Start();
+            StopBtnEnabled = true;
+        }
+        public void GoHome()
+        {
+            parent.CurrentViewModel = new StartViewModel(parent);
         }
 
     }

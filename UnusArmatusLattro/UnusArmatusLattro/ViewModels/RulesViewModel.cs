@@ -10,7 +10,7 @@ namespace UnusArmatusLattro.ViewModels
 {
     public class RulesViewModel : BaseViewModel
     {
-        public ICommand HomeCommand { get; set; }
+        public ICommand HomeCommand { get; }
         private readonly MainViewModel parent;
 
         public RulesViewModel(MainViewModel parent)
