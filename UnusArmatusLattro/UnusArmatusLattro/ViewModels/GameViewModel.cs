@@ -23,11 +23,12 @@ namespace UnusArmatusLattro.ViewModels
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
         public ICommand HomeCommand { get; set; }
-        public string Score { get; set; }
-        public string User { get; set; }
+        
+        
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
+        public string Score { get; set; }
 
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
@@ -35,7 +36,8 @@ namespace UnusArmatusLattro.ViewModels
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
-        
+        public string User { get; set; }
+
         public GameViewModel(MainViewModel parent, Difficulties diff)
 
         {
@@ -49,17 +51,9 @@ namespace UnusArmatusLattro.ViewModels
             Difficulty = diff;
             GetHighscores();
             Spin = new SpinCommand(this);
-            Score = "0"; //metod
-            User = ""; //metod
-            sendToDatabase = new sendToDatabase(this);
-            
 
+            Score = "0";
             
-            //var timer = new System.Timers.Timer(1000);
-            //timer.Elapsed += OnTimedEvent;
-            //timer.AutoReset = true;
-            //timer.Enabled = true;
-
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
@@ -137,14 +131,6 @@ namespace UnusArmatusLattro.ViewModels
         public void SpinSlots()
         {
 
-            //foreach (var slot in SlotMachine)
-            //{
-            //    var enumValue = (Symbol)random.Next(1, 7);
-            //    int value = (int)enumValue;
-            //    slot.number = value.ToString();
-            //    slot.ImageSource = symbols[enumValue];
-            //}
-            
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
@@ -166,26 +152,23 @@ namespace UnusArmatusLattro.ViewModels
 
         }
 
-        private bool IsHighScore(int score)
-        {
-            foreach (var highScore in HighScores)
-            {
-                if (score > highScore.Score)
-                {
-                    NewHighScore = "Visible";
-                    return true;
-                }
-
-            }
-            if (HighScores.Count < 10)
-            {
-                NewHighScore = "Visible";
-                return true;
-            }
-            return false;
-
-           
-        }
+        //private bool IsHighScore(int score)
+        //{
+        //    foreach (var highScore in HighScores)
+        //    {
+        //        if (score > highScore.Score)
+        //        {
+        //            NewHighScore = "Visible";
+        //            return true;
+        //        }
+        //    }
+        //    if (HighScores.Count < 10)
+        //    {
+        //        NewHighScore = "Visible";
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
 
         public void GoToGameOver()
@@ -199,17 +182,10 @@ namespace UnusArmatusLattro.ViewModels
         {
             GameOverState = "Hidden";
             IsGameOver = true;
-            IsHighScore(int.Parse(Score));
+            //IsHighScore(int.Parse(Score));
             Timer.Stop();
             GoToGameOver();
         }
-
-
-
-        //private string GenerateRandomNumber()
-        //{
-        //    return $"{random.Next(1, 4)}";
-        //}
 
         public int CalculateScore()
         {
@@ -263,13 +239,7 @@ namespace UnusArmatusLattro.ViewModels
             return total;
         }
 
-        public void SendUser()
-        {
-            User user = new User(User, int.Parse(Score));
-
-            Repo.sendUser(user, Difficulty);
         
-        }
 
         
 

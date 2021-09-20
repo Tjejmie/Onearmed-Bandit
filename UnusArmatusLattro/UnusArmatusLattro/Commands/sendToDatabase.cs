@@ -11,12 +11,11 @@ namespace UnusArmatusLattro.Commands
     public class sendToDatabase : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        private GameViewModel gameViewModel;
         private GameOverViewModel gameOverViewModel;
 
-        public sendToDatabase(GameViewModel gameViewModel)
+        public sendToDatabase(GameOverViewModel gameOverViewModel)
         {
-            this.gameViewModel = gameViewModel;
+            this.gameOverViewModel = gameOverViewModel;
         }
 
         public bool CanExecute(object parameter) => true;
@@ -24,9 +23,8 @@ namespace UnusArmatusLattro.Commands
 
         public void Execute(object parameter)
         {
-            
-            gameViewModel.SendUser();
-            gameViewModel.GetHighscores();
+            gameOverViewModel.SendUser();
+            gameOverViewModel.GetHighscores();
         }
     }
 }

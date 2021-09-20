@@ -30,14 +30,12 @@
 
         <TextBlock Text="{Binding Points}" FontSize="25" FontFamily="calibri-bold" FontWeight="Black" Grid.Column="1" Grid.Row="1" Margin="179,0,84,40" >
         </TextBlock>
-        
-        
 
-        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black">
 
-        </TextBox>
+
+        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,44" FontSize="20" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black"/>
         <TextBlock Grid.Column="1" Grid.Row="2" Text="Namn: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="20" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-        <Button Width="200" Grid.Column="1" Grid.Row="2" Height="30" Command="{Binding GameOverCommand}" VerticalAlignment="Bottom">
+        <Button Width="200" Grid.Column="1" Grid.Row="2" Height="30" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom">
             skicka
         </Button>
         <Button Width="168" Grid.Column="1" Grid.Row="3" Height="30" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.Exit}">
