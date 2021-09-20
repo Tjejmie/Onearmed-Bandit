@@ -23,8 +23,8 @@ namespace UnusArmatusLattro.ViewModels
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
-        public ICommand BetCommand { get; set; }
-        public ICommand FinishGame { get; set; }
+        public ICommand BetCommand { get; }
+        public ICommand FinishGame { get; }
         public string Score { get; set; }
         public string User { get; set; }
         public Dictionary<Symbol, string> symbols { get; set; }
@@ -40,7 +40,10 @@ namespace UnusArmatusLattro.ViewModels
         public bool IsGameOver { get; set; }
         public string ScoreToAdd { get; set; }
         public Difficulties Difficulty { get; set; }
-        public int Cols { get; set; }
+        public int Cols { get; set; } = 4;
+        public bool StopBtnEnabled { get; set; } = false;
+        public ICommand Home { get;}
+
         public BettingGameViewModel(MainViewModel parent, Difficulties diff)
         {
             GenerateDictionary();
@@ -51,14 +54,14 @@ namespace UnusArmatusLattro.ViewModels
             this.parent = parent;
             GetHighscores();
             Spin = new SpinCommand(this);
-            Score = "0"; //metod
-            User = ""; //metod
+            Score = "0";
             sendToDatabase = new sendToDatabase(this);
-            
+            FinishGame = new FinishGame(this);
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            
+            Home = new GoToHomeCommand(this);
+
         }
 
         private void OnTimedEvent(Object source, EventArgs e)
@@ -92,8 +95,8 @@ namespace UnusArmatusLattro.ViewModels
 
         private void FillSlots()
         {
-            
-            for (int i = 0; i < 4; i++)
+
+            for (int i = 0; i < Cols; i++)
             {
                 var enumValue = (Symbol)random.Next(1, 7);
                 int value = (int)enumValue;
@@ -165,12 +168,18 @@ namespace UnusArmatusLattro.ViewModels
             return false;
         }
 
+        public void GoToGameOver()
+        {
+            parent.CurrentViewModel = new GameOverViewModel(parent, $"{Wallet}", Difficulty);
+        }
+
         public void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
             IsHighScore(Wallet);
             Timer.Stop();
+            GoToGameOver();
         }
 
         private int CalculateScore()
@@ -230,66 +239,6 @@ namespace UnusArmatusLattro.ViewModels
             }
 
             return total += tempScore;
-
-            //foreach (var slot in SlotMachine)
-            //{
-            //    List<string> scoreList = new List<string>();
-            //    foreach (var slots in SlotMachine)
-            //    {
-            //        if (slot.number.Equals(slots.number))
-            //        {
-            //            scoreList.Add(slot.number);
-            //        }
-            //    }
-            //    if (scoreList.Count > bestScore.Count)
-            //    {
-            //        bestScore = scoreList;
-            //    }
-            //    else if (scoreList.Count == 2 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
-            //    {
-            //        total += int.Parse(scoreList[0]) * 100;
-            //        total += int.Parse(bestScore[0]) * 100;
-            //        RemainingSpins++;
-            //        return total;
-            //    }
-
-            //    //else if (scoreList.Count == 3 && bestScore.Count == 2 && !scoreList.Contains(bestScore[0]))
-            //    //{
-            //    //    total += int.Parse(scoreList[0]) * 100;
-            //    //    total += int.Parse(bestScore[0]) * 100;
-            //    //    RemainingSpins++;
-            //    //    return total;
-            //    //}
-            //    else if (scoreList.Count == 2 && bestScore.Count == 3 && !bestScore.Contains(scoreList[0]))
-            //    {
-            //        total += int.Parse(scoreList[0]) * 100;
-            //        total += int.Parse(bestScore[0]) * 100;
-            //        RemainingSpins++;
-            //        return total;
-            //    }
-            //}
-
-            //if (bestScore.Count == 2)
-            //{
-            //    total += int.Parse(bestScore[0]) * 100;
-            //}
-
-            //if (bestScore.Count == Cols)
-            //{
-            //    return total += 1000000;
-            //}
-
-            //if (bestScore.Count == 3)
-            //{
-            //    total += int.Parse(bestScore[0]) * 1000;
-            //}
-
-            //if (bestScore.Count == 4)
-            //{
-            //    total += int.Parse(bestScore[0]) * 100000;
-            //}
-
-            //return total;
         }
 
         public void SendUser()
@@ -308,6 +257,7 @@ namespace UnusArmatusLattro.ViewModels
                 BettingEnabled = false;
                 GameOverState = "Visible";
                 BetBtn = "Hidden";
+                StopBtnEnabled = true;
                 Timer.Start();
                 return true;
             }
@@ -316,8 +266,8 @@ namespace UnusArmatusLattro.ViewModels
         }
         private void NewRound()
         {
-                CurrentSlot = 0;
-            
+            CurrentSlot = 0;
+
             if (Wallet <= 0)
             {
                 GameOver();
@@ -328,6 +278,7 @@ namespace UnusArmatusLattro.ViewModels
                 BettingEnabled = true;
                 GameOverState = "Hidden";
                 BetBtn = "Visible";
+                StopBtnEnabled = false;
                 Timer.Stop();
             }
 
@@ -337,6 +288,12 @@ namespace UnusArmatusLattro.ViewModels
         {
             Timer.Start();
         }
+
+        public void GoHome()
+        {
+            parent.CurrentViewModel = new StartViewModel(parent);
+        }
+
     }
 }
 

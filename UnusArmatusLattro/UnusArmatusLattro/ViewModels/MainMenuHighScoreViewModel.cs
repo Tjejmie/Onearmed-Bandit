@@ -15,8 +15,9 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<HighscoreView> Easy { get; set; }
         public ObservableCollection<HighscoreView> Normal  { get; set; }
         public ObservableCollection<HighscoreView> Hard { get; set; }
+        public ObservableCollection<HighscoreView> Betting { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
-        public ICommand HomeCommand { get; set; }
+        public ICommand HomeCommand { get; }
         private readonly MainViewModel parent;
 
         public ObservableCollection<HighscoreView> GetHighscores(Data.Difficulties difficulty)
@@ -44,6 +45,7 @@ namespace UnusArmatusLattro.ViewModels
             Easy = GetHighscores(Data.Difficulties.Easy);
             Normal = GetHighscores(Data.Difficulties.Normal);
             Hard = GetHighscores(Data.Difficulties.Hard);
+            Betting = GetHighscores(Data.Difficulties.Betting);
             this.parent = parent;
             HomeCommand = new HighScoreCommand(this);
             

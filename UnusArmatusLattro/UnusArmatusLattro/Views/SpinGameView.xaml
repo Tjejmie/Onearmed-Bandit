@@ -25,18 +25,8 @@
         <!--<ContentControl Content="{Binding SelectedView}"/>-->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center">
             <TextBlock Margin="10,0,10,0" Padding="10" >
-                <Hyperlink Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}" Foreground="#000000" TextDecorations="None">
-                    Spelregler
-                </Hyperlink>
-            </TextBlock>
-            <TextBlock Margin="10,0,10,0" Padding="10">
-                <Hyperlink Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Foreground="#000000" TextDecorations="None">
-                    HighScore
-                </Hyperlink>
-            </TextBlock>
-            <TextBlock Margin="10,0,10,0" Padding="10" >
-                <Hyperlink Foreground="#000000" TextDecorations="None" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}">
-                    Avsluta
+                <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
+                    Hem
                 </Hyperlink>
             </TextBlock>
         </StackPanel>

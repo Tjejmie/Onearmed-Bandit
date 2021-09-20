@@ -26,13 +26,7 @@
         <Image Source="/Resources/Images/cherries.png" Width="25" Height="25">
 
         </Image>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
-            <TextBlock Margin="10,0,10,0" Padding="10">
-                <Hyperlink Command="{Binding HomeCommand}" Foreground="#000000" TextDecorations="None">
-                    Hem
-                </Hyperlink>
-            </TextBlock>
-        </StackPanel>
+        
 
         <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="2">
             <ItemsControl.ItemsPanel>
@@ -50,7 +44,7 @@
                 <EventTrigger RoutedEvent="Binding.TargetUpdated">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetName="ScoreAddBox" Storyboard.TargetProperty="(TextBlock.Opacity)" From="1" To="0" Duration="0:0:1" Completed="DoubleAnimation_Completed2"></DoubleAnimation>
+                            <DoubleAnimation Storyboard.Target="{Binding ElementName=ScoreAddBox}" Storyboard.TargetProperty="(TextBlock.Opacity)" From="1" To="0" Duration="0:0:1" Completed="DoubleAnimation_Completed2"></DoubleAnimation>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
@@ -74,7 +68,7 @@
         <Canvas Name="LeverCanvas" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
-            <Ellipse Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="139" Canvas.Top="0" >
+            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="139" Canvas.Top="0" Cursor="Hand" >
                 <Ellipse.Triggers>
                     <EventTrigger RoutedEvent="Ellipse.MouseDown">
                         <BeginStoryboard>
@@ -107,8 +101,8 @@
                 <RowDefinition Height="66"/>
                 <RowDefinition Height="34"/>
             </Grid.RowDefinitions>
-            <Button Grid.Column="3" Grid.Row="1" Width="340" Grid.RowSpan="3" Height="142" Background="Transparent" Command="{Binding Spin}" Opacity="0" Cursor="Hand"/>
-            <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding Home}" Opacity="1" Cursor="Hand"/>
+            <Button Grid.Column="3" Grid.Row="1" Width="340" Grid.RowSpan="3" Height="142" Background="Transparent" Command="{Binding Spin}" Opacity="0" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}"/>
+            <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding Home}" Opacity="0" Cursor="Hand"/>
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
                 <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
@@ -132,7 +126,7 @@
                 <ColumnDefinition Width="229"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding FinishGame}" Opacity="1" Cursor="Hand"/>
+            <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding FinishGame}" Opacity="0" Cursor="Hand"/>
 
         </Grid>
     </Grid>
