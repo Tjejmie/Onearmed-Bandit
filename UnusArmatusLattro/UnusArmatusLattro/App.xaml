@@ -25,6 +25,12 @@
         <DataTemplate DataType="{x:Type viewmodels:MainMenuHighScoreViewModel}">
             <views:MainMenuHighScoreView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:GameOverViewModel}">
+            <views:GameOverView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:SpinGameViewModel}">
+            <views:SpinGameView />
+        </DataTemplate>
         
     </Application.Resources>
 </Application>

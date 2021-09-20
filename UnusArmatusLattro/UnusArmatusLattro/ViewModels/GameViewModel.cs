@@ -24,11 +24,13 @@ namespace UnusArmatusLattro.ViewModels
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
         public ICommand HomeCommand { get; set; }
-        public string Score { get; set; }
-        public string User { get; set; }
+        
+        
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
+        public string Score { get; set; }
+
         public LeverButton LeverObj { get; set; } = new LeverButton();
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
@@ -37,6 +39,8 @@ namespace UnusArmatusLattro.ViewModels
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
+        public string User { get; set; }
+
         public string ScoreToAdd { get; set; }
         public int Cols { get; set; }
         public GameViewModel(MainViewModel parent, Difficulties diff)
@@ -51,6 +55,7 @@ namespace UnusArmatusLattro.ViewModels
             
             GetHighscores();
             Spin = new SpinCommand(this);
+
             Score = "0"; //metod
             User = ""; //metod
             sendToDatabase = new sendToDatabase(this);
@@ -61,6 +66,8 @@ namespace UnusArmatusLattro.ViewModels
             //timer.AutoReset = true;
             //timer.Enabled = true;
 
+            Score = "0";
+            
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
@@ -71,6 +78,7 @@ namespace UnusArmatusLattro.ViewModels
         {
             parent.CurrentViewModel = new StartViewModel(parent);
         }
+        
 
         private void OnTimedEvent(Object source, EventArgs e)
         {
@@ -153,6 +161,7 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
+
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
@@ -175,16 +184,30 @@ namespace UnusArmatusLattro.ViewModels
             }
         }
 
-        private bool IsHighScore(int score)
-        {
-            foreach (var highScore in HighScores)
-            {
-                if (score > highScore.Score)
-                {
-                    NewHighScore = "Visible";
-                    return true;
-                }
+        //private bool IsHighScore(int score)
+        //{
+        //    foreach (var highScore in HighScores)
+        //    {
+        //        if (score > highScore.Score)
+        //        {
+        //            NewHighScore = "Visible";
+        //            return true;
+        //        }
+        //    }
+        //    if (HighScores.Count < 10)
+        //    {
+        //        NewHighScore = "Visible";
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
+        public void GoToGameOver()
+        {
+            parent.CurrentViewModel = new GameOverViewModel(parent, Score, Difficulty);
+        }
+
+/*
             }
             if (HighScores.Count < 10)
             {
@@ -192,17 +215,19 @@ namespace UnusArmatusLattro.ViewModels
                 return true;
             }
             return false;
-        }
+        }*/
 
         private void GameOver()
         {
             GameOverState = "Hidden";
             IsGameOver = true;
+
             IsHighScore(int.Parse(Score));
             Timer.Stop();
+            GoToGameOver();
         }
 
-        private int CalculateScore()
+        public int CalculateScore()
         {
             List<string> bestScore = new List<string>();
             int total = 0;
@@ -322,13 +347,9 @@ namespace UnusArmatusLattro.ViewModels
             //return total;
         }
 
-        public void SendUser()
-        {
-            User user = new User(User, int.Parse(Score));
-
-            Repo.sendUser(user, Difficulty);
         
-        }
+
+        
 
         public void StartTimer()
         {
