@@ -9,24 +9,26 @@
              d:DesignHeight="700" d:DesignWidth="1500">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="113" />
-            <ColumnDefinition Width="757" />
-            <ColumnDefinition Width="316" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="40*" />
+            <ColumnDefinition Width="580*" />
+            <ColumnDefinition Width="167*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="203*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="156" />
-            <RowDefinition Height="240" />
-            <RowDefinition Height="*" />
+            
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="36*" />
+            <RowDefinition Height="29*" />
         </Grid.RowDefinitions>
-        <Image Source="/Resources/Images/GameWall.png" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
-       
         
-        
-        
-        <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="2">
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/GameWall.png"/>
+        </Grid.Background>
+
+
+        <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="{Binding Cols}" Rows="1" Height="300" Width="auto"/>
@@ -63,15 +65,15 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <Canvas Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
+        <Canvas Margin="0,0,0,110" Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
-            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="139" Canvas.Top="0" Cursor="Hand">
+            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand">
                 <Ellipse.Triggers>
                     <EventTrigger RoutedEvent="Ellipse.MouseDown">
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetName="Lever" Storyboard.TargetProperty="(Canvas.Top)" From="0" To="300" AccelerationRatio=".5" Duration="0:0:1" AutoReverse="true" Completed="DoubleAnimation_Completed">
+                                <DoubleAnimation Storyboard.TargetName="Lever" Storyboard.TargetProperty="(Canvas.Top)" From="0" To="{Binding ElementName=LeverCanvas, Path=ActualHeight}" AccelerationRatio=".5" Duration="0:0:1" AutoReverse="true" Completed="DoubleAnimation_Completed">
                                     
                                 </DoubleAnimation>
                             </Storyboard>

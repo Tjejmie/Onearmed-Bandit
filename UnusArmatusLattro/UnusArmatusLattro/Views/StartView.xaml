@@ -12,7 +12,7 @@
     
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" />
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
