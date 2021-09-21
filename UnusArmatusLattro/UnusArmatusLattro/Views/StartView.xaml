@@ -12,7 +12,7 @@
     
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Resources/Images/MainMenue.png" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -45,15 +45,9 @@
 
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#F4EBB0" />
-                                    
-                                   
+                                    <Setter Property="Background" Value="#FDF1B0" />
                                 </Trigger>
-
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Background" Value="OrangeRed" />
-                                    <Setter Property="Foreground" Value="White" />
-                                </Trigger>
+                               
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -76,12 +70,7 @@
             Avsluta
             </Button>
         </Grid>
-        
-
-        
-
-        
-
+       
         <Grid Grid.Row="1" Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -105,15 +94,9 @@
 
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#E59400" />
-                                        <Setter Property="Foreground" Value="White" />
-
+                                        <Setter Property="Background" Value="#EDD2EF" />
                                     </Trigger>
-
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Setter Property="Background" Value="OrangeRed" />
-                                        <Setter Property="Foreground" Value="White" />
-                                    </Trigger>
+ 
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>

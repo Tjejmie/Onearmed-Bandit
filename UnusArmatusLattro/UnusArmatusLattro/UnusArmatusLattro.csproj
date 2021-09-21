@@ -12,6 +12,7 @@
 
     <None Remove="Resources\Images\apple.png" />
     <None Remove="Resources\Images\banana.png" />
+    <None Remove="Resources\Images\baseline_arrow_back_black_24dp.png" />
     <None Remove="Resources\Images\cherries.png" />
     <None Remove="Resources\Images\GameWall.png" />
     <None Remove="Resources\Images\grapes.png" />
@@ -34,6 +35,7 @@
     </Resource>
     <Resource Include="Resources\Images\apple.png" />
     <Resource Include="Resources\Images\banana.png" />
+    <Resource Include="Resources\Images\baseline_arrow_back_black_24dp.png" />
     <Resource Include="Resources\Images\cherries.png" />
     <Resource Include="Resources\Images\GameWall.png" />
     <Resource Include="Resources\Images\grapes.png" />

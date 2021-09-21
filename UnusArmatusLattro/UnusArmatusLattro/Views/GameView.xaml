@@ -21,12 +21,9 @@
             <RowDefinition Height="240" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image Source="/Resources/Images/SlotMachineLayout.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
-        <Image Source="/Resources/Images/Highscore.png" Grid.Column="4" Grid.Row="0" Grid.RowSpan="4"></Image>
+        <Image Source="/Resources/Images/GameWall.png" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
+       
         
-        <Image Source="/Resources/Images/cherries.png" Width="25" Height="25">
-
-        </Image>
         
         
         <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="2">
