@@ -12,7 +12,7 @@
     
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Resources/Images/MainMenue.png" />
+            <ImageBrush ImageSource="/Resources/Images/MainMenue.png" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="193" />
@@ -31,12 +31,48 @@
             <RowDefinition Height="*" />
             
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#F8E779" />
+                <Setter Property="Foreground" Value="#8E7E11" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
 
-        <Button Grid.Column="1" Grid.Row="1" Opacity="0"   Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}" Cursor="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
 
-        <Button Grid.Column="1" Grid.Row="3" Opacity="0"  Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Cursor="Hand"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#F4EBB0" />
+                                    
+                                   
+                                </Trigger>
 
-        <Button Grid.Column="1" Grid.Row="5" Opacity="0" Background="AliceBlue" FontFamily="Georgia bold" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}" Cursor="Hand"/>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="OrangeRed" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+        <Button  Grid.Column="1" Grid.Row="1" FontSize="32" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}" Cursor="Hand">
+            Spelregler
+        </Button>
+
+        <Button Grid.Column="1" Grid.Row="3" FontSize="32" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Cursor="Hand">
+            Highscore
+        </Button>
+
+        <Button Grid.Column="1" Grid.Row="5" FontSize="32" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}" Cursor="Hand">
+            Avsluta
+        </Button>
 
         <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="5">
             <Grid.RowDefinitions>
@@ -45,8 +81,43 @@
                 <RowDefinition Height="154" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Button Opacity="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.SpinGame}" Cursor="Hand" />
-            <Button Grid.Row="2" Opacity="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand" />
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="#E0B3E4" />
+                    <Setter Property="Foreground" Value="#5D4160" />
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E59400" />
+                                        <Setter Property="Foreground" Value="White" />
+
+                                    </Trigger>
+
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Background" Value="OrangeRed" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+            <Button Command="{Binding ChangeView}" FontSize="52" CommandParameter="{x:Static datan:GoToView.SpinGame}" Cursor="Hand">
+                Normal
+            </Button>
+            <Button Grid.Row="2" Command="{Binding ChangeView}" FontSize="52" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand">
+                Betting
+            </Button>
 
 
 

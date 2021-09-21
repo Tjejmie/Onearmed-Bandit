@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnusArmatusLattro"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
+        
        
         Title="Unus armatus latro" Height="750" Width="1520">
     <Window.InputBindings>
@@ -18,5 +18,8 @@
         <!--<Image Source="/Resources/Images/slotmachine.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>-->
 
         <!--<Image Source="/Resources/Images/lemon.png"></Image>-->
+        
+        
+        
     </Grid>
 </Window>
