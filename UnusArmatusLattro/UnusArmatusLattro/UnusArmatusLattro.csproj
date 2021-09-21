@@ -13,6 +13,7 @@
     <None Remove="Resources\Images\apple.png" />
     <None Remove="Resources\Images\banana.png" />
     <None Remove="Resources\Images\cherries.png" />
+    <None Remove="Resources\Images\GameWall.png" />
     <None Remove="Resources\Images\grapes.png" />
     <None Remove="Resources\Images\Highscore.png" />
     <None Remove="Resources\Images\HighScoreView.png" />
@@ -24,6 +25,7 @@
     <None Remove="Resources\Images\SlotMachineLayout.png" />
     <None Remove="Resources\Images\SlotMachineView.png" />
     <None Remove="Resources\Images\strawberry.png" />
+    <None Remove="Resources\Images\WallpaperStart.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +35,7 @@
     <Resource Include="Resources\Images\apple.png" />
     <Resource Include="Resources\Images\banana.png" />
     <Resource Include="Resources\Images\cherries.png" />
+    <Resource Include="Resources\Images\GameWall.png" />
     <Resource Include="Resources\Images\grapes.png" />
     <Resource Include="Resources\Images\Highscore.png" />
     <Resource Include="Resources\Images\HighScoreView.png" />
@@ -44,6 +47,7 @@
     <Resource Include="Resources\Images\SlotMachineLayout.png" />
     <Resource Include="Resources\Images\SlotMachineView.png" />
     <Resource Include="Resources\Images\strawberry.png" />
+    <Resource Include="Resources\Images\WallpaperStart.png" />
   </ItemGroup>
 
   <ItemGroup>
