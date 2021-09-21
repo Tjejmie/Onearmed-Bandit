@@ -15,29 +15,27 @@
             <ImageBrush ImageSource="/Resources/Images/MainMenue.png" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="193" />
-            <ColumnDefinition Width="303" />
-            <ColumnDefinition Width="370" />
-            <ColumnDefinition Width="536" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="345" />
-            <RowDefinition Height="81" />
-            <RowDefinition Height="39" />
-            <RowDefinition Height="81" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="81" />
+            <RowDefinition Height="1.2*" />
             <RowDefinition Height="*" />
-            
+            <RowDefinition Height=".2*" />
+
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="#F8E779" />
-                <Setter Property="Foreground" Value="#8E7E11" />
-                <Setter Property="FontSize" Value="15" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True" />
-
+                <Setter Property="Margin" Value="0,10,0,0"/>
+                <Setter Property="MinHeight" Value="40"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -62,32 +60,42 @@
                 </Setter>
             </Style>
         </Grid.Resources>
-        <Button  Grid.Column="1" Grid.Row="1" FontSize="32" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}" Cursor="Hand">
-            Spelregler
-        </Button>
-
-        <Button Grid.Column="1" Grid.Row="3" FontSize="32" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Cursor="Hand">
-            Highscore
-        </Button>
-
-        <Button Grid.Column="1" Grid.Row="5" FontSize="32" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}" Cursor="Hand">
-            Avsluta
-        </Button>
-
-        <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="5">
+        <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="153" />
-                <RowDefinition Height="31" />
-                <RowDefinition Height="154" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}" Cursor="Hand">
+            Spelregler
+            </Button>
+            <Button Grid.Row="1" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Cursor="Hand">
+            Highscore
+            </Button>
+            <Button Grid.Row="2" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}" Cursor="Hand">
+            Avsluta
+            </Button>
+        </Grid>
+        
+
+        
+
+        
+
+        <Grid Grid.Row="1" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.Resources>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Background" Value="#E0B3E4" />
-                    <Setter Property="Foreground" Value="#5D4160" />
+                    <Setter Property="Foreground" Value="Black" />
                     <Setter Property="FontSize" Value="15" />
+                    <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                     <Setter Property="SnapsToDevicePixels" Value="True" />
-
+                    <Setter Property="Margin" Value="0,10,0,0"/>
+                    <Setter Property="MinHeight" Value="40"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Button}">
@@ -113,9 +121,9 @@
                 </Style>
             </Grid.Resources>
             <Button Command="{Binding ChangeView}" FontSize="52" CommandParameter="{x:Static datan:GoToView.SpinGame}" Cursor="Hand">
-                Normal
+                Spins
             </Button>
-            <Button Grid.Row="2" Command="{Binding ChangeView}" FontSize="52" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand">
+            <Button Grid.Row="1" Command="{Binding ChangeView}" FontSize="52" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand">
                 Betting
             </Button>
 

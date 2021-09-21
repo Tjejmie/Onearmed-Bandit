@@ -8,6 +8,8 @@
 
   <ItemGroup>
 
+    <None Remove="Resources\Fonts\PressStart2P-Regular.ttf" />
+
     <None Remove="Resources\Images\apple.png" />
     <None Remove="Resources\Images\banana.png" />
     <None Remove="Resources\Images\cherries.png" />
@@ -25,6 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Fonts\PressStart2P-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Images\apple.png" />
     <Resource Include="Resources\Images\banana.png" />
     <Resource Include="Resources\Images\cherries.png" />
