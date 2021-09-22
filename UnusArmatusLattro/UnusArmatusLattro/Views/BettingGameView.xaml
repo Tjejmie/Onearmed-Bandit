@@ -104,10 +104,11 @@
             <Button Grid.Column="3" Grid.Row="1" Width="340" Grid.RowSpan="3" Height="142" Background="Transparent" Command="{Binding Spin}" Opacity="0" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}"/>
             <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding Home}" Opacity="0" Cursor="Hand"/>
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Text="Dollar: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
                 <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
             <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
+                
                 <!--<TextBlock Text="Bet: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>-->
                 <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black">
                 </TextBox>

@@ -67,7 +67,7 @@ namespace UnusArmatusLattro.ViewModels
         private void OnTimedEvent(Object source, EventArgs e)
         {
 
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Red;
             
             
                 int value = random.Next(1, 7);
@@ -162,7 +162,7 @@ namespace UnusArmatusLattro.ViewModels
                         GameOver();
                     else
                     {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Red;
                     }
                 }
             }
