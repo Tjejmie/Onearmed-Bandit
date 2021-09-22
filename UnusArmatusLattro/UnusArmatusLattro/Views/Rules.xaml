@@ -22,7 +22,7 @@
             <!--<ContentControl Content="{Binding SelectedView}"/>-->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
             <TextBlock Margin="10,0,10,0" Padding="10">
-                <Hyperlink Command="{Binding HomeCommand}" Foreground="#000000" TextDecorations="None">
+                <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
                     Hem
                 </Hyperlink>
             </TextBlock>

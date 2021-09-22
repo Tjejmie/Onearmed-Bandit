@@ -12,6 +12,7 @@ namespace UnusArmatusLattro.Commands
         private BettingGameViewModel bettingGameViewModel;
         private GameViewModel gameViewModel;
         private SpinGameViewModel spinGameViewModel;
+        private RulesViewModel rulesViewModel;
 
         public GoToHomeCommand(SpinGameViewModel spinGameViewModel)
         {
@@ -27,7 +28,10 @@ namespace UnusArmatusLattro.Commands
         {
             this.gameViewModel = gameViewModel;
         }
-
+        public GoToHomeCommand(RulesViewModel rulesViewModel)
+        {
+            this.rulesViewModel = rulesViewModel;
+        }
         public bool CanExecute(object parameter) => true;
        
 
@@ -44,6 +48,10 @@ namespace UnusArmatusLattro.Commands
             else if (spinGameViewModel != null)
             {
                 spinGameViewModel.GoHome();
+            }
+            else if (rulesViewModel != null)
+            {
+                rulesViewModel.GoHome();
             }
 
         }
