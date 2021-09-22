@@ -13,6 +13,7 @@ namespace UnusArmatusLattro.Commands
         private GameViewModel gameViewModel;
         private SpinGameViewModel spinGameViewModel;
         private RulesViewModel rulesViewModel;
+        private MainMenuHighScoreViewModel mainMenuHighScoreViewModel;
 
         public GoToHomeCommand(SpinGameViewModel spinGameViewModel)
         {
@@ -31,6 +32,10 @@ namespace UnusArmatusLattro.Commands
         public GoToHomeCommand(RulesViewModel rulesViewModel)
         {
             this.rulesViewModel = rulesViewModel;
+        }
+        public GoToHomeCommand(MainMenuHighScoreViewModel mainMenuHighScoreViewModel)
+        {
+            this.mainMenuHighScoreViewModel = mainMenuHighScoreViewModel;
         }
         public bool CanExecute(object parameter) => true;
        
@@ -52,6 +57,11 @@ namespace UnusArmatusLattro.Commands
             else if (rulesViewModel != null)
             {
                 rulesViewModel.GoHome();
+            }
+            else if (mainMenuHighScoreViewModel != null)
+            {
+                mainMenuHighScoreViewModel.GoHome();
+
             }
 
         }

@@ -44,7 +44,7 @@
         <!--<ContentControl Content="{Binding SelectedView}"/>-->
         <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center">
             <TextBlock Margin="10,0,10,0" Padding="10" > 
-        <Hyperlink Command="{Binding HomeCommand}" Foreground="#000000" TextDecorations="None">
+        <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
                    <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
                 </Hyperlink>
             </TextBlock>
