@@ -96,16 +96,17 @@
         </Button>-->
         <!--<Label Content="Highscore" Grid.Column="4" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>-->
 
-        <Grid Grid.Column="4" Grid.RowSpan="3">
+        <Grid Grid.Column="4" Grid.RowSpan="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="17*"/>
+                <RowDefinition Height="28*"/>
+                
                 <RowDefinition Height="83*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
                 <ColumnDefinition Width="95*"/>
             </Grid.ColumnDefinitions>
-            <ItemsControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding HighScores}">
+            <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding HighScores}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="1" Rows="10" Height="auto" Width="auto"/>
@@ -115,6 +116,23 @@
         </Grid>
 
 
+        <Grid Grid.Column="4" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="16*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="13*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="10*"/>
+            </Grid.ColumnDefinitions>
+            <Button FontSize="25" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Command="{Binding FinishGame}" Cursor="Hand" Content="Ca$h out"/>
+        </Grid>
+        
+        
         <Canvas Margin="0,0,0,110" Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
