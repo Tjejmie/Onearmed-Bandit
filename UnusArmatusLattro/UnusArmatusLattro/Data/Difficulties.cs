@@ -8,6 +8,6 @@ namespace UnusArmatusLattro.Data
 {
     public enum Difficulties
     {
-        Easy = 1000, Normal = 500, Hard = 750, Betting = 510
+        Easy = 700, Normal = 450, Hard = 150, Betting = 300
     }
 }
