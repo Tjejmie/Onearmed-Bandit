@@ -31,6 +31,7 @@ namespace UnusArmatusLattro.ViewModels
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
         public bool BettingEnabled { get; set; } = true;
+        public string BetLabel { get; set; } = "Lägg ett bet";
         public int Wallet { get; set; } = 100;
         public string CurrentBet { get; set; } = "0";
         public string GameOverState { get; set; } = "Hidden";
@@ -256,6 +257,7 @@ namespace UnusArmatusLattro.ViewModels
             if (tempBet != 0 && tempBet <= int.Parse(wallet))
             {
                 BettingEnabled = false;
+                BetLabel = "Lagt bet";
                 GameOverState = "Visible";
                 BetBtn = "Hidden";
                 StopBtnEnabled = true;
@@ -277,6 +279,7 @@ namespace UnusArmatusLattro.ViewModels
             {
                 CurrentBet = "0";
                 BettingEnabled = true;
+                BetLabel = "Lägg ett bet";
                 GameOverState = "Hidden";
                 BetBtn = "Visible";
                 StopBtnEnabled = false;
