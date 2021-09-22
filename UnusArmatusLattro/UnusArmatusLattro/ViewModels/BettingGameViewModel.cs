@@ -61,13 +61,14 @@ namespace UnusArmatusLattro.ViewModels
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
             Home = new GoToHomeCommand(this);
+           
 
         }
 
         private void OnTimedEvent(Object source, EventArgs e)
         {
 
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Red;
 
 
             int value = random.Next(1, 7);
@@ -143,7 +144,7 @@ namespace UnusArmatusLattro.ViewModels
                         GameOver();
                     else
                     {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Red;
                     }
                 }
             }

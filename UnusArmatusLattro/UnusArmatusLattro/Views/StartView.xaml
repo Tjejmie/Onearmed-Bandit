@@ -15,11 +15,11 @@
             <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" />
         </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="24*" />
+            <ColumnDefinition Width="6*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1.2*" />
@@ -103,11 +103,11 @@
                     </Setter>
                 </Style>
             </Grid.Resources>
-            <Button Command="{Binding ChangeView}" FontSize="52" CommandParameter="{x:Static datan:GoToView.SpinGame}" Cursor="Hand">
-                Spins
+            <Button Command="{Binding ChangeView}" FontSize="38" CommandParameter="{x:Static datan:GoToView.SpinGame}" Cursor="Hand">
+                Spela Spins
             </Button>
-            <Button Grid.Row="1" Command="{Binding ChangeView}" FontSize="52" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand">
-                Betting
+            <Button Grid.Row="1" Command="{Binding ChangeView}" FontSize="38" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand">
+                Spela Betting
             </Button>
 
 

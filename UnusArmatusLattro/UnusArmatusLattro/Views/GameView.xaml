@@ -154,12 +154,12 @@
             
             <Button Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
-                <TextBlock Text="{Binding Score}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Text="Score: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Text="{Binding Score}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
             <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Spins: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-                <TextBlock Text="{Binding RemainingSpins}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
+                <TextBlock Text="Spins: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
+                <TextBlock Text="{Binding RemainingSpins}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black">
                 </TextBlock>
             </StackPanel>
             <Button Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem"/>
