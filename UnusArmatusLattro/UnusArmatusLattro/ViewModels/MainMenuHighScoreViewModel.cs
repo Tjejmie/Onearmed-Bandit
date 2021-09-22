@@ -19,6 +19,7 @@ namespace UnusArmatusLattro.ViewModels
         public UserRepository Repo { get; set; } = new UserRepository();
         public ICommand HomeCommand { get; }
         private readonly MainViewModel parent;
+        public ICommand Home { get; }
 
         public ObservableCollection<HighscoreView> GetHighscores(Data.Difficulties difficulty)
         {
