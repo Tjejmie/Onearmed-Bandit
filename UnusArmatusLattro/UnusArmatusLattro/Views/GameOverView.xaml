@@ -42,35 +42,41 @@
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500" />
-            <ColumnDefinition Width="500" />
-            <ColumnDefinition Width="50" />
-            <ColumnDefinition Width="350" />
-            <ColumnDefinition Width="70" />
+            <ColumnDefinition Width="40*" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="30*" />
+            <ColumnDefinition Width="5*" />
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="300" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="150" />
-            <RowDefinition Height="100" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="45*" />
+            <RowDefinition Height="15*" />
+            <RowDefinition Height="25*" />
+            <RowDefinition Height="16*" />
+            <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
-        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.Exit}">
+        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" CommandParameter="{x:Static datan:GoToView.Exit}">
             Avsluta
         </Button>
-        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.SpinGame}">
+        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" CommandParameter="{x:Static datan:GoToView.SpinGame}">
             Spela igen
         </Button>
 
 
-        <Label Grid.Column="1" Grid.Row="1" Content="Din poäng är: " VerticalAlignment="Center"  HorizontalAlignment="Left" FontSize="20"  FontWeight="Black" Height="80"></Label>
 
-        <Label Content="{Binding Points}" FontSize="30"  FontWeight="Black" Grid.Column="1" Grid.Row="1" Margin="263,0,0,40" FontFamily="Calibri bold" >
-        </Label>
+        <StackPanel VerticalAlignment="Center"  Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
 
-        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,100" FontSize="30" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black"/>
+            <Label Content="Din poäng är: " FontSize="25"  FontWeight="Black"></Label>
+
+            <Label Content="{Binding Points}" FontSize="28"  FontWeight="Black">
+            </Label>
+        </StackPanel>
+
+        
+            <TextBox x:Name="txtUserName" Text="{Binding User}" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Height="40" FontSize="30" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" TabIndex="0" Loaded="Load" />
         <Label Grid.Column="1" Grid.Row="2" Content="Namn: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25"  FontWeight="Black"></Label>
+        
 
         <Grid Grid.Row="2" Grid.Column="1" >
             <Grid.Resources>
@@ -108,7 +114,7 @@
             </Button>
         </Grid>
 
-        <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding HighScores}">
+        <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="20" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding HighScores}">
 
         </ItemsControl>
         <Label Grid.Row="0" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="20">
