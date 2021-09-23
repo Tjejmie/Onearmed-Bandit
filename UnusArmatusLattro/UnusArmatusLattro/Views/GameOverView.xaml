@@ -69,8 +69,8 @@
         <Label Content="{Binding Points}" FontSize="30"  FontWeight="Black" Grid.Column="1" Grid.Row="1" Margin="263,0,0,40" FontFamily="Calibri bold" >
         </Label>
 
-        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,100" FontSize="30" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black"/>
-        <Label Grid.Column="1" Grid.Row="2" Content="Namn: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25"  FontWeight="Black"></Label>
+        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,100" FontSize="30" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding DisplayInputField}"/>
+        <Label Grid.Column="1" Grid.Row="2" Content="{Binding txtboxLabel}" VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25"  FontWeight="Black"></Label>
 
         <Grid Grid.Row="2" Grid.Column="1" >
             <Grid.Resources>
@@ -103,7 +103,7 @@
                     <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                 </Style>
             </Grid.Resources>
-            <Button  FontSize="25" Width="300" Grid.Column="1" Grid.Row="2" Height="80" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom">
+            <Button  FontSize="25" Width="300" Grid.Column="1" Grid.Row="2" Height="80" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom" Visibility="{Binding DisplayInputField}">
                 Skicka
             </Button>
         </Grid>

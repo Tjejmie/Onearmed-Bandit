@@ -17,6 +17,8 @@ namespace UnusArmatusLattro.ViewModels
 
         private readonly MainViewModel parent;
 
+        public string txtboxLabel { get; set; } = "";
+        public string DisplayInputField { get; set; } = "Hidden";
         public string Points { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         public Difficulties Difficulty { get; set; }
@@ -78,11 +80,21 @@ namespace UnusArmatusLattro.ViewModels
             {
                 if (score > highScore.Score)
                 {
+                    txtboxLabel = "Namn:";
+                    DisplayInputField = "Visible";
                     return true;
+                }
+                else
+                {
+                    txtboxLabel = "Oh noo...Du kom inte med på topplistan";
+                    DisplayInputField = "Hidden";
+                    
                 }
             }
             if (HighScores.Count < 10)
             {
+                txtboxLabel = "Namn:";
+                DisplayInputField = "Visible";
                 return true;
             }
             return false;
