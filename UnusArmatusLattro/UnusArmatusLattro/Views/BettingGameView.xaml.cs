@@ -23,6 +23,20 @@ namespace UnusArmatusLattro.Views
         {
             InitializeComponent();
         }
+        private void LeverCanvas_DragOver(object sender, DragEventArgs e)
+        {
+            object data = e.Data.GetData(DataFormats.Serializable);
+            //if (data is LeverButton btn)
+            //{
+
+            //    Point dropPosition = e.GetPosition(LeverCanvas);
+
+            //    Canvas.SetTop(btn, e.GetPosition(LeverCanvas).Y);
+
+
+            //}
+            Canvas.SetTop(Lever, e.GetPosition(LeverCanvas).Y);
+        }
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
@@ -35,6 +49,11 @@ namespace UnusArmatusLattro.Views
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
             if(gameViewModel.ConfirmBet(BettingBox.Text, Wallet.Text))
             gameViewModel.StartTimer();
+        }
+        private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
+            Canvas.SetTop(Lever, 0);
         }
     }
 }

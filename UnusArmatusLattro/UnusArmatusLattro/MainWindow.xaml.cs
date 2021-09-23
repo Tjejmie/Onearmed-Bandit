@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UnusArmatusLattro.ViewModels;
+using System.Media;
+using System.Windows.Media.Animation;
 
 namespace UnusArmatusLattro
 {
@@ -21,13 +23,24 @@ namespace UnusArmatusLattro
     /// </summary>
     public partial class MainWindow : Window
     {
+        MediaPlayer mediaPlayer;
         public MainWindow()
         {
             InitializeComponent();
             MainViewModel mainView = new MainViewModel();
             mainView.CurrentViewModel = new StartViewModel(mainView);
             DataContext = mainView;
-            
+            BackgroundMusic();
+        }
+
+        public void BackgroundMusic()
+        {
+            var timeline = new MediaTimeline(new Uri("Resources/MP3/Las Vegas Casino Music Video_ For Night Game of Poker, Blackjack, Roulette Wheel & Slots.mp3", UriKind.Relative));
+            timeline.RepeatBehavior = RepeatBehavior.Forever;
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.Volume = 0.3f;
+            mediaPlayer.Clock = timeline.CreateClock();
+            mediaPlayer.Clock.Controller.Begin();
         }
 
        

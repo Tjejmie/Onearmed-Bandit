@@ -5,36 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    
-    <Grid Background ="Turquoise">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="50" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+             d:DesignHeight="700" d:DesignWidth="1520">
+
+    <Grid >
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Margin" Value="0,10,0,0"/>
+                <Setter Property="MinHeight" Value="40"/>
+
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="40" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="50" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="*" />
-                <RowDefinition Height="40" />
-            </Grid.RowDefinitions>
-            <Image Source="/Resources/Images/cherries.png" Width="25" Height="25"/>
-            <!--<ContentControl Content="{Binding SelectedView}"/>-->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
-            <TextBlock Margin="10,0,10,0" Padding="10">
-                <Hyperlink Command="{Binding HomeCommand}" Foreground="#000000" TextDecorations="None">
-                    Hem
-                </Hyperlink>
-            </TextBlock>
-            
-                
-            
-            
-        </StackPanel>
-        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="20" TextDecorations="Underline">
-            Spelregler: <Bold>Normal</Bold>
-        </TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Width="400" Margin="0,100,0,0" TextWrapping="Wrap">
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="20"  Width="645" VerticalAlignment="Bottom">
+            Spelregler Spin
+        </Label>
+        <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="20"  Width="645" VerticalAlignment="Bottom" >
+            Spelregler Betting
+        </Label>
+
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Column="1" Grid.Row="2">
+            <TextBlock FontSize="15" Background="WhiteSmoke" HorizontalAlignment="Center"  Width="665" TextWrapping="Wrap" VerticalAlignment="Center" Height="360" >
             <LineBreak/>
             <Bold>Allmänt:</Bold>
             <LineBreak/>
@@ -57,5 +68,45 @@
             Du får också poängen adderade för respektive frukt i paret * hundra.
 
         </TextBlock>
+        </Border>
+
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="2" Grid.Column="3">
+            <TextBlock FontSize="15" Background="WhiteSmoke" HorizontalAlignment="Center"  Width="665" TextWrapping="Wrap" VerticalAlignment="Center" Height="360">
+            <LineBreak/>
+            <Bold>Allmänt:</Bold>
+            <LineBreak/>
+            
+            Starta spelet genom att välja svårighetsgrad. De fyra spelrutorna slumpar sedan fram en av sex olika frukter med ett intervall beroende
+            på svårighetsgrad, för att låsa rutan klickar spelaren antingen på stoppknappen eller på mellanslag. För varje runda (fyra låsningar) 
+            subtraheras ett spin från spelarnes 10 startspins. När spelarens spins är nere på noll är spelet över. Poängen räknas enligt nedan.
+            <LineBreak/>
+            <LineBreak/>
+            <Bold>Två lika</Bold> frukter ger värdet på frukten * hundra.
+            <LineBreak/>
+            <LineBreak/>
+            <Bold>Tre lika</Bold> frukter ger värdet på frukten * tusen.
+            <LineBreak/>
+            <LineBreak/>
+            <Bold>Fyra lika</Bold> frukter innebär jackpot och du tilldelas En miljon poäng.
+            <LineBreak/>
+            <LineBreak/>
+            <Bold>Två par</Bold>, om du dina slots endast innehåller två sorters frukter får du ett extra spin. 
+            Du får också poängen adderade för respektive frukt i paret * hundra.
+
+        </TextBlock>
+        </Border>
+        
+
+        <TextBlock Margin="10,0,10,0" Padding="10" > 
+        <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
+                   <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
+                </Hyperlink>
+
+        </TextBlock>
+
+
     </Grid>
+
+
+
 </UserControl>

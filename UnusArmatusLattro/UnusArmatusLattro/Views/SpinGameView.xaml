@@ -60,7 +60,7 @@
                    <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
                 </Hyperlink>
                 
-            </TextBlock>
+        </TextBlock>
 
 
 

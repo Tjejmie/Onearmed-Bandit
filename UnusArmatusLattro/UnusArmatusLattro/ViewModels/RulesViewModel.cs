@@ -10,16 +10,16 @@ namespace UnusArmatusLattro.ViewModels
 {
     public class RulesViewModel : BaseViewModel
     {
-        public ICommand HomeCommand { get; }
+        public ICommand Home { get; }
         private readonly MainViewModel parent;
 
         public RulesViewModel(MainViewModel parent)
         {
             this.parent = parent;
-            HomeCommand = new RulesCommand(this);
+            Home = new GoToHomeCommand(this);
         }
-        
-        public void GoToMenu()
+
+        public void GoHome()
         {
             parent.CurrentViewModel = new StartViewModel(parent);
         }
