@@ -32,7 +32,7 @@ namespace UnusArmatusLattro.ViewModels
         public string NewHighScore { get; set; } = "Hidden";
         public bool BettingEnabled { get; set; } = true;
         public int Wallet { get; set; } = 100;
-        public string CurrentBet { get; set; } = "0";
+        public string CurrentBet { get; set; } = "";
         public string GameOverState { get; set; } = "Hidden";
         public string BetBtn { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;
@@ -298,7 +298,7 @@ namespace UnusArmatusLattro.ViewModels
             }
             else
             {
-                CurrentBet = "0";
+                CurrentBet = "";
                 BettingEnabled = true;
                 GameOverState = "Hidden";
                 BetBtn = "Visible";
