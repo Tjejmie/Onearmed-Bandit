@@ -25,24 +25,18 @@ namespace UnusArmatusLattro.ViewModels
         public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
         public ICommand Home { get; }
-        
-        
         public Dictionary<Symbol, string> symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
-       
         public string Score { get; set; }
-
         public LeverButton LeverObj { get; set; } = new LeverButton();
-        public int RemainingSpins { get; set; } = 1;
+        public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
         public string ShowScoreToAdd { get; set; } = "Hidden";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
-        
         public bool StopBtnEnabled { get; set; } = false;
-
         public string ScoreToAdd { get; set; }
         public int Cols { get; set; }
         public GameViewModel(MainViewModel parent, Difficulties diff)
@@ -70,12 +64,12 @@ namespace UnusArmatusLattro.ViewModels
             SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
             
             
-                int value = random.Next(1, 7);
+                int value = random.Next(1, 8);
                 int num = int.Parse(SlotMachine[CurrentSlot].number);
                 
                 while (num == value)
                 {
-                    value = random.Next(1, 7);
+                    value = random.Next(1, 8);
                 }
                 var enumValue = (Symbol)value;
                 SlotMachine[CurrentSlot].number = value.ToString();
@@ -91,6 +85,7 @@ namespace UnusArmatusLattro.ViewModels
             symbols.Add(Symbol.Banana, "/Resources/Images/banana.png");
             symbols.Add(Symbol.Apple, "/Resources/Images/apple.png");
             symbols.Add(Symbol.Strawberry, "/Resources/Images/strawberry.png");
+            symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
         }
 
         private void FillSlots()
@@ -98,7 +93,7 @@ namespace UnusArmatusLattro.ViewModels
             FillSlotsByDifficulty();
             for (int i = 0; i < Cols; i++)
             {
-                var enumValue = (Symbol)random.Next(1, 7);
+                var enumValue = (Symbol)random.Next(1, 8);
                 int value = (int)enumValue;
                 Slots temp = new Slots() {
                     number = value.ToString(),
@@ -145,10 +140,25 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
-
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+                if(SlotMachine[CurrentSlot].number == $"{(int)Symbol.Bandit}")
+                {
+                    Timer.Stop();
+                    RemainingSpins--;
+                    ScoreToAdd = $"El bandido";
+                    CurrentSlot = 0;
+
+                    if (RemainingSpins == 0)
+                        GameOver();
+                    else
+                    {
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                    }
+
+                    return;
+                }
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
@@ -172,9 +182,6 @@ namespace UnusArmatusLattro.ViewModels
             parent.CurrentViewModel = new GameOverViewModel(parent, Score, Difficulty);
         }
 
-
-    
-
         private void GameOver()
         {
             GameOverState = "Hidden";
@@ -184,6 +191,10 @@ namespace UnusArmatusLattro.ViewModels
             GoToGameOver();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int CalculateScore()
         {
             List<string> bestScore = new List<string>();
@@ -196,6 +207,7 @@ namespace UnusArmatusLattro.ViewModels
             scoreDictionary.Add("4", 0);
             scoreDictionary.Add("5", 0);
             scoreDictionary.Add("6", 0);
+            scoreDictionary.Add("7", 0);
 
             for (int i = 1; i < scoreDictionary.Count+1; i++)
             {
@@ -218,7 +230,11 @@ namespace UnusArmatusLattro.ViewModels
                     {
                         hasPair = true;
                     }
-                    tempScore += int.Parse(item.Key) * 100;
+
+                    if (Difficulty != Difficulties.Hard)
+                    {
+                        tempScore += int.Parse(item.Key) * 100;
+                    }
                 }
                 else if (item.Value == Cols)
                 {
