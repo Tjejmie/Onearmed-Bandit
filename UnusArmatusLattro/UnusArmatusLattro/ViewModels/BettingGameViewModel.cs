@@ -31,6 +31,7 @@ namespace UnusArmatusLattro.ViewModels
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
         public bool BettingEnabled { get; set; } = true;
+        public string BetLabel { get; set; } = "Lägg ett bet";
         public int Wallet { get; set; } = 100;
         public string CurrentBet { get; set; } = "";
         public string GameOverState { get; set; } = "Hidden";
@@ -62,6 +63,7 @@ namespace UnusArmatusLattro.ViewModels
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
             Home = new GoToHomeCommand(this);
+           
 
             System.IO.Stream str = Resources.Resource1.sm64_whomp;
             player = new SoundPlayer(str);
@@ -70,7 +72,7 @@ namespace UnusArmatusLattro.ViewModels
         private void OnTimedEvent(Object source, EventArgs e)
         {
 
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
 
 
             int value = random.Next(1, 8);
@@ -167,7 +169,7 @@ namespace UnusArmatusLattro.ViewModels
                         GameOver();
                     else
                     {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
                     }
                 }
             }
@@ -279,6 +281,7 @@ namespace UnusArmatusLattro.ViewModels
             if (tempBet != 0 && tempBet <= int.Parse(wallet))
             {
                 BettingEnabled = false;
+                BetLabel = "Lagt bet";
                 GameOverState = "Visible";
                 BetBtn = "Hidden";
                 StopBtnEnabled = true;
@@ -300,6 +303,7 @@ namespace UnusArmatusLattro.ViewModels
             {
                 CurrentBet = "";
                 BettingEnabled = true;
+                BetLabel = "Lägg ett bet";
                 GameOverState = "Hidden";
                 BetBtn = "Visible";
                 StopBtnEnabled = false;

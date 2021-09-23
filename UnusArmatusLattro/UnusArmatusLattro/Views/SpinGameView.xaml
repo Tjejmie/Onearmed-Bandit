@@ -6,48 +6,78 @@
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              xmlns:datan="clr-namespace:UnusArmatusLattro.Data"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background ="Turquoise">
+             d:DesignHeight="700" d:DesignWidth="1520">
+    <Grid >
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
             <RowDefinition Height="100" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="*" />
             <RowDefinition Height="40" />
+       
         </Grid.RowDefinitions>
-        <Image Source="/Resources/Images/cherries.png" Width="25" Height="25"/>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#E0B3E4" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Margin" Value="0,10,0,0"/>
+                <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#EDD2EF" />
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+      
         <!--<ContentControl Content="{Binding SelectedView}"/>-->
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" VerticalAlignment="Center">
-            <TextBlock Margin="10,0,10,0" Padding="10" >
-                <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
-                    Hem
+
+        <TextBlock Margin="10,0,10,0" Padding="10" > 
+        <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
+                   <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
                 </Hyperlink>
-            </TextBlock>
-        </StackPanel>
+                
+        </TextBlock>
 
 
-        <Button Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Height="100" FontFamily="Georgia bold" Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Easy}">
+
+        <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" Height="100" Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Easy}" Cursor="Hand">
             Easy
         </Button>
-        <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Height="100" FontFamily="Georgia bold" Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Normal}">
-            Medium
+        <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Center"  Height="100"  Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Normal}" Cursor="Hand">
+            Normal
         </Button>
-        <Button Grid.Column="3" Grid.Row="2" VerticalAlignment="Bottom" Height="100" FontFamily="Georgia bold" Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Hard}">
+        <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Height="100"  Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Hard}" Cursor="Hand">
             Hard
         </Button>
 
 
-        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Content="Unus Armatus Latro" FontSize="40" FontFamily ="Georgia bold" Foreground="Black" >
+      
 
-        </Label>
-
-
+        
 
     </Grid>
 </UserControl>

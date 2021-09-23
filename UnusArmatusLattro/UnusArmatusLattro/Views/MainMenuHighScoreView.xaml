@@ -5,35 +5,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Turquoise">
+             d:DesignHeight="700" d:DesignWidth="1520">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" />
+        </Grid.Background>
+
+
+        <Grid.Resources>
+            <Style TargetType="{x:Type Label}">
+                
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Margin" Value="0,10,0,0"/>
+                <Setter Property="MinHeight" Value="40"/>
+
+            </Style>
+        </Grid.Resources>
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="15*" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="30*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <Image Source="/Resources/Images/cherries.png" Width="25" Height="25"/>
         <!--<ContentControl Content="{Binding SelectedView}"/>-->
-        <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center">
-            <TextBlock Margin="10,0,10,0" Padding="10">
-                <Hyperlink Command="{Binding HomeCommand}" Foreground="#000000" TextDecorations="None">
-                    Hem
+        <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center">
+            <TextBlock Margin="10,0,10,0" Padding="10" > 
+        <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
+                   <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
                 </Hyperlink>
             </TextBlock>
 
         </StackPanel>
 
 
-        <Label Content="Highscore easy" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>
-        <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Easy}" >
+        <Label Content="Highscore Easy" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
+        <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Easy}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Background="White" Columns="1" Rows="10" Height="300" Width="auto"/>
@@ -41,8 +61,8 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <Label Content="Highscore normal" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>
-        <ItemsControl  Margin="5" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding Normal}">
+        <Label Content="Highscore Normal" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
+        <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White"  Margin="3" Grid.Column="2" Grid.Row="3" ItemsSource="{Binding Normal}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Background="White" Columns="1" Rows="10" Height="300" Width="auto"/>
@@ -50,8 +70,8 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <Label Content="Highscore hard" Grid.Column="3" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>
-        <ItemsControl Grid.Column="3" Grid.Row="1" ItemsSource="{Binding Hard}">
+        <Label Content="Highscore Hard" Grid.Column="3" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
+        <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Hard}">
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -61,9 +81,9 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
-            </ItemsControl>
-
-        <ItemsControl Grid.Column="4" Grid.Row="1" ItemsSource="{Binding Betting}">
+        </ItemsControl>
+        <Label Content="Highscore Betting" Grid.Column="4" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
+        <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="4" Grid.Row="3" ItemsSource="{Binding Betting}">
             
 
             <ItemsControl.ItemsPanel>

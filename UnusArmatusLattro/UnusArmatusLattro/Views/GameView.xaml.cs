@@ -19,9 +19,11 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameView : UserControl
     {
+        
         public GameView()
         {
             InitializeComponent();
+
         }
 
         
@@ -71,6 +73,17 @@ namespace UnusArmatusLattro.Views
         {
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.StartTimer();
+        }
+
+        private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Canvas.SetLeft(Lever, LeverCanvas.ActualWidth /2 - Lever.Width/2);
+            Canvas.SetTop(Lever, 0);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            TogglePopupButton.IsChecked = false;
         }
     }
 }

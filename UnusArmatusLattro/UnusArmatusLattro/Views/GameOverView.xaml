@@ -6,52 +6,113 @@
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              xmlns:datan="clr-namespace:UnusArmatusLattro.Data"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="Aqua">
+             d:DesignHeight="700" d:DesignWidth="1520">
+    <Grid >
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" />
+        </Grid.Background>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#E0B3E4" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Margin" Value="0,10,0,0"/>
+                <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#EDD2EF" />
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
-
-            <ColumnDefinition Width="*" />
-
-            <ColumnDefinition Width="400" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="500" />
+            <ColumnDefinition Width="500" />
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="70" />
 
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="300" />
             <RowDefinition Height="100" />
-            <RowDefinition Height="70" />
-            <RowDefinition Height="70" />
+            <RowDefinition Height="150" />
             <RowDefinition Height="100" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-
-
-        <Label Content="Game over" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"  HorizontalAlignment="Center" FontSize="45" FontFamily="georgia bold"></Label>
-        <TextBlock Grid.Column="1" Grid.Row="1" Text="Din poäng är: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-
-        <TextBlock Text="{Binding Points}" FontSize="25" FontFamily="calibri-bold" FontWeight="Black" Grid.Column="1" Grid.Row="1" Margin="179,0,84,40" >
-        </TextBlock>
-
-
-
-        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,44" FontSize="20" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black"/>
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="Namn: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="20" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-        <Button Width="200" Grid.Column="1" Grid.Row="2" Height="30" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom">
-            skicka
-        </Button>
-        <Button Width="168" Grid.Column="1" Grid.Row="3" Height="30" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.Exit}">
+        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.Exit}">
             Avsluta
         </Button>
-        <Button Width="168" Grid.Column="1" Grid.Row="3" Height="30" Command="{Binding GameOverCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.SpinGame}">
+        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="{Binding }" CommandParameter="{x:Static datan:GoToView.SpinGame}">
             Spela igen
         </Button>
 
 
-        <ItemsControl Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding HighScores}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="1" Rows="10" Height="300" Width="auto" Margin="0,-15,0,-230"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+        <Label Grid.Column="1" Grid.Row="1" Content="Din poäng är: " VerticalAlignment="Center"  HorizontalAlignment="Left" FontSize="20"  FontWeight="Black" Height="80"></Label>
+
+        <Label Content="{Binding Points}" FontSize="30"  FontWeight="Black" Grid.Column="1" Grid.Row="1" Margin="263,0,0,40" FontFamily="Calibri bold" >
+        </Label>
+
+        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,100" FontSize="30" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black"/>
+        <Label Grid.Column="1" Grid.Row="2" Content="Namn: " VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25"  FontWeight="Black"></Label>
+
+        <Grid Grid.Row="2" Grid.Column="1" >
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="#F8E779" />
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="FontSize" Value="18" />
+                    <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                    <Setter Property="SnapsToDevicePixels" Value="True" />
+                    <Setter Property="Margin" Value="0,10,0,0"/>
+                    <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#FDF1B0" />
+                                    </Trigger>
+
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                </Style>
+            </Grid.Resources>
+            <Button  FontSize="25" Width="300" Grid.Column="1" Grid.Row="2" Height="80" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom">
+                Skicka
+            </Button>
+        </Grid>
+
+        <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding HighScores}">
+
         </ItemsControl>
+        <Label Grid.Row="0" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="20">
+            Highscore
+        </Label> 
     </Grid>
 </UserControl>

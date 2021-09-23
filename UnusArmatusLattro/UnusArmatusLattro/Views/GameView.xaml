@@ -8,36 +8,160 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1500">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#F8E779" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FDF1B0" />
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="#9c8e43"/>
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type ToggleButton}">
+                <Setter Property="Background" Value="#F8E779" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FDF1B0" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="113" />
-            <ColumnDefinition Width="757" />
-            <ColumnDefinition Width="316" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="40*" />
+            <ColumnDefinition Width="580*" />
+            <ColumnDefinition Width="167*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="203*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="156" />
-            <RowDefinition Height="240" />
-            <RowDefinition Height="*" />
+            
+            <RowDefinition Height="35*" />
+            <RowDefinition Height="36*" />
+            <RowDefinition Height="29*" />
         </Grid.RowDefinitions>
-        <Image Source="/Resources/Images/SlotMachineLayout.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>
-        <Image Source="/Resources/Images/Highscore.png" Grid.Column="4" Grid.Row="0" Grid.RowSpan="4"></Image>
         
-        <Image Source="/Resources/Images/cherries.png" Width="25" Height="25">
 
-        </Image>
-        
-        
-        <ItemsControl  ItemsSource="{Binding SlotMachine}" Grid.Column="1" Grid.Row="2">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="{Binding Cols}" Rows="1" Height="300" Width="auto"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/Images/GameWall.png"/>
+        </Grid.Background>
 
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-        <TextBlock Name="ScoreAddBox" Grid.Column="1" Grid.Row="2"  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="200" FontSize="130" TextAlignment="Center">
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="88*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="95*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SlotMachine}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="{Binding Cols}" Rows="1" Height="auto" Width="auto"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Popup Placement="Center"  Name="myPopup" IsOpen="{Binding IsChecked, ElementName=TogglePopupButton}" AllowsTransparency="True">
+                <Grid Grid.Column="1" Grid.Row="1" Width="740" Height="400" Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+
+                    <Rectangle Grid.RowSpan="3" Stroke="Black" StrokeThickness="5" Width="740" Height="400" Fill="#f0d9f2" RadiusX="20" RadiusY="20"/>
+
+                    <TextBlock Grid.Row="0" FontSize="20" TextDecorations="Underline" HorizontalAlignment="Center" Margin="0,10" FontFamily="{StaticResource PS2P}">Instruktioner</TextBlock>
+                    <TextBlock Grid.Row="1" FontSize="17" Margin="15">
+                    1. Klicka på cirkeln till höger för att starta maskinen<LineBreak/>
+                    2. Klicka på Stop för att stoppa den markerade rutan<LineBreak/>
+                    3. När alla rutor är stannade får du poäng baserat på de frukter du har låst in<LineBreak/>
+                    4. Får du två par får du en ny spin <LineBreak/>
+                    5. en ny runda startas automatiskt så länge du har spins kvar
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+                        <StackPanel Margin="0,0,10,0">
+                            <Label FontSize="25" Margin="0,20,0,15">Frukt</Label>
+                            <Label FontSize="25">Värde</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/cherries.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">1</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/lemon.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">2</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/banana.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">3</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/apple.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">4</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/strawberry.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">5</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/Resources/Images/grapes.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">6</Label>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Margin="10" Click="Button_Click" Width="50" Height="50" HorizontalAlignment="Right">X</Button>
+
+                </Grid>
+
+
+                <!--</Border>-->
+            </Popup>
+            
+
+        </Grid>
+
+        
+        <TextBlock Name="ScoreAddBox" Grid.Column="1" Grid.Row="1"  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="200" FontSize="130" TextAlignment="Center">
             <TextBlock.Text>
                 <Binding Path="ScoreToAdd" NotifyOnTargetUpdated="True"></Binding>
             </TextBlock.Text>
@@ -59,22 +183,34 @@
         </Button>-->
         <!--<Label Content="Highscore" Grid.Column="4" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>-->
 
-        <ItemsControl Grid.Column="4" Grid.Row="1" Grid.RowSpan="3" Margin="0,20,0,20" ItemsSource="{Binding HighScores}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="1" Rows="10" Height="300" Width="auto"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
-        <Canvas Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="2" Grid.Column="2" Grid.RowSpan="3">
+        <Grid Grid.Column="4" Grid.RowSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="17*"/>
+                <RowDefinition Height="83*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="95*"/>
+            </Grid.ColumnDefinitions>
+            <ItemsControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding HighScores}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="1" Rows="10" Height="auto" Width="auto"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Grid>
+        
+        
+        <Canvas Margin="0,0,0,110" Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
-            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="139" Canvas.Top="0" Cursor="Hand">
+            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand">
                 <Ellipse.Triggers>
                     <EventTrigger RoutedEvent="Ellipse.MouseDown">
                         <BeginStoryboard>
                             <Storyboard>
-                                <DoubleAnimation Storyboard.TargetName="Lever" Storyboard.TargetProperty="(Canvas.Top)" From="0" To="300" AccelerationRatio=".5" Duration="0:0:1" AutoReverse="true" Completed="DoubleAnimation_Completed">
+                                <DoubleAnimation Storyboard.TargetName="Lever" Storyboard.TargetProperty="(Canvas.Top)" From="0" To="{Binding ElementName=LeverCanvas, Path=ActualHeight}" AccelerationRatio=".5" Duration="0:0:1" AutoReverse="true" Completed="DoubleAnimation_Completed">
                                     
                                 </DoubleAnimation>
                             </Storyboard>
@@ -85,34 +221,41 @@
             </Ellipse>
         </Canvas>
         
-        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="53"/>
-                <ColumnDefinition Width="229"/>
-                <ColumnDefinition Width="33"/>
-                <ColumnDefinition Width="352"/>
-                <ColumnDefinition Width="32"/>
-                <ColumnDefinition Width="229"/>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="25*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="38*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="25*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="33"/>
-                <RowDefinition Height="66"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="66"/>
-                <RowDefinition Height="34"/>
+                <RowDefinition Height="16*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="13*"/>
             </Grid.RowDefinitions>
-            <Button Grid.Column="3" Grid.Row="1" Width="340" Grid.RowSpan="3" Height="142" Background="Transparent" Command="{Binding Spin}" Opacity="0" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}"/>
+            
+            <Button Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Score: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
-                <TextBlock Text="{Binding Score}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Text="Score: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
+                <TextBlock Text="{Binding Score}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
             <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Spins: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
-                <TextBlock Text="{Binding RemainingSpins}" FontSize="15" FontFamily="calibri-bold" FontWeight="Black">
+                <TextBlock Text="Spins: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>
+                <TextBlock Text="{Binding RemainingSpins}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black">
                 </TextBlock>
             </StackPanel>
-            <Button Grid.Column="1" Grid.Row="1" Background="Transparent" Command="{Binding Home}" Opacity="0" Cursor="Hand"/>
+            <Button Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem"/>
+            <Border Grid.Column="5" Grid.Row="1" CornerRadius="20">
+                <ToggleButton x:Name="TogglePopupButton">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                        Hjälp
+                    </TextBlock>
+                </ToggleButton>
+            </Border>
         </Grid>
     </Grid>
 

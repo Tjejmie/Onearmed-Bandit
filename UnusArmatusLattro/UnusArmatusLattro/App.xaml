@@ -31,6 +31,6 @@
         <DataTemplate DataType="{x:Type viewmodels:SpinGameViewModel}">
             <views:SpinGameView />
         </DataTemplate>
-        
+        <FontFamily x:Key="PS2P">./Resources/Fonts/PressStart2P-Regular.ttf#Press Start 2P</FontFamily>
     </Application.Resources>
 </Application>
