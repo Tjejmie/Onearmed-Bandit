@@ -44,7 +44,8 @@ namespace UnusArmatusLattro.ViewModels
         public int Cols { get; set; } = 4;
         public bool StopBtnEnabled { get; set; } = false;
         public ICommand Home { get;}
-        SoundPlayer player { get; set; }
+        SoundPlayer Player { get; set; }
+        
 
         public BettingGameViewModel(MainViewModel parent, Difficulties diff)
         {
@@ -63,10 +64,7 @@ namespace UnusArmatusLattro.ViewModels
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
             Home = new GoToHomeCommand(this);
-           
 
-            System.IO.Stream str = Resources.Resource1.sm64_whomp;
-            player = new SoundPlayer(str);
         }
 
         private void OnTimedEvent(Object source, EventArgs e)
@@ -143,7 +141,7 @@ namespace UnusArmatusLattro.ViewModels
                     ScoreToAdd = $"El bandido";
                     CurrentSlot = 0;
                     NewRound();
-                    player.Play();
+                    Playeffect(Sounds.Bandit);
 
                     if (Wallet == 0)
                         GameOver();
@@ -271,6 +269,10 @@ namespace UnusArmatusLattro.ViewModels
 
         public bool ConfirmBet(String bet, string wallet)
         {
+            if (bet == "")
+            {
+                return false;
+            }
             int tempBet = int.Parse(bet);
             if (tempBet != 0 && tempBet <= int.Parse(wallet))
             {
@@ -313,6 +315,30 @@ namespace UnusArmatusLattro.ViewModels
         public void GoHome()
         {
             parent.CurrentViewModel = new StartViewModel(parent);
+        }
+
+        public void Playeffect(Sounds sounds)
+        {
+            
+            System.IO.Stream sound;
+            
+            switch (sounds)
+            {
+                case Sounds.Bandit:
+                    sound = Resources.Resource1.sm64_whomp;
+                    break;
+                case Sounds.Lever:
+                    sound = Resources.Resource1.LeverPull;
+                    break;
+                case Sounds.Cash:
+                    sound = Resources.Resource1.LeverPush;
+                    break;
+                default:
+                    sound = null;
+                    break;
+            }
+            SoundPlayer player = new SoundPlayer(sound);
+            player.Play();
         }
 
     }

@@ -63,6 +63,24 @@ namespace UnusArmatusLattro.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        public static System.IO.UnmanagedMemoryStream LeverPull {
+            get {
+                return ResourceManager.GetStream("LeverPull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream LeverPush {
+            get {
+                return ResourceManager.GetStream("LeverPush", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         public static System.IO.UnmanagedMemoryStream sm64_whomp {
             get {
                 return ResourceManager.GetStream("sm64_whomp", resourceCulture);

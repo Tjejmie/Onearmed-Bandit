@@ -28,6 +28,8 @@
     <None Remove="Resources\Images\SlotMachineView.png" />
     <None Remove="Resources\Images\strawberry.png" />
     <None Remove="Resources\Images\WallpaperStart.png" />
+    <None Remove="Resources\LeverPull.wav" />
+    <None Remove="Resources\LeverPush.wav" />
     <None Remove="Resources\MP3\Las Vegas Casino Music Video_ For Night Game of Poker, Blackjack, Roulette Wheel &amp; Slots.mp3" />
   </ItemGroup>
 
@@ -53,6 +55,12 @@
     <Resource Include="Resources\Images\SlotMachineView.png" />
     <Resource Include="Resources\Images\strawberry.png" />
     <Resource Include="Resources\Images\WallpaperStart.png" />
+    <Content Include="Resources\LeverPull.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\LeverPush.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\MP3\Las Vegas Casino Music Video_ For Night Game of Poker, Blackjack, Roulette Wheel &amp; Slots.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -67,7 +75,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
-    <Folder Include="Data\" />
   </ItemGroup>
 
   <ItemGroup>

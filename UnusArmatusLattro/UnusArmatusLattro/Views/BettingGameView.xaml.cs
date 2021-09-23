@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Media;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -67,6 +69,18 @@ namespace UnusArmatusLattro.Views
         private void Load(object sender, RoutedEventArgs e)
         {
             BettingBox.Focus();
+        }
+
+        private void Lever_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
+            gameViewModel.Playeffect(Data.Sounds.Lever);
+        }
+
+        private void BettingBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
