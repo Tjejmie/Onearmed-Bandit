@@ -163,8 +163,10 @@ namespace UnusArmatusLattro.ViewModels
                     {
                         Playeffect(Sounds.Jackpot);
                     }
-                    else
+                    else if (winnings > 0)
+                    {
                         Playeffect(Sounds.Cash);
+                    }
 
                     ScoreToAdd = $"+{winnings}";
                     Wallet = Wallet + winnings;
