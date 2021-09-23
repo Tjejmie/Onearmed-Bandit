@@ -44,6 +44,97 @@
             Spelregler Betting
         </Label>
 
+        
+        
+
+        
+        
+        <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="3" Background="White">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="3" VerticalAlignment="Bottom" Grid.ColumnSpan="1">
+                <StackPanel Margin="0,0,10,0">
+                    <Label FontSize="16" Margin="0,20,0,15">Frukt</Label>
+                    <Label FontSize="16">Värde</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/cherries.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0" >1</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/lemon.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">2</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/banana.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">3</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/apple.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">4</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/strawberry.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">5</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/Resources/Images/grapes.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">6</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/Resources/Images/bandit.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">Bandit</Label>
+                </StackPanel>
+
+            </StackPanel>
+            
+        </Border>
+        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="16"  Margin="10,10,0,0" >
+                  <Bold> 1.</Bold> Fyll i textfältet med ditt bet. Bettet får aldrig överstiga din budget, <LineBreak/> du får heller inte betta 0. <LineBreak/>
+                  <Bold>  2.</Bold> Klicka på cirkeln till höger för att starta maskinen, nu låser även maskinen ditt<LineBreak/> nuvarande bet<LineBreak/>
+                  <Bold>  3. </Bold> Klicka på Stop för att stoppa den markerade rutan<LineBreak/>
+                  <Bold>  4. </Bold> När alla rutor är stannade får du pengar baserat på de frukter samt bet du har låst in<LineBreak/>
+                  <Bold>  5. </Bold> Fortsätt spela tills du har fått nog alternativt när du fått slut på pengar.<LineBreak/>
+                  <Bold> 6. </Bold> Akta dig för banditen! Hamnar du på den tar han dina satsade pengar! <LineBreak/>
+                  <Bold> 7. </Bold>Tryck på Ca$h out-knappen när du vill avsluta spelet.
+        </TextBlock>
+
+        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="2" Grid.Column="1" Background="White">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Grid.ColumnSpan="1" >
+                <StackPanel Margin="0,0,10,0">
+                    <Label FontSize="16" Margin="0,20,0,15">Frukt</Label>
+                    <Label FontSize="16">Värde</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/cherries.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0" >1</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/lemon.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">2</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/banana.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">3</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/apple.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">4</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                    <Image Source="/Resources/Images/strawberry.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">5</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/Resources/Images/grapes.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">6</Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/Resources/Images/bandit.png" Width="50"></Image>
+                    <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">Bandit</Label>
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
         <TextBlock Grid.Row="2" Grid.Column="1" FontSize="15"  Margin="10,10,0,0">
                     Starta spelet genom att välja svårighetsgrad. De fyra spelrutorna slumpar sedan fram en av sex <LineBreak/> olika frukter med ett intervall beroende
             på svårighetsgrad, för att låsa rutan klickar spelaren <LineBreak/>  antingen på stoppknappen eller på mellanslag. För varje runda (fyra låsningar) 
@@ -64,96 +155,6 @@
             <LineBreak/>
             <Bold>Banditen </Bold> - Akta dig för banditen, hamnar du på han tar han dina poäng.
         </TextBlock>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Grid.ColumnSpan="1" >
-            <StackPanel Margin="0,0,10,0">
-                <Label FontSize="16" Margin="0,20,0,15">Frukt</Label>
-                <Label FontSize="16">Värde</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/cherries.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0" >1</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/lemon.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">2</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/banana.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">3</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/apple.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">4</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/strawberry.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">5</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <Image Source="/Resources/Images/grapes.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">6</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <Image Source="/Resources/Images/bandit.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">Bandit</Label>
-            </StackPanel>
-
-        </StackPanel>
-
-        <TextBlock Grid.Row="2" Grid.Column="3" FontSize="16"  Margin="10,10,0,0" >
-                  <Bold> 1.</Bold> Fyll i textfältet med ditt bet. Bettet får aldrig överstiga din budget, <LineBreak/> du får heller inte betta 0. <LineBreak/>
-                  <Bold>  2.</Bold> Klicka på cirkeln till höger för att starta maskinen, nu låser även maskinen ditt<LineBreak/> nuvarande bet<LineBreak/>
-                  <Bold>  3. </Bold> Klicka på Stop för att stoppa den markerade rutan<LineBreak/>
-                  <Bold>  4. </Bold> När alla rutor är stannade får du pengar baserat på de frukter samt bet du har låst in<LineBreak/>
-                  <Bold>  5. </Bold> Fortsätt spela tills du har fått nog alternativt när du fått slut på pengar.<LineBreak/>
-                  <Bold> 6. </Bold> Akta dig för banditen! Hamnar du på den tar han dina satsade pengar! <LineBreak/>
-                  <Bold> 7. </Bold>Tryck på Ca$h out-knappen när du vill avsluta spelet.
-        </TextBlock>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="3" VerticalAlignment="Bottom" Grid.ColumnSpan="1">
-            <StackPanel Margin="0,0,10,0">
-                <Label FontSize="16" Margin="0,20,0,15">Frukt</Label>
-                <Label FontSize="16">Värde</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/cherries.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0" >1</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/lemon.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">2</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/banana.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">3</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/apple.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">4</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="0,0,10,0">
-                <Image Source="/Resources/Images/strawberry.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">5</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <Image Source="/Resources/Images/grapes.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">6</Label>
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <Image Source="/Resources/Images/bandit.png" Width="50"></Image>
-                <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">Bandit</Label>
-            </StackPanel>
-            
-        </StackPanel>
-
-        <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="3">
-            
-        </Border> 
-
-        <Border BorderBrush="Black" BorderThickness="3" Grid.Row="2" Grid.Column="3">
-            
-   
-        </Border>
-        
 
         <TextBlock Margin="10,0,10,0" Padding="10" > 
         <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
