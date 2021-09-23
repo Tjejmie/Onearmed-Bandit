@@ -117,7 +117,8 @@
                     2. Klicka på Stop för att stoppa den markerade rutan<LineBreak/>
                     3. När alla rutor är stannade får du poäng baserat på de frukter du har låst in<LineBreak/>
                     4. Får du två par får du en ny spin <LineBreak/>
-                    5. en ny runda startas automatiskt så länge du har spins kvar
+                    5. Akta dig för banditen! Hamnar du på den tar han dina poäng under pågående spin<LineBreak/>
+                    6. en ny runda startas automatiskt så länge du har spins kvar
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
                         <StackPanel Margin="0,0,10,0">
@@ -147,6 +148,10 @@
                         <StackPanel Orientation="Vertical">
                             <Image Source="/Resources/Images/grapes.png" Width="80"></Image>
                             <Label HorizontalAlignment="Center" FontSize="25">6</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/Resources/Images/bandit.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">Bandit</Label>
                         </StackPanel>
                     </StackPanel>
                     <Button Margin="10" Click="Button_Click" Width="50" Height="50" HorizontalAlignment="Right">X</Button>
