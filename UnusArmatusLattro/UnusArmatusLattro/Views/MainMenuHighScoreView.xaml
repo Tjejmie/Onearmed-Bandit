@@ -81,7 +81,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
 
-            </ItemsControl>
+        </ItemsControl>
         <Label Content="Highscore Betting" Grid.Column="4" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
         <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="4" Grid.Row="3" ItemsSource="{Binding Betting}">
             
