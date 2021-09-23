@@ -198,9 +198,6 @@ namespace UnusArmatusLattro.ViewModels
         /// <returns></returns>
         public int CalculateScore()
         {
-            List<string> bestScore = new List<string>();
-            int total = 0;
-
             Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
             scoreDictionary.Add("1", 0);
             scoreDictionary.Add("2", 0);
@@ -240,7 +237,7 @@ namespace UnusArmatusLattro.ViewModels
                 }
                 else if (item.Value == Cols)
                 {
-                    return total += 1000000;
+                    return 1000000;
                 }
                 else if (item.Value == 3)
                 {
@@ -256,10 +253,10 @@ namespace UnusArmatusLattro.ViewModels
             if(hasPair && hasThreeOfAKind)
             {
                 RemainingSpins++;
-                return total += tempScore * 2;
+                return tempScore * 2;
             }
 
-            return total += tempScore;
+            return tempScore;
 
         }
 
