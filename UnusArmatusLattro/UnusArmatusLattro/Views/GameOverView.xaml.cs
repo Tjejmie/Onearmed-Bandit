@@ -23,6 +23,10 @@ namespace UnusArmatusLattro.Views
             InitializeComponent();
         }
 
-       
+        private void Load(object sender, RoutedEventArgs e)
+        {
+            txtUserName.Focus();
+        }
+
     }
 }
