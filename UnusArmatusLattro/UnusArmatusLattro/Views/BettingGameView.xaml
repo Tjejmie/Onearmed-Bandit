@@ -8,13 +8,14 @@
              d:DesignHeight="700" d:DesignWidth="1500">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="{x:Type Button}">
+            <Style x:Key="BaseButtonStyle" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="#F8E779" />
                 <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontSize" Value="28" />
                 <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -25,6 +26,57 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#FDF1B0" />
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="#9c8e43" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SecondaryButtonStyle" BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#CA8BD5" />
+                
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#DFB8E2" />
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="#9c8e43" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type ToggleButton}">
+                <Setter Property="Background" Value="#CA8BD5" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#DFB8E2" />
                                 </Trigger>
 
                             </ControlTemplate.Triggers>
@@ -63,6 +115,62 @@
                 <RowDefinition Height="95*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
+            <Popup Placement="Center"  Name="myPopup" IsOpen="{Binding IsChecked, ElementName=TogglePopupButton}" AllowsTransparency="True">
+                <Grid Grid.Column="1" Grid.Row="1" Width="740" Height="400" Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+
+                    <Rectangle Grid.RowSpan="3" Stroke="Black" StrokeThickness="5" Width="740" Height="400" Fill="#f0d9f2" RadiusX="20" RadiusY="20"/>
+
+                    <TextBlock Grid.Row="0" FontSize="20" TextDecorations="Underline" HorizontalAlignment="Center" Margin="0,10" FontFamily="{StaticResource PS2P}">Instruktioner</TextBlock>
+                    <TextBlock Grid.Row="1" FontSize="17" Margin="15">
+                    1. Fyll i textfältet med ditt bet. Bettet får aldrig överstiga din budget, du får heller inte betta 0. <LineBreak/>
+                    2. Klicka på cirkeln till höger för att starta maskinen, nu låser även maskinen ditt nuvarande bet<LineBreak/>
+                    3. Klicka på Stop för att stoppa den markerade rutan<LineBreak/>
+                    4. När alla rutor är stannade får du pengar baserat på de frukter samt bet du har låst in<LineBreak/>
+                    5. Fortsätt spela tills du har fått nog alternativt när du fått slut på pengar.<LineBreak/>
+                    6. Tryck på Ca$h out-knappen när du vill avsluta spelet.    
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
+                        <StackPanel Margin="0,0,10,0">
+                            <Label FontSize="25" Margin="0,20,0,15">Frukt</Label>
+                            <Label FontSize="25">Värde</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/cherries.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">1</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/lemon.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">2</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/banana.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">3</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/apple.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">4</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="0,0,10,0">
+                            <Image Source="/Resources/Images/strawberry.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">5</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/Resources/Images/grapes.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">6</Label>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button Style="{StaticResource BaseButtonStyle}" Margin="10" Click="Button_Click" Width="50" Height="50" HorizontalAlignment="Right">X</Button>
+
+                </Grid>
+
+
+                <!--</Border>-->
+            </Popup>
             <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SlotMachine}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -129,7 +237,7 @@
                 <ColumnDefinition Width="80*"/>
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
-            <Button FontSize="25" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Command="{Binding FinishGame}" Cursor="Hand" Content="Ca$h out"/>
+            <Button Style="{StaticResource BaseButtonStyle}" FontSize="25" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Command="{Binding FinishGame}" Cursor="Hand" Content="Ca$h out"/>
         </Grid>
         
         
@@ -168,20 +276,21 @@
                 <RowDefinition Height="32*"/>
                 <RowDefinition Height="13*"/>
             </Grid.RowDefinitions>
-
-            <Button Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
+            <ToggleButton Grid.Column="5" Grid.Row="1" x:Name="TogglePopupButton">
+                <TextBlock>Hjälp</TextBlock>
+            </ToggleButton>
+            <Button Style="{StaticResource BaseButtonStyle}" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Pengar: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
                 <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
-            <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
-                <!--<TextBlock Text="Bet: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>-->
-                <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black">
-                </TextBox>
-                
+            
+            <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Vertical" >
+                <TextBlock Text="{Binding BetLabel}" Grid.Column="5" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="20" FontFamily="calibri-bold" FontWeight="Black" />
+                <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black" />
             </StackPanel>
-            <TextBlock Text="Lägg ett bett:" Grid.Column="5" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="20" FontFamily="calibri-bold" FontWeight="Black"/>
-            <Button Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem"/>
+            
+            <Button Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem" />
         </Grid>
     </Grid>
 
