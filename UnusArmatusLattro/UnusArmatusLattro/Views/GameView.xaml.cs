@@ -78,5 +78,10 @@ namespace UnusArmatusLattro.Views
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth /2 - Lever.Width/2);
             Canvas.SetTop(Lever, 0);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            TogglePopupButton.IsChecked = false;
+        }
     }
 }

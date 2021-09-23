@@ -154,8 +154,9 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     Timer.Stop();
                     RemainingSpins -= 1;
-                    ScoreToAdd = $"+{CalculateScore()}";
-                    Score = $"{int.Parse(Score) + CalculateScore()}";
+                    int Winnings = CalculateScore();
+                    ScoreToAdd = $"+{Winnings}";
+                    Score = $"{int.Parse(Score) + Winnings}";
                     CurrentSlot = 0;
 
                     if (RemainingSpins == 0)
