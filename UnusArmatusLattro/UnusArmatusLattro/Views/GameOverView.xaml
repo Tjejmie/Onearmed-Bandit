@@ -68,13 +68,18 @@
         <StackPanel VerticalAlignment="Center"  Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
 
             <Label Content="Din poäng är: " FontSize="25"  FontWeight="Black"></Label>
-
-        <Label Content="{Binding Points}" FontSize="30"  FontWeight="Black" Grid.Column="1" Grid.Row="1" Margin="263,0,0,40" FontFamily="Calibri bold" >
-        </Label>
-
-        <TextBox Text="{Binding User}" Grid.Column="1" Grid.Row="2" Margin="0,0,0,100" FontSize="30" Width="200" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding DisplayInputField}"/>
-        <Label Grid.Column="1" Grid.Row="2" Content="{Binding txtboxLabel}" VerticalAlignment="Top"  HorizontalAlignment="Left" FontSize="25"  FontWeight="Black"></Label>
-
+            <Label Content="{Binding Points}" FontSize="30" FontWeight="Black">
+            </Label>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2" VerticalAlignment="top">
+            <Label Grid.Column="1" Grid.Row="2" Content="{Binding txtboxLabel}" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="25"  FontWeight="Black"></Label>
+            <Border BorderBrush="Black" BorderThickness="5" CornerRadius="5" Margin="0,10,0,0">
+                <TextBox x:Name="txtUserName" Text="{Binding User}" Grid.Column="1" Grid.Row="2" Background="Transparent" FontSize="30" Height="50" HorizontalAlignment="Left" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding DisplayInputField}"/>
+            </Border>
+            
+        </StackPanel>
+        
+        
         <Grid Grid.Row="2" Grid.Column="1" >
             <Grid.Resources>
                 <Style TargetType="{x:Type Button}">
