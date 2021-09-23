@@ -225,6 +225,7 @@ namespace UnusArmatusLattro.ViewModels
                     if (hasPair)
                     {
                         RemainingSpins++;
+                        tempScore += int.Parse(item.Key) * 100;
                     }
                     else
                     {
