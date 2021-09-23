@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnusArmatusLattro.Data;
 using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Views
@@ -84,6 +85,12 @@ namespace UnusArmatusLattro.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             TogglePopupButton.IsChecked = false;
+        }
+
+        private void Lever_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            GameViewModel gameViewModel = (GameViewModel)DataContext;
+            gameViewModel.Playeffect(Sounds.Lever);
         }
     }
 }

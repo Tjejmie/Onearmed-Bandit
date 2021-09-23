@@ -131,6 +131,7 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
+            Playeffect(Sounds.Stop);
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
@@ -345,6 +346,9 @@ namespace UnusArmatusLattro.ViewModels
                     break;
                 case Sounds.Jackpot:
                     sound = Resources.Resource1.jackpot;
+                    break;
+                case Sounds.Stop:
+                    sound = Resources.Resource1.LeverPull;
                     break;
                 default:
                     sound = null;

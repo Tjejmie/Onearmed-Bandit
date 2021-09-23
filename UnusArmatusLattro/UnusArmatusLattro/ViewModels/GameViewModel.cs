@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Media;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -140,6 +141,7 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
+            Playeffect(Sounds.Stop);
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
@@ -148,6 +150,7 @@ namespace UnusArmatusLattro.ViewModels
                     Timer.Stop();
                     RemainingSpins--;
                     ScoreToAdd = $"El bandido";
+                    Playeffect(Sounds.Bandit);
                     CurrentSlot = 0;
 
                     if (RemainingSpins == 0)
@@ -165,6 +168,16 @@ namespace UnusArmatusLattro.ViewModels
                     Timer.Stop();
                     RemainingSpins -= 1;
                     int Winnings = CalculateScore();
+                    
+                    if (Winnings >= 1000000)
+                    {
+                        Playeffect(Sounds.Jackpot);
+                    }
+                    else if (Winnings > 0)
+                    {
+                        Playeffect(Sounds.Cash);
+                    }
+
                     ScoreToAdd = $"+{Winnings}";
                     Score = $"{int.Parse(Score) + Winnings}";
                     CurrentSlot = 0;
@@ -270,6 +283,35 @@ namespace UnusArmatusLattro.ViewModels
             parent.CurrentViewModel = new StartViewModel(parent);
         }
 
+        public void Playeffect(Sounds sounds)
+        {
+
+            System.IO.Stream sound;
+
+            switch (sounds)
+            {
+                case Sounds.Bandit:
+                    sound = Resources.Resource1.sm64_whomp;
+                    break;
+                case Sounds.Lever:
+                    sound = Resources.Resource1.LeverPush;
+                    break;
+                case Sounds.Cash:
+                    sound = Resources.Resource1.win;
+                    break;
+                case Sounds.Jackpot:
+                    sound = Resources.Resource1.jackpot;
+                    break;
+                case Sounds.Stop:
+                    sound = Resources.Resource1.LeverPull;
+                    break;
+                default:
+                    sound = null;
+                    break;
+            }
+            SoundPlayer player = new SoundPlayer(sound);
+            player.Play();
+        }
     }
 }
 
