@@ -129,7 +129,6 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 HighScores.Add(temp);
             }
-
         }
 
         public void SpinSlots()
@@ -146,7 +145,6 @@ namespace UnusArmatusLattro.ViewModels
                     NewRound();
                     player.Play();
 
-
                     if (Wallet == 0)
                         GameOver();
                     else
@@ -161,8 +159,9 @@ namespace UnusArmatusLattro.ViewModels
                 if (CurrentSlot == SlotMachine.Count)
                 {
                     Wallet -= int.Parse(CurrentBet);
-                    ScoreToAdd = $"+{CalculateScore()}";
-                    Wallet = Wallet + CalculateScore();
+                    int winnings = CalculateScore();
+                    ScoreToAdd = $"+{winnings}";
+                    Wallet = Wallet + winnings;
                     NewRound();
 
                     if (Wallet == 0)
@@ -184,7 +183,6 @@ namespace UnusArmatusLattro.ViewModels
                     NewHighScore = "Visible";
                     return true;
                 }
-
             }
             if (HighScores.Count < 10)
             {
@@ -210,8 +208,6 @@ namespace UnusArmatusLattro.ViewModels
 
         private int CalculateScore()
         {
-            //List<string> bestScore = new List<string>();
-            int total = Wallet;
             Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
             int tempBet = int.Parse(CurrentBet);
             scoreDictionary.Add("1", 0);
@@ -246,7 +242,7 @@ namespace UnusArmatusLattro.ViewModels
                 }
                 else if (item.Value == Cols)
                 {
-                    return total = tempBet + 1000000;
+                    return tempBet + 1000000;
                 }
                 else if (item.Value == 3)
                 {
@@ -261,18 +257,16 @@ namespace UnusArmatusLattro.ViewModels
 
             if (hasPair && hasThreeOfAKind)
             {
-                return total += tempScore * 2;
+                return tempScore * 2;
             }
 
-            return total += tempScore;
+            return tempScore;
         }
 
         public void SendUser()
         {
             User user = new User(User, int.Parse(Score));
-
             Repo.sendUser(user, Difficulty);
-
         }
 
         public bool ConfirmBet(String bet, string wallet)
@@ -309,7 +303,6 @@ namespace UnusArmatusLattro.ViewModels
                 StopBtnEnabled = false;
                 Timer.Stop();
             }
-
         }
 
         public void StartTimer()
