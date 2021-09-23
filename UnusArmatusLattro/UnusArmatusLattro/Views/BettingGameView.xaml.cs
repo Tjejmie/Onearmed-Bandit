@@ -22,6 +22,7 @@ namespace UnusArmatusLattro.Views
         public BettingGameView()
         {
             InitializeComponent();
+            
         }
         private void LeverCanvas_DragOver(object sender, DragEventArgs e)
         {
@@ -40,6 +41,7 @@ namespace UnusArmatusLattro.Views
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
+            BettingBox.Focus();
             //if (gameViewModel.ScoreToAdd != null);
                //gameViewModel.StartTimer();
         }
@@ -50,6 +52,7 @@ namespace UnusArmatusLattro.Views
             if(gameViewModel.ConfirmBet(BettingBox.Text, Wallet.Text))
             gameViewModel.StartTimer();
         }
+        
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
@@ -59,6 +62,11 @@ namespace UnusArmatusLattro.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             TogglePopupButton.IsChecked = false;
+        }
+        
+        private void Load(object sender, RoutedEventArgs e)
+        {
+            BettingBox.Focus();
         }
     }
 }

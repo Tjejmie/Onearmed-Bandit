@@ -284,10 +284,14 @@
                 <TextBlock Text="Pengar: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
                 <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
-            
             <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Vertical" >
                 <TextBlock Text="{Binding BetLabel}" Grid.Column="5" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Center"  FontSize="20" FontFamily="calibri-bold" FontWeight="Black" />
                 <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black" />
+
+            <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
+                <!--<TextBlock Text="Bet: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>-->
+                <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black"  TabIndex="0" Loaded="Load" >
+                </TextBox>
             </StackPanel>
             
             <Button Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem" />

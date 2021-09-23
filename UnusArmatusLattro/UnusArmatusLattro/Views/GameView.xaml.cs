@@ -63,6 +63,8 @@ namespace UnusArmatusLattro.Views
             {
                 if(gameViewModel.ScoreToAdd != null)
                 gameViewModel.StartTimer();
+
+                gameViewModel.ScoreToAdd = "";
             }
             
         }
