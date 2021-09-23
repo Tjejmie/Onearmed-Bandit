@@ -22,10 +22,12 @@ namespace UnusArmatusLattro.Views
         public BettingGameView()
         {
             InitializeComponent();
+            
         }
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
+            BettingBox.Focus();
             //if (gameViewModel.ScoreToAdd != null);
                //gameViewModel.StartTimer();
         }
@@ -35,6 +37,11 @@ namespace UnusArmatusLattro.Views
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
             if(gameViewModel.ConfirmBet(BettingBox.Text, Wallet.Text))
             gameViewModel.StartTimer();
+        }
+
+        private void Load(object sender, RoutedEventArgs e)
+        {
+            BettingBox.Focus();
         }
     }
 }

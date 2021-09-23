@@ -11,7 +11,7 @@ using UnusArmatusLattro.Views;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Linq;
-
+using System.Media;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -32,7 +32,7 @@ namespace UnusArmatusLattro.ViewModels
         public string NewHighScore { get; set; } = "Hidden";
         public bool BettingEnabled { get; set; } = true;
         public int Wallet { get; set; } = 100;
-        public string CurrentBet { get; set; } = "0";
+        public string CurrentBet { get; set; } = "";
         public string GameOverState { get; set; } = "Hidden";
         public string BetBtn { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;
@@ -43,6 +43,7 @@ namespace UnusArmatusLattro.ViewModels
         public int Cols { get; set; } = 4;
         public bool StopBtnEnabled { get; set; } = false;
         public ICommand Home { get;}
+        SoundPlayer player { get; set; }
 
         public BettingGameViewModel(MainViewModel parent, Difficulties diff)
         {
@@ -62,6 +63,8 @@ namespace UnusArmatusLattro.ViewModels
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
             Home = new GoToHomeCommand(this);
 
+            System.IO.Stream str = Resources.Resource1.sm64_whomp;
+            player = new SoundPlayer(str);
         }
 
         private void OnTimedEvent(Object source, EventArgs e)
@@ -70,12 +73,12 @@ namespace UnusArmatusLattro.ViewModels
             SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
 
 
-            int value = random.Next(1, 7);
+            int value = random.Next(1, 8);
             int num = int.Parse(SlotMachine[CurrentSlot].number);
 
             while (num == value)
             {
-                value = random.Next(1, 7);
+                value = random.Next(1, 8);
             }
             var enumValue = (Symbol)value;
             SlotMachine[CurrentSlot].number = value.ToString();
@@ -91,6 +94,7 @@ namespace UnusArmatusLattro.ViewModels
             symbols.Add(Symbol.Banana, "/Resources/Images/banana.png");
             symbols.Add(Symbol.Apple, "/Resources/Images/apple.png");
             symbols.Add(Symbol.Strawberry, "/Resources/Images/strawberry.png");
+            symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
         }
 
         private void FillSlots()
@@ -98,7 +102,7 @@ namespace UnusArmatusLattro.ViewModels
 
             for (int i = 0; i < Cols; i++)
             {
-                var enumValue = (Symbol)random.Next(1, 7);
+                var enumValue = (Symbol)random.Next(1, 8);
                 int value = (int)enumValue;
                 Slots temp = new Slots()
                 {
@@ -131,6 +135,26 @@ namespace UnusArmatusLattro.ViewModels
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+                if (SlotMachine[CurrentSlot].number == $"{(int)Symbol.Bandit}")
+                {
+                    Wallet -= int.Parse(CurrentBet);
+                    Timer.Stop();
+                    ScoreToAdd = $"El bandido";
+                    CurrentSlot = 0;
+                    NewRound();
+                    player.Play();
+
+
+                    if (Wallet == 0)
+                        GameOver();
+                    else
+                    {
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                    }
+
+                    return;
+                }
+
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
@@ -274,7 +298,7 @@ namespace UnusArmatusLattro.ViewModels
             }
             else
             {
-                CurrentBet = "0";
+                CurrentBet = "";
                 BettingEnabled = true;
                 GameOverState = "Hidden";
                 BetBtn = "Visible";
