@@ -28,9 +28,11 @@
     <None Remove="Resources\Images\SlotMachineView.png" />
     <None Remove="Resources\Images\strawberry.png" />
     <None Remove="Resources\Images\WallpaperStart.png" />
+    <None Remove="Resources\jackpot.wav" />
     <None Remove="Resources\LeverPull.wav" />
     <None Remove="Resources\LeverPush.wav" />
     <None Remove="Resources\MP3\Las Vegas Casino Music Video_ For Night Game of Poker, Blackjack, Roulette Wheel &amp; Slots.mp3" />
+    <None Remove="Resources\win.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +61,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\LeverPush.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\win.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\jackpot.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\MP3\Las Vegas Casino Music Video_ For Night Game of Poker, Blackjack, Roulette Wheel &amp; Slots.mp3">

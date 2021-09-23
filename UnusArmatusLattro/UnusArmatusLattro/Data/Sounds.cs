@@ -8,6 +8,6 @@ namespace UnusArmatusLattro.Data
 {
     public enum Sounds
     {
-        Bandit, Lever, Cash
+        Bandit, Lever, Cash, Jackpot
     }
 }

@@ -158,6 +158,14 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     Wallet -= int.Parse(CurrentBet);
                     int winnings = CalculateScore();
+
+                    if (winnings >= 1000000)
+                    {
+                        Playeffect(Sounds.Jackpot);
+                    }
+                    else
+                        Playeffect(Sounds.Cash);
+
                     ScoreToAdd = $"+{winnings}";
                     Wallet = Wallet + winnings;
                     NewRound();
@@ -328,10 +336,13 @@ namespace UnusArmatusLattro.ViewModels
                     sound = Resources.Resource1.sm64_whomp;
                     break;
                 case Sounds.Lever:
-                    sound = Resources.Resource1.LeverPull;
+                    sound = Resources.Resource1.LeverPush;
                     break;
                 case Sounds.Cash:
-                    sound = Resources.Resource1.LeverPush;
+                    sound = Resources.Resource1.win;
+                    break;
+                case Sounds.Jackpot:
+                    sound = Resources.Resource1.jackpot;
                     break;
                 default:
                     sound = null;
