@@ -207,7 +207,7 @@
         </Grid>
         
         
-        <Canvas Margin="0,0,0,110" Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
+        <Canvas Margin="0,0,0,110" Name="LeverCanvas" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
             <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand">

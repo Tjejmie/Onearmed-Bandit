@@ -20,6 +20,7 @@
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Margin" Value="0,10,0,0"/>
                 <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -64,23 +65,7 @@
         </Button>
 
 
-
-        <StackPanel VerticalAlignment="Center"  Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-
-            <Label Content="Din poäng är: " FontSize="25"  FontWeight="Black"></Label>
-            <Label Content="{Binding Points}" FontSize="30" FontWeight="Black">
-            </Label>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2" VerticalAlignment="top">
-            <Label Grid.Column="1" Grid.Row="2" Content="{Binding txtboxLabel}" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="25"  FontWeight="Black"></Label>
-            <Border BorderBrush="Black" BorderThickness="5" CornerRadius="5" Margin="0,10,0,0">
-                <TextBox x:Name="txtUserName" Text="{Binding User}" Grid.Column="1" Grid.Row="2" Background="Transparent" FontSize="30" Height="50" HorizontalAlignment="Left" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding DisplayInputField}"/>
-            </Border>
-            
-        </StackPanel>
-        
-        
-        <Grid Grid.Row="2" Grid.Column="1" >
+        <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" >
             <Grid.Resources>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Background" Value="#F8E779" />
@@ -90,6 +75,7 @@
                     <Setter Property="SnapsToDevicePixels" Value="True" />
                     <Setter Property="Margin" Value="0,10,0,0"/>
                     <Setter Property="MinHeight" Value="40"/>
+                    <Setter Property="Cursor" Value="Hand" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type Button}">
@@ -111,7 +97,25 @@
                     <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                 </Style>
             </Grid.Resources>
-            <Button  FontSize="25" Width="300" Grid.Column="1" Grid.Row="2" Height="80" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom" Visibility="{Binding DisplayInputField}">
+            
+            <StackPanel Orientation="Vertical">
+
+                <StackPanel VerticalAlignment="Center"  Orientation="Horizontal" Margin="0,0,0,10">
+                    <Label Content="Din poäng är: " FontSize="25"  FontWeight="Black"></Label>
+                    <Label Content="{Binding Points}" FontSize="30" FontWeight="Black">
+                    </Label>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" VerticalAlignment="top">
+                    <TextBlock  Text="{Binding txtboxLabel}" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="25" FontWeight="Black" TextWrapping="Wrap"></TextBlock>
+                    <Border BorderBrush="Black" BorderThickness="5" CornerRadius="10" Margin="0,10,0,0" Visibility="{Binding DisplayInputField}">
+                        <TextBox x:Name="txtUserName" Text="{Binding User}" Background="pink" FontSize="30" Height="50" HorizontalAlignment="Stretch" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding DisplayInputField}" Loaded="Load"/>
+                    </Border>
+                </StackPanel>
+
+            </StackPanel>
+            
+            <Button FontSize="25" Width="300" Height="80" Command="{Binding sendToDatabase}" VerticalAlignment="Bottom" Visibility="{Binding DisplayInputField}">
                 Skicka
             </Button>
         </Grid>

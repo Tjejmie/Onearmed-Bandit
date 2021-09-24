@@ -19,7 +19,7 @@ namespace UnusArmatusLattro.ViewModels
     public class GameViewModel : BaseViewModel
     {
         private readonly MainViewModel parent;
-        public ObservableCollection<Slots> SlotMachine { get; }
+        public ObservableCollection<Slots> SlotMachine { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
@@ -44,9 +44,9 @@ namespace UnusArmatusLattro.ViewModels
             this.parent = parent;
             Home = new GoToHomeCommand(this);
             GenerateDictionary();
-            SlotMachine = new ObservableCollection<Slots>();
             Difficulty = diff;
             FillSlots();
+            StopBtnEnabled = false;
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0";
@@ -88,8 +88,11 @@ namespace UnusArmatusLattro.ViewModels
             symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
         }
 
-        private void FillSlots()
+        public async void FillSlots()
         {
+            StopBtnEnabled = false;
+            await Task.Delay(1000);
+            SlotMachine = new ObservableCollection<Slots>();
             FillSlotsByDifficulty();
             for (int i = 0; i < Cols; i++)
             {
@@ -101,6 +104,7 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 SlotMachine.Add(temp);
             }
+            
         }
 
         public void FillSlotsByDifficulty()
@@ -154,9 +158,11 @@ namespace UnusArmatusLattro.ViewModels
                         GameOver();
                     else
                     {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
                     }
-
+                    
+                    FillSlots();
+                    
                     return;
                 }
                 CurrentSlot++;
@@ -175,6 +181,9 @@ namespace UnusArmatusLattro.ViewModels
                     {
                         SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
                     }
+                    
+                    FillSlots();
+                    
                 }
             }
         }

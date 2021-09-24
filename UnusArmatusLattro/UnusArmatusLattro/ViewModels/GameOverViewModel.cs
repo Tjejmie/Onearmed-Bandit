@@ -86,7 +86,7 @@ namespace UnusArmatusLattro.ViewModels
                 }
                 else
                 {
-                    txtboxLabel = "Oh noo...Du kom inte med på topplistan";
+                    txtboxLabel = "Oh noo...Du fick inte plats på topplistan dessvärre.";
                     DisplayInputField = "Hidden";
                     
                 }
