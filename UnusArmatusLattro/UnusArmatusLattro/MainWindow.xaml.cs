@@ -43,6 +43,11 @@ namespace UnusArmatusLattro
             mediaPlayer.Clock.Controller.Begin();
         }
 
-       
+        public void TurnOffMusic()
+        {
+            mediaPlayer.Clock.Controller.Stop();
+        }
+
+     
     }
 }

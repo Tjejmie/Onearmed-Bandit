@@ -26,6 +26,8 @@
     <None Remove="Resources\Images\slotM.png" />
     <None Remove="Resources\Images\SlotMachineLayout.png" />
     <None Remove="Resources\Images\SlotMachineView.png" />
+    <None Remove="Resources\Images\soundOff.png" />
+    <None Remove="Resources\Images\soundOn.png" />
     <None Remove="Resources\Images\strawberry.png" />
     <None Remove="Resources\Images\WallpaperStart.png" />
     <None Remove="Resources\jackpot.wav" />
@@ -55,6 +57,8 @@
     <Resource Include="Resources\Images\slotM.png" />
     <Resource Include="Resources\Images\SlotMachineLayout.png" />
     <Resource Include="Resources\Images\SlotMachineView.png" />
+    <Resource Include="Resources\Images\soundOff.png" />
+    <Resource Include="Resources\Images\soundOn.png" />
     <Resource Include="Resources\Images\strawberry.png" />
     <Resource Include="Resources\Images\WallpaperStart.png" />
     <Content Include="Resources\LeverPull.wav">
