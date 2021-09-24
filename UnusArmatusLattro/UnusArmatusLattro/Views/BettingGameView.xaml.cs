@@ -68,5 +68,7 @@ namespace UnusArmatusLattro.Views
         {
             BettingBox.Focus();
         }
+
+
     }
 }
