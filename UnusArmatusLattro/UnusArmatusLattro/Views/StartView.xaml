@@ -12,7 +12,7 @@
     
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" />
+            <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png"/>
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*" />
@@ -36,6 +36,7 @@
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Margin" Value="0,10,0,0"/>
                 <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -53,6 +54,32 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style TargetType="{x:Type ToggleButton}">
+                <Setter Property="Background" Value="#92BAF9" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Margin" Value="0,10,0,0"/>
+                <Setter Property="MinHeight" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#B6D2FE" />
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </Grid.Resources>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -60,13 +87,13 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}" Cursor="Hand">
+            <Button Grid.Row="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}">
             Spelregler
             </Button>
-            <Button Grid.Row="1" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}" Cursor="Hand">
+            <Button Grid.Row="1" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}">
             Highscore
             </Button>
-            <Button Grid.Row="2" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}" Cursor="Hand">
+            <Button Grid.Row="2" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}">
             Avsluta
             </Button>
         </Grid>
@@ -84,6 +111,7 @@
                     <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                     <Setter Property="SnapsToDevicePixels" Value="True" />
                     <Setter Property="Margin" Value="0,10,0,0"/>
+                    <Setter Property="Cursor" Value="Hand"/>
                     <Setter Property="MinHeight" Value="40"/>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -103,18 +131,26 @@
                     </Setter>
                 </Style>
             </Grid.Resources>
-            <Button Command="{Binding ChangeView}" FontSize="38" CommandParameter="{x:Static datan:GoToView.SpinGame}" Cursor="Hand">
+            <Button Command="{Binding ChangeView}" FontSize="38" CommandParameter="{x:Static datan:GoToView.SpinGame}">
                 Spela Spins
             </Button>
-            <Button Grid.Row="1" Command="{Binding ChangeView}" FontSize="38" CommandParameter="{x:Static datan:GoToView.BettingGame}" Cursor="Hand">
+            <Button Grid.Row="1" Command="{Binding ChangeView}" FontSize="38" CommandParameter="{x:Static datan:GoToView.BettingGame}">
                 Spela Betting
             </Button>
-
-
-
         </Grid>
-        
-         
+
+
+        <Grid Grid.Row="0" Grid.Column="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <ToggleButton x:Name="SoundBtn" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10" Checked="SoundBtn_Checked" Unchecked="SoundBtn_Unchecked" >
+                <Image Source="/Resources/Images/soundOn.png" Name="imgLineItemAdd" VerticalAlignment="Center" />
+            </ToggleButton>
+           
+        </Grid>
+
     </Grid>
    
 </UserControl>

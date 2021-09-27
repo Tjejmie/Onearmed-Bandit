@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using System.Windows.Media;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Media;
 
 namespace UnusArmatusLattro.ViewModels
 {
@@ -19,7 +20,7 @@ namespace UnusArmatusLattro.ViewModels
     public class GameViewModel : BaseViewModel
     {
         private readonly MainViewModel parent;
-        public ObservableCollection<Slots> SlotMachine { get; }
+        public ObservableCollection<Slots> SlotMachine { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
         public ICommand Spin { get; }
@@ -44,9 +45,9 @@ namespace UnusArmatusLattro.ViewModels
             this.parent = parent;
             Home = new GoToHomeCommand(this);
             GenerateDictionary();
-            SlotMachine = new ObservableCollection<Slots>();
             Difficulty = diff;
             FillSlots();
+            StopBtnEnabled = false;
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0";
@@ -88,8 +89,11 @@ namespace UnusArmatusLattro.ViewModels
             symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
         }
 
-        private void FillSlots()
+        public async void FillSlots()
         {
+            StopBtnEnabled = false;
+            await Task.Delay(1000);
+            SlotMachine = new ObservableCollection<Slots>();
             FillSlotsByDifficulty();
             for (int i = 0; i < Cols; i++)
             {
@@ -101,6 +105,7 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 SlotMachine.Add(temp);
             }
+            
         }
 
         public void FillSlotsByDifficulty()
@@ -140,6 +145,7 @@ namespace UnusArmatusLattro.ViewModels
 
         public void SpinSlots()
         {
+            Playeffect(Sounds.Stop);
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
@@ -147,16 +153,19 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     Timer.Stop();
                     RemainingSpins--;
-                    ScoreToAdd = $"El bandido";
+                    ScoreToAdd = $"El bandito";
+                    Playeffect(Sounds.Bandit);
                     CurrentSlot = 0;
 
                     if (RemainingSpins == 0)
                         GameOver();
                     else
                     {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
                     }
-
+                    
+                    FillSlots();
+                    
                     return;
                 }
                 CurrentSlot++;
@@ -165,6 +174,16 @@ namespace UnusArmatusLattro.ViewModels
                     Timer.Stop();
                     RemainingSpins -= 1;
                     int Winnings = CalculateScore();
+                    
+                    if (Winnings >= 1000000)
+                    {
+                        Playeffect(Sounds.Jackpot);
+                    }
+                    else if (Winnings > 0)
+                    {
+                        Playeffect(Sounds.Cash);
+                    }
+
                     ScoreToAdd = $"+{Winnings}";
                     Score = $"{int.Parse(Score) + Winnings}";
                     CurrentSlot = 0;
@@ -175,6 +194,9 @@ namespace UnusArmatusLattro.ViewModels
                     {
                         SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
                     }
+                    
+                    FillSlots();
+                    
                 }
             }
         }
@@ -270,6 +292,35 @@ namespace UnusArmatusLattro.ViewModels
             parent.CurrentViewModel = new StartViewModel(parent);
         }
 
+        public void Playeffect(Sounds sounds)
+        {
+
+            System.IO.Stream sound;
+
+            switch (sounds)
+            {
+                case Sounds.Bandit:
+                    sound = Resources.Resource1.sm64_whomp;
+                    break;
+                case Sounds.Lever:
+                    sound = Resources.Resource1.LeverPush;
+                    break;
+                case Sounds.Cash:
+                    sound = Resources.Resource1.win;
+                    break;
+                case Sounds.Jackpot:
+                    sound = Resources.Resource1.jackpot;
+                    break;
+                case Sounds.Stop:
+                    sound = Resources.Resource1.LeverPull;
+                    break;
+                default:
+                    sound = null;
+                    break;
+            }
+            SoundPlayer player = new SoundPlayer(sound);
+            player.Play();
+        }
     }
 }
 

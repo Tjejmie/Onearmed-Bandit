@@ -118,8 +118,8 @@
             <Popup Placement="Center"  Name="myPopup" IsOpen="{Binding IsChecked, ElementName=TogglePopupButton}" AllowsTransparency="True">
                 <Grid Grid.Column="1" Grid.Row="1" Width="740" Height="400" Background="Transparent">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="2.1*"/>
+                        <RowDefinition Height="6*"/>
                         <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
 
@@ -132,7 +132,8 @@
                     3. Klicka på Stop för att stoppa den markerade rutan<LineBreak/>
                     4. När alla rutor är stannade får du pengar baserat på de frukter samt bet du har låst in<LineBreak/>
                     5. Fortsätt spela tills du har fått nog alternativt när du fått slut på pengar.<LineBreak/>
-                    6. Tryck på Ca$h out-knappen när du vill avsluta spelet.    
+                    6. Akta dig för banditen! Hamnar du på den tar han dina pengar<LineBreak/>
+                    7. Tryck på Ca$h out-knappen när du vill avsluta spelet.    
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2">
                         <StackPanel Margin="0,0,10,0">
@@ -162,6 +163,10 @@
                         <StackPanel Orientation="Vertical">
                             <Image Source="/Resources/Images/grapes.png" Width="80"></Image>
                             <Label HorizontalAlignment="Center" FontSize="25">6</Label>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="/Resources/Images/bandit.png" Width="80"></Image>
+                            <Label HorizontalAlignment="Center" FontSize="25">Bandit</Label>
                         </StackPanel>
                     </StackPanel>
                     <Button Style="{StaticResource BaseButtonStyle}" Margin="10" Click="Button_Click" Width="50" Height="50" HorizontalAlignment="Right">X</Button>
@@ -244,7 +249,7 @@
         <Canvas Margin="0,0,0,110" Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
-            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand">
+            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand" MouseDown="Lever_MouseDown">
                 <Ellipse.Triggers>
                     <EventTrigger RoutedEvent="Ellipse.MouseDown">
                         <BeginStoryboard>
@@ -285,8 +290,11 @@
                 <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
             <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
-                <!--<TextBlock Text="Bet: " FontSize="15" FontFamily="calibri-bold" FontWeight="Black"></TextBlock>-->
+
+          
+                <TextBlock Text="Bet: " FontSize="20" FontFamily="calibri-bold" FontWeight="Black" VerticalAlignment="Center"></TextBlock>
                 <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black"  TabIndex="0" Loaded="Load" >
+
                 </TextBox>
             </StackPanel>
             
