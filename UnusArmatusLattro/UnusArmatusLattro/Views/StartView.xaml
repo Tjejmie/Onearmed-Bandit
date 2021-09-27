@@ -113,8 +113,24 @@
 
 
         </Grid>
+
+
+        <Grid Grid.Row="0" Grid.Column="4">
+            <Button x:Name="soundBtn" Margin="10,0,10,255" Padding="10" Click="Button_Click"  > 
+              <Hyperlink Command="{Binding }" Foreground="#000000" TextDecorations="None">
+                    <Image Source="/Resources/Images/soundOn.png" Name="imgLineItemAdd" VerticalAlignment="Center" />
+              </Hyperlink>
+
+            </Button>
         
-         
+
+
+        </Grid>
+
+        
+
+
+
     </Grid>
    
 </UserControl>

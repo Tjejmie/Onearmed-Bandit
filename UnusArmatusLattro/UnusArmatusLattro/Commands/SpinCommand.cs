@@ -33,6 +33,7 @@ namespace UnusArmatusLattro.Commands
                 gameViewModel.SpinSlots();
             else
                 bettingGameViewModel.SpinSlots();
+                
         }
     }
 }

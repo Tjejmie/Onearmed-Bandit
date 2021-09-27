@@ -249,7 +249,7 @@
         <Canvas Margin="0,0,0,110" Name="LeverCanvas" DragOver="LeverCanvas_DragOver" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
-            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand">
+            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand" MouseDown="Lever_MouseDown">
                 <Ellipse.Triggers>
                     <EventTrigger RoutedEvent="Ellipse.MouseDown">
                         <BeginStoryboard>
@@ -290,9 +290,11 @@
                 <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
             </StackPanel>
             <StackPanel Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
+
           
                 <TextBlock Text="Bet: " FontSize="20" FontFamily="calibri-bold" FontWeight="Black" VerticalAlignment="Center"></TextBlock>
                 <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black"  TabIndex="0" Loaded="Load" >
+
                 </TextBox>
             </StackPanel>
             

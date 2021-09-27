@@ -9,12 +9,15 @@ namespace UnusArmatusLattro.ViewModels
 {
     public class StartViewModel : BaseViewModel
     {
+     
         private readonly MainViewModel parent;
+  
 
         public StartViewModel(MainViewModel parent)
         {
             this.parent = parent;
             ChangeView = new ChangeViewCommand(this);
+           
         }
         public ICommand ChangeView { get; set; }
         
@@ -41,6 +44,9 @@ namespace UnusArmatusLattro.ViewModels
         {
             parent.CurrentViewModel = new BettingGameViewModel(parent, diff);
         }
+
+        
+      
 
 
     }

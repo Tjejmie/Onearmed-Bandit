@@ -19,9 +19,23 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class StartView : UserControl
     {
+        // MediaPlayer mediaPlayer;
+       MainWindow mainWindow;
+  
         public StartView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           mainWindow = (MainWindow)Window.GetWindow(this);
+           mainWindow.TurnOffMusic();
+
+            ControlTemplate ct = soundBtn.Template;
+            imgLineItemAdd.Source = new BitmapImage(new Uri("/Resources/Images/soundOff.png", UriKind.RelativeOrAbsolute));
+          
+
         }
     }
 }
