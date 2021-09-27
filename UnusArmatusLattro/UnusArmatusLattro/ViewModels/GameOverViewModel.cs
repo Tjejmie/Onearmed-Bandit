@@ -14,18 +14,14 @@ namespace UnusArmatusLattro.ViewModels
     public class GameOverViewModel : BaseViewModel
     {
         public ICommand GameOverCommand { get; set; }
-
         private readonly MainViewModel parent;
-        public bool InputAccepted { get; set; } = true;
-        public string txtboxLabel { get; set; } = "";
-        public string DisplayInputField { get; set; } = "Hidden";
         public string Points { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         public Difficulties Difficulty { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
-        
         public string User { get; set; }
         public ICommand sendToDatabase { get; }
+        public bool InputAccepted { get; set; } = true;
 
         public GameOverViewModel(MainViewModel parent, string score, Difficulties diff)
         {
@@ -69,11 +65,12 @@ namespace UnusArmatusLattro.ViewModels
         }
         public void SendUser()
         {
-            User user = new User(User, int.Parse(Points));
-
-            Repo.sendUser(user, Difficulty);
-            InputAccepted = false;
-
+            if (User != "")
+            {
+                User user = new User(User, int.Parse(Points));
+                Repo.sendUser(user, Difficulty);
+                InputAccepted = false;
+            }
         }
         private bool IsHighScore(int score)
         {
@@ -81,21 +78,11 @@ namespace UnusArmatusLattro.ViewModels
             {
                 if (score > highScore.Score)
                 {
-                    txtboxLabel = "Namn:";
-                    DisplayInputField = "Visible";
                     return true;
-                }
-                else
-                {
-                    txtboxLabel = "Oh noo...Du fick inte plats på topplistan dessvärre.";
-                    DisplayInputField = "Hidden";
-                    
                 }
             }
             if (HighScores.Count < 10)
             {
-                txtboxLabel = "Namn:";
-                DisplayInputField = "Visible";
                 return true;
             }
             return false;
