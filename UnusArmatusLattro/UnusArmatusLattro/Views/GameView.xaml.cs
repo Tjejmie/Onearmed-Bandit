@@ -20,37 +20,37 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameView : UserControl
     {
-        
+        bool isRunning;
         public GameView()
         {
             InitializeComponent();
 
         }
 
-        
 
-        private void LeverCanvas_DragOver(object sender, DragEventArgs e)
-        {
-            object data = e.Data.GetData(DataFormats.Serializable);
-            //if (data is LeverButton btn)
-            //{
 
-            //    Point dropPosition = e.GetPosition(LeverCanvas);
-                
-            //    Canvas.SetTop(btn, e.GetPosition(LeverCanvas).Y);
+        //private void LeverCanvas_DragOver(object sender, DragEventArgs e)
+        //{
+        //    object data = e.Data.GetData(DataFormats.Serializable);
+        //    //if (data is LeverButton btn)
+        //    //{
 
-                
-            //}
-            Canvas.SetTop(Lever, e.GetPosition(LeverCanvas).Y);
-        }
+        //    //    Point dropPosition = e.GetPosition(LeverCanvas);
 
-        private void Lever_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                DragDrop.DoDragDrop(this, new DataObject(DataFormats.Serializable, this), DragDropEffects.Move);
-            }
-        }
+        //    //    Canvas.SetTop(btn, e.GetPosition(LeverCanvas).Y);
+
+
+        //    //}
+        //    Canvas.SetTop(Lever, e.GetPosition(LeverCanvas).Y);
+        //}
+
+        //private void Lever_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (e.LeftButton == MouseButtonState.Pressed)
+        //    {
+        //        DragDrop.DoDragDrop(this, new DataObject(DataFormats.Serializable, this), DragDropEffects.Move);
+        //    }
+        //}
 
         private void Lever_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -59,13 +59,18 @@ namespace UnusArmatusLattro.Views
 
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
-            GameViewModel gameViewModel = (GameViewModel)DataContext;
-            if(gameViewModel != null)
+            if (isRunning)
             {
-                if(gameViewModel.ScoreToAdd != null)
-                gameViewModel.StartTimer();
-
-                gameViewModel.ScoreToAdd = "";
+                GameViewModel gameViewModel = (GameViewModel)DataContext;
+                if (gameViewModel != null)
+                {
+                    if (gameViewModel.ScoreToAdd != null)
+                    {
+                        gameViewModel.StartTimer();
+                        
+                    }
+                        gameViewModel.ScoreToAdd = "";       
+                }
             }
             
         }
@@ -74,6 +79,7 @@ namespace UnusArmatusLattro.Views
         {
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.StartTimer();
+            isRunning = true;
         }
 
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
