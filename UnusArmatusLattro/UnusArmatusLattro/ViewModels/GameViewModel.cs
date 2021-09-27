@@ -30,7 +30,7 @@ namespace UnusArmatusLattro.ViewModels
         public UserRepository Repo { get; set; } = new UserRepository();
         public string Score { get; set; }
         public LeverButton LeverObj { get; set; } = new LeverButton();
-        public int RemainingSpins { get; set; } = 1;
+        public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
         public string ShowScoreToAdd { get; set; } = "Hidden";
         private int CurrentSlot { get; set; } = 0;
@@ -153,7 +153,7 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     Timer.Stop();
                     RemainingSpins--;
-                    ScoreToAdd = $"El bandido";
+                    ScoreToAdd = $"El bandito";
                     Playeffect(Sounds.Bandit);
                     CurrentSlot = 0;
 

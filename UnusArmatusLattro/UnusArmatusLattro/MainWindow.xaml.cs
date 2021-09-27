@@ -43,11 +43,15 @@ namespace UnusArmatusLattro
             mediaPlayer.Clock.Controller.Begin();
         }
 
-        public void TurnOffMusic()
+        public void PauseMusic()
         {
-            mediaPlayer.Clock.Controller.Stop();
+            mediaPlayer.Clock.Controller.Pause();
         }
 
-     
+        public void ResumeMusic()
+        {
+            mediaPlayer.Clock.Controller.Resume();
+        }
+
     }
 }

@@ -139,7 +139,7 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     Wallet -= int.Parse(CurrentBet);
                     Timer.Stop();
-                    ScoreToAdd = $"El bandido";
+                    ScoreToAdd = $"El bandito";
                     CurrentSlot = 0;
                     NewRound();
                     Playeffect(Sounds.Bandit);
