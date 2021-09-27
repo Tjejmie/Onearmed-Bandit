@@ -70,5 +70,11 @@ namespace UnusArmatusLattro.Views
         {
             BettingBox.Focus();
         }
+
+        private void Lever_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
+            gameViewModel.Playeffect(Data.Sounds.Lever);
+        }
     }
 }
