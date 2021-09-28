@@ -21,12 +21,34 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameView : UserControl
     {
-        Storyboard story = new Storyboard();
+        Storyboard buttonStory = new Storyboard();
+        Storyboard leverStory = new Storyboard();
         bool isRunning;
+
         public GameView()
         {
             InitializeComponent();
+            SetColorButton();
+            SetColorLever();
+        }
 
+        private void SetColorLever()
+        {
+            ColorAnimation color = new ColorAnimation();
+            color.From = Colors.Yellow;
+            color.To = Colors.Red;
+            color.Duration = TimeSpan.FromSeconds(.2);
+            color.RepeatBehavior = RepeatBehavior.Forever;
+            color.AutoReverse = true;
+
+            leverStory.Children.Add(color);
+            Storyboard.SetTarget(color, Lever);
+            Storyboard.SetTargetProperty(color, new PropertyPath("(Ellipse.Stroke).(SolidColorBrush.Color)"));
+            leverStory.Begin();
+        }
+
+        private void SetColorButton()
+        {
             ColorAnimation color = new ColorAnimation();
             color.From = Colors.LightPink;
             color.To = Colors.Red;
@@ -34,17 +56,14 @@ namespace UnusArmatusLattro.Views
             color.RepeatBehavior = RepeatBehavior.Forever;
             color.AutoReverse = true;
 
-            story.Children.Add(color);
+            buttonStory.Children.Add(color);
             Storyboard.SetTarget(color, Border);
             Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
-
         }
-
 
         private void Lever_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Canvas.SetTop(Lever, 300);
-            
         }
 
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
@@ -69,14 +88,12 @@ namespace UnusArmatusLattro.Views
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.StartTimer();
             isRunning = true;
-            
         }
 
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth /2 - Lever.Width/2);
             Canvas.SetTop(Lever, 0);
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -88,12 +105,10 @@ namespace UnusArmatusLattro.Views
         {
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.Playeffect(Sounds.Lever);
-            story.Begin();
+            buttonStory.Begin();
+            leverStory.Stop();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
+   
     }
 }

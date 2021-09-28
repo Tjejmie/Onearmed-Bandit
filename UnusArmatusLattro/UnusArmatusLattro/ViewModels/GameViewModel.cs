@@ -38,6 +38,7 @@ namespace UnusArmatusLattro.ViewModels
         public Difficulties Difficulty { get; set; }
         public bool StopBtnEnabled { get; set; } = false;
         public string ScoreToAdd { get; set; }
+        public string SpinnToAdd { get; set; }
         public int Cols { get; set; }
         public GameViewModel(MainViewModel parent, Difficulties diff)
         {
@@ -244,6 +245,8 @@ namespace UnusArmatusLattro.ViewModels
                     if (hasPair)
                     {
                         RemainingSpins++;
+                        SpinnToAdd = $"+1";
+                        
                         tempScore += int.Parse(item.Key) * 100;
                     }
                     else
@@ -274,6 +277,7 @@ namespace UnusArmatusLattro.ViewModels
             if(hasPair && hasThreeOfAKind)
             {
                 RemainingSpins++;
+                SpinnToAdd = $"+1";
                 return tempScore * 2;
             }
 
