@@ -8,7 +8,7 @@ namespace UnusArmatusLattro.Commands
 {
     public class GameOverCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged { add { } remove { } }
         public GameOverViewModel baseViewModel;
 
         public GameOverCommand(GameOverViewModel gameOverViewModel)

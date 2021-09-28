@@ -8,7 +8,7 @@ namespace UnusArmatusLattro.Commands
 {
     public class GoToHomeCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged { add { } remove { } }
         private BettingGameViewModel bettingGameViewModel;
         private GameViewModel gameViewModel;
         private SpinGameViewModel spinGameViewModel;

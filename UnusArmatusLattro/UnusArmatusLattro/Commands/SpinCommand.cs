@@ -8,7 +8,7 @@ namespace UnusArmatusLattro.Commands
 {
     class SpinCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged { add { } remove { } }
 
         private GameViewModel gameViewModel;
         private BettingGameViewModel bettingGameViewModel;

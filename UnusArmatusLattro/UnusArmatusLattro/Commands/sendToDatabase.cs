@@ -10,7 +10,7 @@ namespace UnusArmatusLattro.Commands
 {
     public class sendToDatabase : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged { add { } remove { } }
         private GameOverViewModel gameOverViewModel;
         private GameViewModel gameViewModel;
         private BettingGameViewModel bettingGameViewModel;
