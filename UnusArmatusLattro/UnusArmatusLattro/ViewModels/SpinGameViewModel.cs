@@ -29,7 +29,5 @@ namespace UnusArmatusLattro.ViewModels
         {
             parent.CurrentViewModel = new GameViewModel(parent, diff);
         }
-        
-
     }
 }

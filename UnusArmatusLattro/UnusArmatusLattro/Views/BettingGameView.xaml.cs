@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -22,25 +23,39 @@ namespace UnusArmatusLattro.Views
     public partial class BettingGameView : UserControl
     {
         bool isRunning;
+        Storyboard story = new Storyboard();
+        Storyboard LeverStory = new Storyboard();
         public BettingGameView()
         {
             InitializeComponent();
-            
+            GenerateStoryboards();
         }
-        private void LeverCanvas_DragOver(object sender, DragEventArgs e)
+
+        private void GenerateStoryboards()
         {
-            object data = e.Data.GetData(DataFormats.Serializable);
-            //if (data is LeverButton btn)
-            //{
+            ColorAnimation color = new ColorAnimation();
+            color.From = Colors.LightPink;
+            color.To = Colors.Red;
+            color.Duration = TimeSpan.FromSeconds(.2);
+            color.RepeatBehavior = RepeatBehavior.Forever;
+            color.AutoReverse = true;
 
-            //    Point dropPosition = e.GetPosition(LeverCanvas);
+            story.Children.Add(color);
+            Storyboard.SetTarget(color, StopBorder);
+            Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
 
-            //    Canvas.SetTop(btn, e.GetPosition(LeverCanvas).Y);
+            ColorAnimation leverColor = new ColorAnimation();
+            leverColor.From = Colors.LightPink;
+            leverColor.To = Colors.Red;
+            leverColor.Duration = TimeSpan.FromSeconds(.2);
+            leverColor.RepeatBehavior = RepeatBehavior.Forever;
+            leverColor.AutoReverse = true;
 
-
-            //}
-            Canvas.SetTop(Lever, e.GetPosition(LeverCanvas).Y);
+            LeverStory.Children.Add(leverColor);
+            Storyboard.SetTarget(leverColor, Lever);
+            Storyboard.SetTargetProperty(leverColor, new PropertyPath("(Ellipse.Stroke).(SolidColorBrush.Color)"));
         }
+
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             BettingBox.Focus();
@@ -48,9 +63,7 @@ namespace UnusArmatusLattro.Views
             {
                 BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
                 if (gameViewModel != null)
-                {
                     gameViewModel.ScoreToAdd = "";
-                }
                 isRunning = false;
             }
         }
@@ -58,17 +71,18 @@ namespace UnusArmatusLattro.Views
         private void DoubleAnimation_Completed(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
-            if(gameViewModel.ConfirmBet(BettingBox.Text, Wallet.Text))
+            if (gameViewModel.ConfirmBet(BettingBox.Text, Wallet.Text))
             {
                 gameViewModel.StartTimer();
+                LeverStory.Stop();
             }
             else
             {
-                MessageBox.Show("Incorrect bet");
+                BettingPopup.IsOpen = true;
                 BettingBox.Text = "";
             }
         }
-        
+
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
@@ -79,7 +93,12 @@ namespace UnusArmatusLattro.Views
         {
             TogglePopupButton.IsChecked = false;
         }
-        
+
+        private void BettingPopupButton(object sender, RoutedEventArgs e)
+        {
+            BettingPopup.IsOpen = false;
+        }
+
         private void Load(object sender, RoutedEventArgs e)
         {
             BettingBox.Focus();
@@ -95,20 +114,36 @@ namespace UnusArmatusLattro.Views
         private void HighScorePreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
-           
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void BettingBox_KeyDown(object sender, KeyEventArgs e) 
-        { 
-            
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
+        private void BettingBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = e.Key == Key.Space;
+        }
+
+        private void Button_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (StopButton.IsEnabled)
+                story.Begin();
+            else
+                story.Stop();
+        }
+
+        private void BettingBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BettingBox.Text == "")
+                LeverStory.Stop();
             else
             {
-                e.Handled = false;
+                if (int.Parse(BettingBox.Text) <= int.Parse(Wallet.Text))
+                {
+                    LeverStory.Begin();
+                }
+                else
+                {
+                    LeverStory.Stop();
+                }
             }
         }
     }

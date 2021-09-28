@@ -23,7 +23,6 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<Slots> SlotMachine { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
-        public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
         public ICommand Home { get; }
         public Dictionary<Symbol, string> symbols { get; set; }

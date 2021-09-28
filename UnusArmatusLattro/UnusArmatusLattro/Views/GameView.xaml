@@ -244,7 +244,7 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Name="Border" BorderBrush="Pink" BorderThickness="5" CornerRadius="10" Margin="0,10,0,0">
-                <Button Command="{Binding Spin}" Cursor="Hand" Visibility="{Binding DisplayInputField}" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
+                <Button Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop" Click="Button_Click_1"/>
             </Border>
 
             

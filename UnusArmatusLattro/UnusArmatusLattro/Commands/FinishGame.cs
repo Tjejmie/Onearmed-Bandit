@@ -24,7 +24,6 @@ namespace UnusArmatusLattro.Commands
         public void Execute(object parameter)
         {
             bettingGameView.GameOver();
-
         }
     }
 }

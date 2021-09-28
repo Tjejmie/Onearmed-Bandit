@@ -21,13 +21,13 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<Slots> SlotMachine { get; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
-        public ICommand Spin { get; }
-        public ICommand sendToDatabase { get; }
+        public ICommand SendToDatabase { get; }
         public ICommand BetCommand { get; }
         public ICommand FinishGame { get; }
+        public ICommand Home { get;}
         public string Score { get; set; }
         public string User { get; set; }
-        public Dictionary<Symbol, string> symbols { get; set; }
+        public Dictionary<Symbol, string> Symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string NewHighScore { get; set; } = "Hidden";
         public bool BettingEnabled { get; set; } = true;
@@ -43,7 +43,6 @@ namespace UnusArmatusLattro.ViewModels
         public Difficulties Difficulty { get; set; }
         public int Cols { get; set; } = 4;
         public bool StopBtnEnabled { get; set; } = false;
-        public ICommand Home { get;}
         SoundPlayer Player { get; set; }
         
 
@@ -58,7 +57,7 @@ namespace UnusArmatusLattro.ViewModels
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0";
-            sendToDatabase = new sendToDatabase(this);
+            //SendToDatabase = new sendToDatabase(this);
             FinishGame = new FinishGame(this);
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
@@ -80,21 +79,21 @@ namespace UnusArmatusLattro.ViewModels
             {
                 value = random.Next(1, 8);
             }
-            var enumValue = (Symbol)value;
+            Symbol enumValue = (Symbol)value;
             SlotMachine[CurrentSlot].number = value.ToString();
-            SlotMachine[CurrentSlot].ImageSource = symbols[enumValue];
+            SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
 
         }
         private void GenerateDictionary()
         {
-            symbols = new Dictionary<Symbol, string>();
-            symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
-            symbols.Add(Symbol.Lemon, "/Resources/Images/lemon.png");
-            symbols.Add(Symbol.Grapes, "/Resources/Images/grapes.png");
-            symbols.Add(Symbol.Banana, "/Resources/Images/banana.png");
-            symbols.Add(Symbol.Apple, "/Resources/Images/apple.png");
-            symbols.Add(Symbol.Strawberry, "/Resources/Images/strawberry.png");
-            symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
+            Symbols = new Dictionary<Symbol, string>();
+            Symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
+            Symbols.Add(Symbol.Lemon, "/Resources/Images/lemon.png");
+            Symbols.Add(Symbol.Grapes, "/Resources/Images/grapes.png");
+            Symbols.Add(Symbol.Banana, "/Resources/Images/banana.png");
+            Symbols.Add(Symbol.Apple, "/Resources/Images/apple.png");
+            Symbols.Add(Symbol.Strawberry, "/Resources/Images/strawberry.png");
+            Symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
         }
 
         private void FillSlots()
@@ -102,12 +101,12 @@ namespace UnusArmatusLattro.ViewModels
 
             for (int i = 0; i < Cols; i++)
             {
-                var enumValue = (Symbol)random.Next(1, 8);
+                Symbol enumValue = (Symbol)random.Next(1, 8);
                 int value = (int)enumValue;
                 Slots temp = new Slots()
                 {
                     number = value.ToString(),
-                    ImageSource = symbols[enumValue]
+                    ImageSource = Symbols[enumValue]
                 };
                 SlotMachine.Add(temp);
             }

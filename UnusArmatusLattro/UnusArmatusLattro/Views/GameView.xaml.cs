@@ -90,5 +90,10 @@ namespace UnusArmatusLattro.Views
             gameViewModel.Playeffect(Sounds.Lever);
             story.Begin();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

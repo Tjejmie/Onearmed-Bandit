@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using UnusArmatusLattro.ViewModels;
 using System.Media;
 using System.Windows.Media.Animation;
+using UnusArmatusLattro.Commands;
 
 namespace UnusArmatusLattro
 {
@@ -24,6 +25,7 @@ namespace UnusArmatusLattro
     public partial class MainWindow : Window
     {
         MediaPlayer mediaPlayer;
+        public ICommand Spin { get; set; }
         public MainWindow()
         {
             InitializeComponent();
