@@ -22,6 +22,7 @@ namespace UnusArmatusLattro.ViewModels
         public string User { get; set; }
         public ICommand sendToDatabase { get; }
         public bool InputAccepted { get; set; } = true;
+        public ICommand Home { get; }
 
         public GameOverViewModel(MainViewModel parent, string score, Difficulties diff)
         {
@@ -33,6 +34,7 @@ namespace UnusArmatusLattro.ViewModels
             User = "";
             sendToDatabase = new sendToDatabase(this);
             GameOver();
+            Home = new GoToHomeCommand(this);
         }
 
         public void SpinGame()
@@ -91,6 +93,11 @@ namespace UnusArmatusLattro.ViewModels
         private void GameOver()
         {
             IsHighScore(int.Parse(Points));
+        }
+
+        public void GoHome()
+        {
+            parent.CurrentViewModel = new StartViewModel(parent);
         }
     }
 

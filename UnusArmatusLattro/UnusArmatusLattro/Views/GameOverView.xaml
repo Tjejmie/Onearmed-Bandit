@@ -57,7 +57,7 @@
             <RowDefinition Height="16*" />
             <RowDefinition Height="5*" />
         </Grid.RowDefinitions>
-        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" CommandParameter="{x:Static datan:GoToView.Exit}">
+        <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding Home}" HorizontalAlignment="Right" VerticalAlignment="Bottom" CommandParameter="{x:Static datan:GoToView.Exit}">
             Avsluta
         </Button>
         <Button Width="200" Grid.Column="1" Grid.Row="3" Height="70" Command="{Binding GameOverCommand}" HorizontalAlignment="Left" VerticalAlignment="Bottom" CommandParameter="{x:Static datan:GoToView.SpinGame}">
