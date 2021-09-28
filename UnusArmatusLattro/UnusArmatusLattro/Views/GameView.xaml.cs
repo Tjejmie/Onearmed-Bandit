@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -20,41 +21,30 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameView : UserControl
     {
+        Storyboard story = new Storyboard();
         bool isRunning;
         public GameView()
         {
             InitializeComponent();
 
+            ColorAnimation color = new ColorAnimation();
+            color.From = Colors.LightPink;
+            color.To = Colors.Red;
+            color.Duration = TimeSpan.FromSeconds(.2);
+            color.RepeatBehavior = RepeatBehavior.Forever;
+            color.AutoReverse = true;
+
+            story.Children.Add(color);
+            Storyboard.SetTarget(color, Border);
+            Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
+
         }
 
-
-
-        //private void LeverCanvas_DragOver(object sender, DragEventArgs e)
-        //{
-        //    object data = e.Data.GetData(DataFormats.Serializable);
-        //    //if (data is LeverButton btn)
-        //    //{
-
-        //    //    Point dropPosition = e.GetPosition(LeverCanvas);
-
-        //    //    Canvas.SetTop(btn, e.GetPosition(LeverCanvas).Y);
-
-
-        //    //}
-        //    Canvas.SetTop(Lever, e.GetPosition(LeverCanvas).Y);
-        //}
-
-        //private void Lever_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (e.LeftButton == MouseButtonState.Pressed)
-        //    {
-        //        DragDrop.DoDragDrop(this, new DataObject(DataFormats.Serializable, this), DragDropEffects.Move);
-        //    }
-        //}
 
         private void Lever_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Canvas.SetTop(Lever, 300);
+            
         }
 
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
@@ -72,7 +62,6 @@ namespace UnusArmatusLattro.Views
                         gameViewModel.ScoreToAdd = "";       
                 }
             }
-            
         }
 
         private void DoubleAnimation_Completed(object sender, EventArgs e)
@@ -80,12 +69,14 @@ namespace UnusArmatusLattro.Views
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.StartTimer();
             isRunning = true;
+            
         }
 
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth /2 - Lever.Width/2);
             Canvas.SetTop(Lever, 0);
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -97,6 +88,7 @@ namespace UnusArmatusLattro.Views
         {
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.Playeffect(Sounds.Lever);
+            story.Begin();
         }
     }
 }
