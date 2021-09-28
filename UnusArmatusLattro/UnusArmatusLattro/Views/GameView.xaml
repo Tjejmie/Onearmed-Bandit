@@ -221,7 +221,7 @@
         <Canvas Margin="0,0,0,110" Name="LeverCanvas" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
-            <Ellipse  Visibility="{Binding DisplayInputField}" Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand" MouseDown="Lever_MouseDown">
+            <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand" MouseDown="Lever_MouseDown">
                 <Ellipse.Triggers>
                     <EventTrigger RoutedEvent="Ellipse.MouseDown">
                         <BeginStoryboard>
@@ -255,7 +255,7 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Name="Border" BorderBrush="Pink" BorderThickness="5" CornerRadius="20" Margin="0,10,0,0">
-                <Button Command="{Binding Spin}" Cursor="Hand" Visibility="{Binding DisplayInputField}" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
+                <Button Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
             </Border>
 
 
