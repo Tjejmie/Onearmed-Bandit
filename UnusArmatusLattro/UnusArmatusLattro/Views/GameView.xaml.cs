@@ -64,7 +64,6 @@ namespace UnusArmatusLattro.Views
         private void Lever_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Canvas.SetTop(Lever, 300);
-            
         }
 
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
@@ -89,14 +88,12 @@ namespace UnusArmatusLattro.Views
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.StartTimer();
             isRunning = true;
-            
         }
 
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth /2 - Lever.Width/2);
             Canvas.SetTop(Lever, 0);
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -112,21 +109,6 @@ namespace UnusArmatusLattro.Views
             leverStory.Stop();
         }
 
-        private void DoubleAnimation_Completed_1(object sender, EventArgs e)
-        {
-            if (isRunning)
-            {
-                GameViewModel gameViewModel = (GameViewModel)DataContext;
-                if (gameViewModel != null)
-                {
-                    if (gameViewModel.SpinnToAdd != null)
-                    {
-                        gameViewModel.StartTimer();
-
-                    }
-                    gameViewModel.SpinnToAdd = "";
-                }
-            }
-        }
+   
     }
 }
