@@ -111,5 +111,22 @@ namespace UnusArmatusLattro.Views
             buttonStory.Begin();
             leverStory.Stop();
         }
+
+        private void DoubleAnimation_Completed_1(object sender, EventArgs e)
+        {
+            if (isRunning)
+            {
+                GameViewModel gameViewModel = (GameViewModel)DataContext;
+                if (gameViewModel != null)
+                {
+                    if (gameViewModel.SpinnToAdd != null)
+                    {
+                        gameViewModel.StartTimer();
+
+                    }
+                    gameViewModel.SpinnToAdd = "";
+                }
+            }
+        }
     }
 }
