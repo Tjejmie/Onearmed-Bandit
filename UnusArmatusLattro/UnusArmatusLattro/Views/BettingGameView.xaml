@@ -293,7 +293,7 @@
 
           
                 <TextBlock Text="Bet: " FontSize="20" FontFamily="calibri-bold" FontWeight="Black" VerticalAlignment="Center"></TextBlock>
-                <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black"  TabIndex="0" Loaded="Load" >
+                <TextBox x:Name="BettingBox" Text="{Binding CurrentBet}" IsEnabled="{Binding BettingEnabled}" FontSize="25" Width="150"  FontFamily="calibri-bold" FontWeight="Black"  TabIndex="0" Loaded="Load" PreviewTextInput="HighScorePreviewTextInput" PreviewKeyDown="BettingBox_KeyDown" >
 
                 </TextBox>
             </StackPanel>

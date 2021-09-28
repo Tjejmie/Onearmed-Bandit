@@ -137,7 +137,7 @@ namespace UnusArmatusLattro.ViewModels
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
                 if (SlotMachine[CurrentSlot].number == $"{(int)Symbol.Bandit}")
                 {
-                    Wallet -= int.Parse(CurrentBet);
+                    
                     Timer.Stop();
                     ScoreToAdd = $"El bandito";
                     CurrentSlot = 0;
@@ -146,10 +146,7 @@ namespace UnusArmatusLattro.ViewModels
 
                     if (Wallet == 0)
                         GameOver();
-                    else
-                    {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Yellow;
-                    }
+                    
 
                     return;
                 }
@@ -157,7 +154,7 @@ namespace UnusArmatusLattro.ViewModels
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
-                    Wallet -= int.Parse(CurrentBet);
+                    
                     int winnings = CalculateScore();
 
                     if (winnings >= 1000000)
@@ -175,10 +172,7 @@ namespace UnusArmatusLattro.ViewModels
 
                     if (Wallet == 0)
                         GameOver();
-                    else
-                    {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                    }
+                    
                 }
             }
         }
@@ -287,6 +281,8 @@ namespace UnusArmatusLattro.ViewModels
             int tempBet = int.Parse(bet);
             if (tempBet != 0 && tempBet <= int.Parse(wallet))
             {
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                Wallet -= tempBet;
                 BettingEnabled = false;
                 BetLabel = "Lagt bet";
                 GameOverState = "Visible";
@@ -320,6 +316,7 @@ namespace UnusArmatusLattro.ViewModels
 
         public void StartTimer()
         {
+            
             Timer.Start();
         }
 
