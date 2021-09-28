@@ -21,6 +21,7 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class BettingGameView : UserControl
     {
+        bool isRunning;
         public BettingGameView()
         {
             InitializeComponent();
@@ -42,17 +43,30 @@ namespace UnusArmatusLattro.Views
         }
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
-            BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
             BettingBox.Focus();
-            //if (gameViewModel.ScoreToAdd != null);
-               //gameViewModel.StartTimer();
+            if (isRunning)
+            {
+                BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
+                if (gameViewModel != null)
+                {
+                    gameViewModel.ScoreToAdd = "";
+                }
+                isRunning = false;
+            }
         }
 
         private void DoubleAnimation_Completed(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
             if(gameViewModel.ConfirmBet(BettingBox.Text, Wallet.Text))
-            gameViewModel.StartTimer();
+            {
+                gameViewModel.StartTimer();
+            }
+            else
+            {
+                MessageBox.Show("Incorrect bet");
+                BettingBox.Text = "";
+            }
         }
         
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -75,6 +89,27 @@ namespace UnusArmatusLattro.Views
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
             gameViewModel.Playeffect(Data.Sounds.Lever);
+            isRunning = true;
+        }
+
+        private void HighScorePreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+           
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void BettingBox_KeyDown(object sender, KeyEventArgs e) 
+        { 
+            
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
+            }
         }
     }
 }
