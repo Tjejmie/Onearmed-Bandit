@@ -26,9 +26,7 @@ namespace UnusArmatusLattro.Commands
                 switch (parameter)
                 {
                     
-                    case Data.GoToView.Exit:
-                        Environment.Exit(0);
-                        break;
+                    
                     case Data.GoToView.SpinGame:
                         baseViewModel.SpinGame();
                         break;
