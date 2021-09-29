@@ -88,6 +88,10 @@
                                         <Setter Property="Background" Value="#FDF1B0" />
                                     </Trigger>
 
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Foreground" Value="#9c8e43" />
+                                    </Trigger>
+
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>

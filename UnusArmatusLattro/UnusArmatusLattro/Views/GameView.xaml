@@ -9,14 +9,14 @@
              d:DesignHeight="700" d:DesignWidth="1500">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="{x:Type Button}">
+            <Style x:Key="BaseButtonStyle" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="#F8E779" />
                 <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontSize" Value="28" />
                 <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="MinHeight" Value="40"/>
-                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -30,16 +30,32 @@
                                 </Trigger>
 
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Foreground" Value="#9c8e43"/>
+                                    <Setter Property="Foreground" Value="#9c8e43" />
                                 </Trigger>
-
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SecondaryButtonStyle" BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#CA8BD5" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#DFB8E2" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
             <Style TargetType="{x:Type ToggleButton}">
-                <Setter Property="Background" Value="#F8E779" />
+                <Setter Property="Background" Value="#CA8BD5" />
                 <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontSize" Value="28" />
                 <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
@@ -55,7 +71,7 @@
 
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FDF1B0" />
+                                    <Setter Property="Background" Value="#DFB8E2" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -255,7 +271,7 @@
             </Grid.RowDefinitions>
 
             <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Name="Border" BorderBrush="Pink" BorderThickness="5" CornerRadius="20" Margin="0,10,0,0">
-                <Button Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
+                <Button Style="{StaticResource BaseButtonStyle}" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
             </Border>
 
 
@@ -268,7 +284,7 @@
                 <TextBlock Text="{Binding RemainingSpins}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black">
                 </TextBlock>
             </StackPanel>
-            <Button Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem"/>
+            <Button Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem"/>
             <Border Grid.Column="5" Grid.Row="1" CornerRadius="20">
                 <ToggleButton x:Name="TogglePopupButton">
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
