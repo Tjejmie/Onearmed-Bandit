@@ -70,7 +70,7 @@ namespace UnusArmatusLattro.Views
                 GameViewModel gameViewModel = (GameViewModel)DataContext;
                 if (gameViewModel != null)
                 {
-                    if (gameViewModel.ScoreToAdd != null)
+                    if (gameViewModel.ScoreToAdd != null && gameViewModel.ScoreToAdd != "")
                     {
                         gameViewModel.StartTimer();
 

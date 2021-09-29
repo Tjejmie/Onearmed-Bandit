@@ -171,8 +171,11 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     RoundEnd();
                 }
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                SlotMachine[CurrentSlot].BorderSlot = 4;
+                else
+                {
+                    SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                    SlotMachine[CurrentSlot].BorderSlot = 4;
+                }
             }
         }
 
@@ -280,6 +283,8 @@ namespace UnusArmatusLattro.ViewModels
                 BetLabel = "Lägg ett bet";
                 StopBtnEnabled = false;
                 Timer.Stop();
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+                SlotMachine[CurrentSlot].BorderSlot = 2;
             }
         }
 

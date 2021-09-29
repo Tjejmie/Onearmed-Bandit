@@ -104,7 +104,8 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 SlotMachine.Add(temp);
             }
-            
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+            SlotMachine[CurrentSlot].BorderSlot = 4;
         }
 
         public void FillSlotsByDifficulty()
@@ -139,7 +140,6 @@ namespace UnusArmatusLattro.ViewModels
                 };
                 HighScores.Add(temp);
             }
-
         }
 
         private void BanditHit()
@@ -154,10 +154,8 @@ namespace UnusArmatusLattro.ViewModels
                 GameOver();
             else
             {
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                SlotMachine[CurrentSlot].BorderSlot = 4;
+                FillSlots();
             }
-            FillSlots();
         }
 
         private void RoundEnd()
@@ -183,10 +181,8 @@ namespace UnusArmatusLattro.ViewModels
                 GameOver();
             else
             {
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                SlotMachine[CurrentSlot].BorderSlot = 4;
+                FillSlots();
             }
-            FillSlots();
         }
 
         public void StopSlot()
@@ -206,9 +202,11 @@ namespace UnusArmatusLattro.ViewModels
                 {
                     RoundEnd();
                 }
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                SlotMachine[CurrentSlot].BorderSlot = 4;
-
+                else
+                {
+                    SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                    SlotMachine[CurrentSlot].BorderSlot = 4;
+                }
             }
         }
         public void GoToGameOver()
@@ -291,6 +289,8 @@ namespace UnusArmatusLattro.ViewModels
         {
             Timer.Start();
             StopBtnEnabled = true;
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+            SlotMachine[CurrentSlot].BorderSlot = 4;
         }
         public void GoHome()
         {
