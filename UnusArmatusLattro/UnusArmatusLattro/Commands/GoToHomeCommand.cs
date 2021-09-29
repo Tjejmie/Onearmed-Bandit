@@ -44,10 +44,8 @@ namespace UnusArmatusLattro.Commands
             this.mainMenuHighScoreViewModel = mainMenuHighScoreViewModel;
         }
 
-
         public bool CanExecute(object parameter) => true;
        
-
         public void Execute(object parameter)
         {
             if (bettingGameViewModel != null)
@@ -74,7 +72,6 @@ namespace UnusArmatusLattro.Commands
             {
                 gameOverViewModel.GoHome();
             }
-
         }
     }
 }

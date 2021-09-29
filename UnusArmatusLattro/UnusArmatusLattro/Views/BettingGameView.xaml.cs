@@ -111,7 +111,7 @@ namespace UnusArmatusLattro.Views
         private void Lever_MouseDown(object sender, MouseButtonEventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
-            gameViewModel.Playeffect(Data.Sounds.Lever);
+            gameViewModel.PlayEffect(Data.Sounds.Lever);
             isRunning = true;
         }
 

@@ -24,22 +24,18 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<HighscoreView> GetHighscores(Data.Difficulties difficulty)
         {
             ObservableCollection<HighscoreView> highscoreViews = new ObservableCollection<HighscoreView>();
-            List<Username> templist = Repo.GetUsers(difficulty);
+            List<User> templist = Repo.GetUsers(difficulty);
 
             foreach (var user in templist)
             {
                 HighscoreView temp = new HighscoreView
                 {
-                    Name = user.Name,
+                    Name = user.UserName,
                     Score = user.Points
                 };
                 highscoreViews.Add(temp);
             }
-
             return highscoreViews;
-
-
-
         }
         public MainMenuHighScoreViewModel(MainViewModel parent)
         {
@@ -49,7 +45,6 @@ namespace UnusArmatusLattro.ViewModels
             Betting = GetHighscores(Data.Difficulties.Betting);
             this.parent = parent;
             Home = new GoToHomeCommand(this);
-            
         }
 
         public void GoHome()

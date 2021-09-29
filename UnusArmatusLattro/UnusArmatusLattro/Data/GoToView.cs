@@ -8,6 +8,6 @@ namespace UnusArmatusLattro.Data
 {
     public enum GoToView
     {
-       Menu, Rules, HighScore, BettingGame, Exit, SpinGame
+        Rules, HighScore, BettingGame, Exit, SpinGame
     }
 }

@@ -25,63 +25,56 @@ namespace UnusArmatusLattro.ViewModels
         public ICommand FinishGame { get; }
         public ICommand Home { get;}
         public string Score { get; set; }
-        public string User { get; set; }
         public Dictionary<Symbol, string> Symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
-        public string NewHighScore { get; set; } = "Hidden";
         public bool BettingEnabled { get; set; } = true;
         public string BetLabel { get; set; } = "Lägg ett bet";
         public int Wallet { get; set; } = 100;
         public string CurrentBet { get; set; } = "";
-        public string GameOverState { get; set; } = "Hidden";
-        public string BetBtn { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
-        public bool IsGameOver { get; set; }
         public string ScoreToAdd { get; set; }
         public Difficulties Difficulty { get; set; }
-        public int Cols { get; set; } = 4;
+        public int NumberOfSlots { get; set; } = 4;
         public bool StopBtnEnabled { get; set; } = false;
         
-
         public BettingGameViewModel(MainViewModel parent, Difficulties diff)
         {
-            GenerateDictionary();
+            GenerateSymbolsDictionary();
             BetCommand = new BetCommand(this);
+            FinishGame = new FinishGameCommand(this);
+            Spin = new StopSlotCommand(this);
+            Home = new GoToHomeCommand(this);
             SlotMachine = new ObservableCollection<Slots>();
             FillSlots();
             Difficulty = diff;
             this.parent = parent;
             GetHighscores();
-            Spin = new SpinCommand(this);
             Score = "0";
-            FinishGame = new FinishGame(this);
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            Home = new GoToHomeCommand(this);
-
         }
 
-        private void OnTimedEvent(Object source, EventArgs e)
+        /// <summary>
+        /// Genererar en slumpad bild på den aktiva slotten och ser till att det ej blir två irad
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void OnTimedEvent(Object source, EventArgs e) 
         {
-
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-
-
             int value = random.Next(1, 8);
-            int num = SlotMachine[CurrentSlot].Number;
-
-            while (num == value)
+            while (SlotMachine[CurrentSlot].Number == value)
             {
                 value = random.Next(1, 8);
             }
             Symbol enumValue = (Symbol)value;
             SlotMachine[CurrentSlot].Number = value;
             SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
-
         }
-        private void GenerateDictionary()
+
+
+        private void GenerateSymbolsDictionary()
         {
             Symbols = new Dictionary<Symbol, string>
             {
@@ -94,103 +87,91 @@ namespace UnusArmatusLattro.ViewModels
                 { Symbol.Bandit, "/Resources/Images/bandit.png" }
             };
         }
-
+        /// <summary>
+        /// Fyller slots i slotmaskinen
+        /// </summary>
         private void FillSlots()
         {
-
-            for (int i = 0; i < Cols; i++)
+            for (int i = 0; i < NumberOfSlots; i++)
             {
                 Symbol enumValue = (Symbol)random.Next(1, 8);
                 int value = (int)enumValue;
-                Slots temp = new Slots()
+                Slots slot = new Slots()
                 {
                     Number = value,
                     ImageSource = Symbols[enumValue]
                 };
-                SlotMachine.Add(temp);
+                SlotMachine.Add(slot);
             }
         }
 
         public void GetHighscores()
         {
             HighScores = new ObservableCollection<HighscoreView>();
-            List<Username> templist = Repo.GetUsers(Difficulty);
+            List<User> highscoreList = Repo.GetUsers(Difficulty);
 
-            foreach (var user in templist)
+            foreach (var user in highscoreList)
             {
-                HighscoreView temp = new HighscoreView
+                HighscoreView player = new HighscoreView
                 {
-                    Name = user.Name,
+                    Name = user.UserName,
                     Score = user.Points
                 };
-                HighScores.Add(temp);
+                HighScores.Add(player);
             }
         }
 
-        public void SpinSlots()
+        private void BanditHit()
         {
-            Playeffect(Sounds.Stop);
-            if (!IsGameOver)
+            Timer.Stop();
+            ScoreToAdd = $"El bandito";
+            CurrentSlot = 0;
+            NewRound();
+            PlayEffect(Sounds.Bandit);
+            if (Wallet == 0)
+                GameOver();
+            return;
+        }
+
+        private void RoundEnd()
+        {
+            int winnings = CalculateScore();
+
+            if (winnings >= 1000000)
             {
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-                if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
-                {
-                    
-                    Timer.Stop();
-                    ScoreToAdd = $"El bandito";
-                    CurrentSlot = 0;
-                    NewRound();
-                    Playeffect(Sounds.Bandit);
+                PlayEffect(Sounds.Jackpot);
+            }
+            else if (winnings > 0)
+            {
+                PlayEffect(Sounds.Cash);
+            }
 
-                    if (Wallet == 0)
-                        GameOver();
-                    
+            ScoreToAdd = $"+{winnings}";
+            Wallet += winnings;
+            NewRound();
 
-                    return;
-                }
+            if (Wallet == 0)
+                GameOver();
+        }
 
+        public void StopSlot()
+        {
+            PlayEffect(Sounds.Stop);
+
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+            if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
+            {
+                BanditHit();
+            }
+            else
+            {
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
-                    
-                    int winnings = CalculateScore();
-
-                    if (winnings >= 1000000)
-                    {
-                        Playeffect(Sounds.Jackpot);
-                    }
-                    else if (winnings > 0)
-                    {
-                        Playeffect(Sounds.Cash);
-                    }
-
-                    ScoreToAdd = $"+{winnings}";
-                    Wallet += winnings;
-                    NewRound();
-
-                    if (Wallet == 0)
-                        GameOver();
-                    
+                    RoundEnd();
                 }
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
             }
-        }
-
-        private bool IsHighScore(int score)
-        {
-            foreach (var highScore in HighScores)
-            {
-                if (score > highScore.Score)
-                {
-                    NewHighScore = "Visible";
-                    return true;
-                }
-            }
-            if (HighScores.Count < 10)
-            {
-                NewHighScore = "Visible";
-                return true;
-            }
-            return false;
         }
 
         public void GoToGameOver()
@@ -200,9 +181,6 @@ namespace UnusArmatusLattro.ViewModels
 
         public void GameOver()
         {
-            GameOverState = "Hidden";
-            IsGameOver = true;
-            IsHighScore(Wallet);
             Timer.Stop();
             GoToGameOver();
         }
@@ -241,7 +219,7 @@ namespace UnusArmatusLattro.ViewModels
                     }
                     tempScore += item.Key * tempBet;
                 }
-                else if (item.Value == Cols)
+                else if (item.Value == NumberOfSlots)
                 {
                     return tempBet + 1000000;
                 }
@@ -264,27 +242,19 @@ namespace UnusArmatusLattro.ViewModels
             return tempScore;
         }
 
-        public void SendUser()
-        {
-            User user = new User(User, int.Parse(Score));
-            Repo.SendUser(user, Difficulty);
-        }
-
         public bool ConfirmBet(String bet, string wallet)
         {
             if (bet == "")
             {
                 return false;
             }
-            int tempBet = int.Parse(bet);
-            if (tempBet != 0 && tempBet <= int.Parse(wallet))
+            int currentBet = int.Parse(bet);
+            if (currentBet != 0 && currentBet <= int.Parse(wallet))
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                Wallet -= tempBet;
+                Wallet -= currentBet;
                 BettingEnabled = false;
                 BetLabel = "Lagt bet";
-                GameOverState = "Visible";
-                BetBtn = "Hidden";
                 StopBtnEnabled = true;
                 Timer.Start();
                 return true;
@@ -305,8 +275,6 @@ namespace UnusArmatusLattro.ViewModels
                 CurrentBet = "";
                 BettingEnabled = true;
                 BetLabel = "Lägg ett bet";
-                GameOverState = "Hidden";
-                BetBtn = "Visible";
                 StopBtnEnabled = false;
                 Timer.Stop();
             }
@@ -314,7 +282,6 @@ namespace UnusArmatusLattro.ViewModels
 
         public void StartTimer()
         {
-            
             Timer.Start();
         }
 
@@ -323,7 +290,7 @@ namespace UnusArmatusLattro.ViewModels
             parent.CurrentViewModel = new StartViewModel(parent);
         }
 
-        public void Playeffect(Sounds sounds)
+        public void PlayEffect(Sounds sounds)
         {
             System.IO.Stream sound = sounds switch
             {
@@ -337,7 +304,6 @@ namespace UnusArmatusLattro.ViewModels
             SoundPlayer player = new SoundPlayer(sound);
             player.Play();
         }
-
     }
 }
 

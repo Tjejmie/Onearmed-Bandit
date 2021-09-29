@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using UnusArmatusLattro.ViewModels;
 
-
 namespace UnusArmatusLattro.Commands
 {
-    public class FinishGame : ICommand
+    public class StartOverCommand : ICommand
     {
         public event EventHandler CanExecuteChanged { add { } remove { } }
-        public BettingGameViewModel bettingGameView;
+        public GameOverViewModel gameOverViewModel;
 
-        public FinishGame(BettingGameViewModel bettingGameView)
+        public StartOverCommand(GameOverViewModel gameOverViewModel)
         {
-            this.bettingGameView = bettingGameView;
+            this.gameOverViewModel = gameOverViewModel;
         }
 
         public bool CanExecute(object parameter) => true;
-        
+
         public void Execute(object parameter)
         {
-            bettingGameView.GameOver();
+            gameOverViewModel.PlayAgain();
         }
     }
 }

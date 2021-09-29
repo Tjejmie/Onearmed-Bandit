@@ -167,7 +167,7 @@
             <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SlotMachine}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="{Binding Cols}" Rows="1" Height="auto" Width="auto"/>
+                        <UniformGrid Columns="{Binding NumberOfSlots}" Rows="1" Height="auto" Width="auto"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>

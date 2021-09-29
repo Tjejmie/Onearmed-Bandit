@@ -98,7 +98,7 @@
 
             <StackPanel Orientation="Vertical" VerticalAlignment="top">
                 <Border Name="Border" BorderBrush="Pink" BorderThickness="5" CornerRadius="10" Margin="0,10,0,0">
-                    <TextBox x:Name="txtUserName" Text="{Binding User}" Background="White" FontSize="30" Height="50" HorizontalAlignment="Stretch" FontFamily="calibri-bold" FontWeight="Black" Loaded="Load" GotFocus="TextboxGotFocus" LostFocus="TextboxLostFocus" IsEnabled="{Binding InputAccepted}" PreviewTextInput="HighScorePreviewTextInput"/>
+                    <TextBox x:Name="txtUserName" Text="{Binding UserName}" Background="White" FontSize="30" Height="50" HorizontalAlignment="Stretch" FontFamily="calibri-bold" FontWeight="Black" Loaded="Load" GotFocus="TextboxGotFocus" LostFocus="TextboxLostFocus" IsEnabled="{Binding InputAccepted}" PreviewTextInput="HighScorePreviewTextInput"/>
                 </Border>
             </StackPanel>
 

@@ -19,7 +19,7 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         public Difficulties Difficulty { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
-        public string User { get; set; }
+        public string UserName { get; set; }
         public ICommand SendToDatabase { get; }
         public bool InputAccepted { get; set; } = true;
         public ICommand Home { get; }
@@ -28,16 +28,16 @@ namespace UnusArmatusLattro.ViewModels
         {
             Difficulty = diff;
             this.parent = parent;
-            GameOverCommand = new GameOverCommand(this);
+            GameOverCommand = new StartOverCommand(this);
             Points = score;
             GetHighscores();
-            User = "";
+            UserName = "";
             SendToDatabase = new SendToDatabaseCommand(this);
             GameOver();
             Home = new GoToHomeCommand(this);
         }
 
-        public void SpinGame()
+        public void PlayAgain()
         {
             if (Difficulty != Difficulties.Betting)
             {
@@ -53,13 +53,13 @@ namespace UnusArmatusLattro.ViewModels
         public void GetHighscores()
         {
             HighScores = new ObservableCollection<HighscoreView>();
-            List<Username> templist = Repo.GetUsers(Difficulty);
+            List<User> templist = Repo.GetUsers(Difficulty);
 
             foreach (var user in templist)
             {
                 HighscoreView temp = new HighscoreView
                 {
-                    Name = user.Name,
+                    Name = user.UserName,
                     Score = user.Points
                 };
                 HighScores.Add(temp);
@@ -67,9 +67,9 @@ namespace UnusArmatusLattro.ViewModels
         }
         public void SendUser()
         {
-            if (User != "")
+            if (UserName != "")
             {
-                User user = new User(User, int.Parse(Points));
+                User user = new User(UserName, int.Parse(Points));
                 Repo.SendUser(user, Difficulty);
                 InputAccepted = false;
             }

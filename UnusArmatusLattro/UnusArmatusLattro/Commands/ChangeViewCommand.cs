@@ -11,63 +11,48 @@ namespace UnusArmatusLattro.Commands
     public class ChangeViewCommand : ICommand
     {
         public event EventHandler CanExecuteChanged { add { } remove { } }
-        private readonly StartViewModel baseViewModel;
-        
-
+        private readonly StartViewModel startViewModel;
 
         public ChangeViewCommand(StartViewModel startViewModel)
         {
-            this.baseViewModel = startViewModel;
+            this.startViewModel = startViewModel;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public bool CanExecute(object parameter) => true;
 
         public void Execute(Object parameter)
         {
             if (parameter.GetType() == typeof(Difficulties))
             {
-                baseViewModel.StartGame((Difficulties)parameter);
+                startViewModel.StartGame((Difficulties)parameter);
             }
-                try
+            try
             {
-                    switch (parameter)
-                    {
-                        case Data.GoToView.Menu:
-                            break;
-                        case Data.GoToView.Rules:
-                            baseViewModel.Rules();
-                            break;
-                        case Data.GoToView.HighScore:
-                            baseViewModel.Highscore();
-                            break;
-                        case Data.GoToView.BettingGame:
-                            baseViewModel.BettingGame(Difficulties.Betting);
-                            break;
-                        case Data.GoToView.SpinGame:
-                            baseViewModel.SpinGame();
-                            break;
-                        case Data.GoToView.Exit:
-                            Environment.Exit(0);
-                            break;
-
-                   
+                switch (parameter)
+                {
+                    case GoToView.Rules:
+                        startViewModel.Rules();
+                        break;
+                    case GoToView.HighScore:
+                        startViewModel.Highscore();
+                        break;
+                    case GoToView.BettingGame:
+                        startViewModel.BettingGame(Difficulties.Betting);
+                        break;
+                    case GoToView.SpinGame:
+                        startViewModel.SpinGame();
+                        break;
+                    case GoToView.Exit:
+                        Environment.Exit(0);
+                        break;
                     default:
-                            break;
-                    }
-                
+                        break;
+                }
             }
             catch (Exception)
             {
-
                 throw;
             }
-        
-               
-            
-            
         }
     }
 }

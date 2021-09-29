@@ -54,7 +54,7 @@ namespace UnusArmatusLattro.ViewModels
             FillSlots();
             StopBtnEnabled = false;
             GetHighscores();
-            Spin = new SpinCommand(this);
+            Spin = new StopSlotCommand(this);
             Score = "0";
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
@@ -135,13 +135,13 @@ namespace UnusArmatusLattro.ViewModels
         public void GetHighscores()
         {
             HighScores = new ObservableCollection<HighscoreView>();
-            List<Username> templist = Repo.GetUsers(Difficulty);
+            List<User> templist = Repo.GetUsers(Difficulty);
 
             foreach (var user in templist)
             {
                 HighscoreView temp = new HighscoreView
                 {
-                    Name = user.Name,
+                    Name = user.UserName,
                     Score = user.Points
                 };
                 HighScores.Add(temp);
@@ -149,7 +149,7 @@ namespace UnusArmatusLattro.ViewModels
 
         }
 
-        public void SpinSlots()
+        public void StopSlot()
         {
             Playeffect(Sounds.Stop);
             if (!IsGameOver)

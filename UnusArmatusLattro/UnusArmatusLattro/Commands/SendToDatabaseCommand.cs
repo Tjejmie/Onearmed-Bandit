@@ -13,7 +13,6 @@ namespace UnusArmatusLattro.Commands
         public event EventHandler CanExecuteChanged { add { } remove { } }
         private readonly GameOverViewModel gameOverViewModel;
         
-
         public SendToDatabaseCommand(GameOverViewModel gameOverViewModel)
         {
             this.gameOverViewModel = gameOverViewModel;
@@ -21,7 +20,6 @@ namespace UnusArmatusLattro.Commands
 
         public bool CanExecute(object parameter) => true;
         
-
         public void Execute(object parameter)
         {
             gameOverViewModel.SendUser();
