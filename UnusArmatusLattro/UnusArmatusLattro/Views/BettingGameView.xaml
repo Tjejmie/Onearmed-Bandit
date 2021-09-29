@@ -258,10 +258,13 @@
             <Border x:Name="StopBorder" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Transparent" BorderThickness="5" CornerRadius="20">
                 <Button Name="StopButton" Style="{StaticResource BaseButtonStyle}" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop" IsEnabledChanged="Button_IsEnabledChanged"/>
             </Border>
-            <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
-                <TextBlock Text=":-" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
-            </StackPanel>
+            <Viewbox  Grid.Column="1" Grid.Row="3" Stretch="Uniform" StretchDirection="DownOnly">
+                <StackPanel  VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
+                <TextBlock Text="Saldo:  " FontSize="28" FontFamily="calibri-bold" FontWeight="Black" />
+                    <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
+                    <TextBlock Text=":-" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
+                </StackPanel>
+            </Viewbox>
             <StackPanel Name="BettingPanel" Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
                 <TextBlock Text="Bet: " FontSize="20" FontFamily="calibri-bold" FontWeight="Black" VerticalAlignment="Center"></TextBlock>
                 <Border BorderThickness="5" BorderBrush="Black" CornerRadius="10">
@@ -283,7 +286,7 @@
                     <Rectangle Grid.RowSpan="3" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="5" Width="250" Height="125" Fill="#f0d9f2" RadiusX="20" RadiusY="20"/>
                     <Button Grid.Column="1" Panel.ZIndex="10" Style="{StaticResource BaseButtonStyle}" Margin="10" Width="40" Height="40" FontSize="20" HorizontalAlignment="Right" Click="BettingPopupButton" Cursor="Hand">X</Button>
                     <TextBlock Grid.RowSpan="2" FontSize="20" TextWrapping="Wrap" Padding="10">
-                        Betta minst 1 och max dina nuvarande pengar
+                        Betta minst 1:- och max dina nuvarande pengar
                     </TextBlock>
                 </Grid>
             </Popup>

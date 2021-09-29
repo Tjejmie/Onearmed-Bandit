@@ -28,12 +28,12 @@ namespace UnusArmatusLattro.ViewModels
 
             foreach (var user in templist)
             {
-                HighscoreView temp = new HighscoreView
+                HighscoreView player = new HighscoreView
                 {
                     Name = user.UserName,
                     Score = user.Points
                 };
-                highscoreViews.Add(temp);
+                highscoreViews.Add(player);
             }
             return highscoreViews;
         }

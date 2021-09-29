@@ -21,6 +21,17 @@ namespace UnusArmatusLattro.Views
     {
 
 
+        public int BorderSlot
+        {
+            get { return (int)GetValue(BorderSlotProperty); }
+            set { SetValue(BorderSlotProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BorderSlot.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BorderSlotProperty =
+            DependencyProperty.Register("BorderSlot", typeof(int), typeof(Slots), new PropertyMetadata(2));
+
+
         public int Number
         {
             get { return (int)GetValue(numberProperty); }
@@ -30,8 +41,6 @@ namespace UnusArmatusLattro.Views
         // Using a DependencyProperty as the backing store for number.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty numberProperty =
             DependencyProperty.Register("Number", typeof(int), typeof(Slots), new PropertyMetadata(1));
-
-
 
         public SolidColorBrush BorderColor
         {
@@ -43,8 +52,6 @@ namespace UnusArmatusLattro.Views
         public static readonly DependencyProperty BorderColorProperty =
             DependencyProperty.Register("BorderColor", typeof(SolidColorBrush), typeof(Slots), new PropertyMetadata(Brushes.Gray));
 
-
-
         public SolidColorBrush Slotcolor
         {
             get { return (SolidColorBrush)GetValue(SlotcolorProperty); }
@@ -55,8 +62,6 @@ namespace UnusArmatusLattro.Views
         public static readonly DependencyProperty SlotcolorProperty =
             DependencyProperty.Register("Slotcolor", typeof(SolidColorBrush), typeof(Slots), new PropertyMetadata(Brushes.White));
 
-
-
         public string ImageSource
         {
             get { return (string)GetValue(ImageSourceProperty); }
@@ -66,8 +71,6 @@ namespace UnusArmatusLattro.Views
         // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ImageSourceProperty =
             DependencyProperty.Register("ImageSource", typeof(string), typeof(Slots), new PropertyMetadata(null));
-
-
 
         public Slots()
         {

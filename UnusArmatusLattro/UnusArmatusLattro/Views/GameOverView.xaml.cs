@@ -32,11 +32,9 @@ namespace UnusArmatusLattro.Views
                 RepeatBehavior = RepeatBehavior.Forever,
                 AutoReverse = true
             };
-
             story.Children.Add(color);
             Storyboard.SetTarget(color, Border);
             Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
-
         }
 
         private void Load(object sender, RoutedEventArgs e)

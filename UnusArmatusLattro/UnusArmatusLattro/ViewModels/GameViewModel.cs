@@ -28,15 +28,13 @@ namespace UnusArmatusLattro.ViewModels
         public UserRepository Repo { get; set; } = new UserRepository();
         public string Score { get; set; }
         public int RemainingSpins { get; set; } = 10;
-        public string GameOverState { get; set; } = "Visible";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
-        public bool IsGameOver { get; set; }
         public Difficulties Difficulty { get; set; }
         public bool StopBtnEnabled { get; set; } = false;
         public string ScoreToAdd { get; set; }
         public string SpinnToAdd { get; set; }
-        public int Cols { get; set; }
+        public int NumberOfSlots { get; set; }
         private readonly Dictionary<int, int> ScoreDictionary = new Dictionary<int, int>() {
             { 1, 0 },
             { 2, 0 },
@@ -49,37 +47,32 @@ namespace UnusArmatusLattro.ViewModels
         {
             this.parent = parent;
             Home = new GoToHomeCommand(this);
+            Spin = new StopSlotCommand(this);
             GenerateDictionary();
             Difficulty = diff;
             FillSlots();
             StopBtnEnabled = false;
-            GetHighscores();
-            Spin = new StopSlotCommand(this);
+            GetHighscores();           
             Score = "0";
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
-            Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
-            
+            Timer.Interval = TimeSpan.FromMilliseconds((int)diff);         
         }
 
 
         private void OnTimedEvent(Object source, EventArgs e)
         {
 
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-            
-            
-                int value = random.Next(1, 8);
-                int num = SlotMachine[CurrentSlot].Number;
-                
-                while (num == value)
-                {
-                    value = random.Next(1, 8);
-                }
-                var enumValue = (Symbol)value;
-                SlotMachine[CurrentSlot].Number = value;
-                SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
-            
+            int value = random.Next(1, 8);
+
+            while (SlotMachine[CurrentSlot].Number == value)
+            {
+                value = random.Next(1, 8);
+            }
+            var enumValue = (Symbol)value;
+            SlotMachine[CurrentSlot].Number = value;
+            SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
+
         }
     private void GenerateDictionary()
         {
@@ -101,7 +94,7 @@ namespace UnusArmatusLattro.ViewModels
             await Task.Delay(1000);
             SlotMachine = new ObservableCollection<Slots>();
             FillSlotsByDifficulty();
-            for (int i = 0; i < Cols; i++)
+            for (int i = 0; i < NumberOfSlots; i++)
             {
                 var enumValue = (Symbol)random.Next(1, 8);
                 int value = (int)enumValue;
@@ -119,13 +112,13 @@ namespace UnusArmatusLattro.ViewModels
             switch (Difficulty)
             {
                 case Difficulties.Easy:
-                    Cols = 3;
+                    NumberOfSlots = 3;
                     break;
                 case Difficulties.Normal:
-                    Cols = 4;
+                    NumberOfSlots = 4;
                     break;
                 case Difficulties.Hard:
-                    Cols = 5;
+                    NumberOfSlots = 5;
                     break;
                 default:
                     break;
@@ -149,61 +142,73 @@ namespace UnusArmatusLattro.ViewModels
 
         }
 
+        private void BanditHit()
+        {
+            Timer.Stop();
+            RemainingSpins--;
+            ScoreToAdd = $"El bandito";
+            Playeffect(Sounds.Bandit);
+            CurrentSlot = 0;
+
+            if (RemainingSpins == 0)
+                GameOver();
+            else
+            {
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                SlotMachine[CurrentSlot].BorderSlot = 4;
+            }
+            FillSlots();
+        }
+
+        private void RoundEnd()
+        {
+            Timer.Stop();
+            RemainingSpins -= 1;
+            int Winnings = CalculateScore();
+
+            if (Winnings >= 1000000)
+            {
+                Playeffect(Sounds.Jackpot);
+            }
+            else if (Winnings > 0)
+            {
+                Playeffect(Sounds.Cash);
+            }
+
+            ScoreToAdd = $"+{Winnings}";
+            Score = $"{int.Parse(Score) + Winnings}";
+            CurrentSlot = 0;
+
+            if (RemainingSpins == 0)
+                GameOver();
+            else
+            {
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                SlotMachine[CurrentSlot].BorderSlot = 4;
+            }
+            FillSlots();
+        }
+
         public void StopSlot()
         {
             Playeffect(Sounds.Stop);
-            if (!IsGameOver)
-            {
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-                if(SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
-                {
-                    Timer.Stop();
-                    RemainingSpins--;
-                    ScoreToAdd = $"El bandito";
-                    Playeffect(Sounds.Bandit);
-                    CurrentSlot = 0;
 
-                    if (RemainingSpins == 0)
-                        GameOver();
-                    else
-                    {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                    }
-                    
-                    FillSlots();
-                    
-                    return;
-                }
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+            SlotMachine[CurrentSlot].BorderSlot = 2;
+            if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
+            {
+                BanditHit();
+            }
+            else
+            {
                 CurrentSlot++;
                 if (CurrentSlot == SlotMachine.Count)
                 {
-                    Timer.Stop();
-                    RemainingSpins -= 1;
-                    int Winnings = CalculateScore();
-                    
-                    if (Winnings >= 1000000)
-                    {
-                        Playeffect(Sounds.Jackpot);
-                    }
-                    else if (Winnings > 0)
-                    {
-                        Playeffect(Sounds.Cash);
-                    }
-
-                    ScoreToAdd = $"+{Winnings}";
-                    Score = $"{int.Parse(Score) + Winnings}";
-                    CurrentSlot = 0;
-
-                    if (RemainingSpins == 0)
-                        GameOver();
-                    else
-                    {
-                        SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                    }
-                    
-                    FillSlots();
-                    
+                    RoundEnd();
                 }
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                SlotMachine[CurrentSlot].BorderSlot = 4;
+
             }
         }
         public void GoToGameOver()
@@ -213,9 +218,6 @@ namespace UnusArmatusLattro.ViewModels
 
         private void GameOver()
         {
-            GameOverState = "Hidden";
-            IsGameOver = true;
-
             Timer.Stop();
             GoToGameOver();
         }
@@ -232,7 +234,7 @@ namespace UnusArmatusLattro.ViewModels
 
         private int GetPairScore()
         {
-            int temp = 0;
+            int score = 0;
             bool hasPairAlready = false;
             foreach (var pair in ScoreDictionary)
             {
@@ -243,17 +245,17 @@ namespace UnusArmatusLattro.ViewModels
                         RemainingSpins++;
                         SpinnToAdd = $"+1";
                     }
-                    temp += pair.Key * 100;
+                    score += pair.Key * 100;
                     hasPairAlready = true;
                 }
             }
 
-            return temp;
+            return score;
         }
 
         private int GetTripletScore() => ScoreDictionary.ContainsValue(3) ? (ScoreDictionary.FirstOrDefault(t => t.Value == 3).Key * 1000) : 0;
         private int GetQuadScore() => ScoreDictionary.ContainsValue(4) ? (ScoreDictionary.First(t => t.Value == 4).Key * 10000) : 0;
-        private bool Jackpot() =>  ScoreDictionary.ContainsValue(Cols);
+        private bool Jackpot() =>  ScoreDictionary.ContainsValue(NumberOfSlots);
         private bool HasFullHouse() => ScoreDictionary.ContainsValue(2) && ScoreDictionary.ContainsValue(3);
 
         /// <summary>
@@ -267,20 +269,20 @@ namespace UnusArmatusLattro.ViewModels
             if (Jackpot())
                 return 1000000;
 
-            int tempScore = GetPairScore();
-            tempScore += GetTripletScore();
+            int score = GetPairScore();
+            score += GetTripletScore();
 
             if (Difficulty == Difficulties.Hard)
-                tempScore += GetQuadScore();
+                score += GetQuadScore();
 
             if(HasFullHouse())
             {
                 RemainingSpins++;
                 SpinnToAdd = $"+1";
-                return tempScore * 2;
+                return score * 2;
             }
 
-            return tempScore;
+            return score;
         }
 
     #endregion

@@ -159,6 +159,7 @@ namespace UnusArmatusLattro.ViewModels
             PlayEffect(Sounds.Stop);
 
             SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+            SlotMachine[CurrentSlot].BorderSlot = 2;
             if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
             {
                 BanditHit();
@@ -171,6 +172,7 @@ namespace UnusArmatusLattro.ViewModels
                     RoundEnd();
                 }
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                SlotMachine[CurrentSlot].BorderSlot = 4;
             }
         }
 
@@ -252,6 +254,7 @@ namespace UnusArmatusLattro.ViewModels
             if (currentBet != 0 && currentBet <= int.Parse(wallet))
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                SlotMachine[CurrentSlot].BorderSlot = 4;
                 Wallet -= currentBet;
                 BettingEnabled = false;
                 BetLabel = "Lagt bet";

@@ -14,27 +14,28 @@ namespace UnusArmatusLattro.ViewModels
     public class GameOverViewModel : BaseViewModel
     {
         public ICommand GameOverCommand { get; set; }
+        public ICommand SendToDatabase { get; }
+        public ICommand Home { get; }
         private readonly MainViewModel parent;
         public string Points { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         public Difficulties Difficulty { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string UserName { get; set; }
-        public ICommand SendToDatabase { get; }
         public bool InputAccepted { get; set; } = true;
-        public ICommand Home { get; }
+        
 
         public GameOverViewModel(MainViewModel parent, string score, Difficulties diff)
         {
+            GameOverCommand = new StartOverCommand(this);
+            SendToDatabase = new SendToDatabaseCommand(this);
+            Home = new GoToHomeCommand(this);
             Difficulty = diff;
             this.parent = parent;
-            GameOverCommand = new StartOverCommand(this);
             Points = score;
             GetHighscores();
             UserName = "";
-            SendToDatabase = new SendToDatabaseCommand(this);
             GameOver();
-            Home = new GoToHomeCommand(this);
         }
 
         public void PlayAgain()
@@ -46,23 +47,22 @@ namespace UnusArmatusLattro.ViewModels
             else
             {
                 parent.CurrentViewModel = new BettingGameViewModel(parent, Difficulty);
-            }
-            
+            }    
         }
 
         public void GetHighscores()
         {
             HighScores = new ObservableCollection<HighscoreView>();
-            List<User> templist = Repo.GetUsers(Difficulty);
+            List<User> highscoreList = Repo.GetUsers(Difficulty);
 
-            foreach (var user in templist)
+            foreach (var user in highscoreList)
             {
-                HighscoreView temp = new HighscoreView
+                HighscoreView player = new HighscoreView
                 {
                     Name = user.UserName,
                     Score = user.Points
                 };
-                HighScores.Add(temp);
+                HighScores.Add(player);
             }
         }
         public void SendUser()
@@ -100,7 +100,4 @@ namespace UnusArmatusLattro.ViewModels
             parent.CurrentViewModel = new StartViewModel(parent);
         }
     }
-
-
-
 }
