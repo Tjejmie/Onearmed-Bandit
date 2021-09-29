@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UnusArmatusLattro.Data;
 using UnusArmatusLattro.ViewModels;
 
@@ -76,9 +69,9 @@ namespace UnusArmatusLattro.Views
                     if (gameViewModel.ScoreToAdd != null)
                     {
                         gameViewModel.StartTimer();
-                        
+
                     }
-                        gameViewModel.ScoreToAdd = "";       
+                    gameViewModel.ScoreToAdd = "";
                 }
             }
         }
@@ -92,7 +85,7 @@ namespace UnusArmatusLattro.Views
 
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Canvas.SetLeft(Lever, LeverCanvas.ActualWidth /2 - Lever.Width/2);
+            Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
             Canvas.SetTop(Lever, 0);
         }
 

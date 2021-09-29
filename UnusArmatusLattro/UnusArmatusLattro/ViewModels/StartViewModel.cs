@@ -17,7 +17,6 @@ namespace UnusArmatusLattro.ViewModels
         {
             this.parent = parent;
             ChangeView = new ChangeViewCommand(this);
-           
         }
         public ICommand ChangeView { get; set; }
         
