@@ -14,8 +14,8 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameView : UserControl
     {
-        Storyboard buttonStory = new Storyboard();
-        Storyboard leverStory = new Storyboard();
+        readonly Storyboard buttonStory = new Storyboard();
+        readonly Storyboard leverStory = new Storyboard();
         bool isRunning;
 
         public GameView()
@@ -27,12 +27,14 @@ namespace UnusArmatusLattro.Views
 
         private void SetColorLever()
         {
-            ColorAnimation color = new ColorAnimation();
-            color.From = Colors.Yellow;
-            color.To = Colors.Red;
-            color.Duration = TimeSpan.FromSeconds(.2);
-            color.RepeatBehavior = RepeatBehavior.Forever;
-            color.AutoReverse = true;
+            ColorAnimation color = new ColorAnimation
+            {
+                From = Colors.Yellow,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             leverStory.Children.Add(color);
             Storyboard.SetTarget(color, Lever);
@@ -42,12 +44,14 @@ namespace UnusArmatusLattro.Views
 
         private void SetColorButton()
         {
-            ColorAnimation color = new ColorAnimation();
-            color.From = Colors.LightPink;
-            color.To = Colors.Red;
-            color.Duration = TimeSpan.FromSeconds(.2);
-            color.RepeatBehavior = RepeatBehavior.Forever;
-            color.AutoReverse = true;
+            ColorAnimation color = new ColorAnimation
+            {
+                From = Colors.LightPink,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             buttonStory.Children.Add(color);
             Storyboard.SetTarget(color, Border);

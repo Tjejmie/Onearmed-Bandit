@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:UnusArmatusLattro.Views"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1520">
-
-    <Grid >
+    <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png"/>
         </Grid.Background>
@@ -19,11 +18,9 @@
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Margin" Value="0,10,0,0"/>
                 <Setter Property="MinHeight" Value="40"/>
-
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="40" />
@@ -36,19 +33,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
-
         <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="20"  Width="645" VerticalAlignment="Bottom">
             Spelregler Spin
         </Label>
         <Label Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="20"  Width="645" VerticalAlignment="Bottom" >
             Spelregler Betting
         </Label>
-
-        
-        
-
-        
-        
         <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="3" Background="White">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="3" VerticalAlignment="Bottom" Grid.ColumnSpan="1">
                 <StackPanel Margin="0,0,10,0">
@@ -83,9 +73,7 @@
                     <Image Source="/Resources/Images/bandit.png" Width="50"></Image>
                     <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">Bandit</Label>
                 </StackPanel>
-
             </StackPanel>
-            
         </Border>
         <TextBlock Grid.Row="2" Grid.Column="3" FontSize="16"  Margin="10,10,0,0" >
                   <Bold> 1.</Bold> Fyll i textfältet med ditt bet. Bettet får aldrig överstiga din budget, <LineBreak/> du får heller inte betta 0. <LineBreak/>
@@ -96,7 +84,6 @@
                   <Bold> 6. </Bold> Akta dig för banditen! Hamnar du på den tar han dina satsade pengar! <LineBreak/>
                   <Bold> 7. </Bold>Tryck på Ca$h out-knappen när du vill avsluta spelet.
         </TextBlock>
-
         <Border BorderBrush="Black" BorderThickness="3" Grid.Row="2" Grid.Column="1" Background="White">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Grid.ColumnSpan="1" >
                 <StackPanel Margin="0,0,10,0">
@@ -131,9 +118,7 @@
                     <Image Source="/Resources/Images/bandit.png" Width="50"></Image>
                     <Label HorizontalAlignment="Center" FontSize="16" Margin="0,30,0,0">Bandit</Label>
                 </StackPanel>
-
             </StackPanel>
-
         </Border>
         <TextBlock Grid.Row="2" Grid.Column="1" FontSize="15"  Margin="10,10,0,0">
                     Starta spelet genom att välja svårighetsgrad. De fyra spelrutorna slumpar sedan fram en av sex <LineBreak/> olika frukter med ett intervall beroende
@@ -155,17 +140,10 @@
             <LineBreak/>
             <Bold>Banditen </Bold> - Akta dig för banditen, hamnar du på han tar han dina poäng.
         </TextBlock>
-
         <TextBlock Margin="10,0,10,0" Padding="10" > 
         <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
                    <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
                 </Hyperlink>
-
         </TextBlock>
-
-
     </Grid>
-
-
-
 </UserControl>

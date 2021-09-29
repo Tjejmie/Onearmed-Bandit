@@ -9,7 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1520"
              >
-    
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png"/>
@@ -25,7 +24,6 @@
             <RowDefinition Height="1.2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height=".2*" />
-
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="{x:Type Button}">
@@ -43,12 +41,10 @@
                             <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#FDF1B0" />
                                 </Trigger>
-                               
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -69,12 +65,10 @@
                             <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#B6D2FE" />
                                 </Trigger>
-
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -88,16 +82,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Rules}">
-            Spelregler
+                Spelregler
             </Button>
             <Button Grid.Row="1" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.HighScore}">
-            Highscore
+                Highscore
             </Button>
             <Button Grid.Row="2" Command="{Binding ChangeView}" CommandParameter="{x:Static datan:GoToView.Exit}">
-            Avsluta
+                Avsluta
             </Button>
         </Grid>
-       
         <Grid Grid.Row="1" Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -119,12 +112,10 @@
                                 <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                     <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                                 </Border>
-
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="#EDD2EF" />
                                     </Trigger>
- 
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -139,7 +130,6 @@
             </Button>
         </Grid>
 
-
         <Grid Grid.Row="0" Grid.Column="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -148,9 +138,6 @@
             <ToggleButton x:Name="SoundBtn" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10" Checked="SoundBtn_Checked" Unchecked="SoundBtn_Unchecked" >
                 <Image Source="/Resources/Images/soundOn.png" Name="imgLineItemAdd" VerticalAlignment="Center" />
             </ToggleButton>
-           
         </Grid>
-
     </Grid>
-   
 </UserControl>

@@ -5,21 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UnusArmatusLattro"
         mc:Ignorable="d"
-       
-       
+
         Title="Unus armatus latro" Height="750" Width="1520">
     <Window.InputBindings>
         <KeyBinding Command="{Binding CurrentViewModel.Spin}" Key="Space">
-            
         </KeyBinding>
     </Window.InputBindings>
     <Grid Background="transparent">
         <ContentControl Content="{Binding CurrentViewModel}" />
-        <!--<Image Source="/Resources/Images/slotmachine.png" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="4" Width="1187" Height="700"></Image>-->
-
-        <!--<Image Source="/Resources/Images/lemon.png"></Image>-->
-        
-        
-        
     </Grid>
 </Window>

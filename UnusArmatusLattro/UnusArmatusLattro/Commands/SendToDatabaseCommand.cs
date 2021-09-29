@@ -8,21 +8,17 @@ using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Commands
 {
-    public class sendToDatabase : ICommand
+    public class SendToDatabaseCommand : ICommand
     {
         public event EventHandler CanExecuteChanged { add { } remove { } }
-        private GameOverViewModel gameOverViewModel;
-        private GameViewModel gameViewModel;
+        private readonly GameOverViewModel gameOverViewModel;
+        
 
-        public sendToDatabase(GameOverViewModel gameOverViewModel)
+        public SendToDatabaseCommand(GameOverViewModel gameOverViewModel)
         {
             this.gameOverViewModel = gameOverViewModel;
         }
 
-        public sendToDatabase(GameViewModel bettingGameViewModel)
-        {
-            this.gameViewModel = bettingGameViewModel;
-        }
         public bool CanExecute(object parameter) => true;
         
 

@@ -21,7 +21,6 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<Slots> SlotMachine { get; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
-        public ICommand SendToDatabase { get; }
         public ICommand BetCommand { get; }
         public ICommand FinishGame { get; }
         public ICommand Home { get;}
@@ -43,7 +42,6 @@ namespace UnusArmatusLattro.ViewModels
         public Difficulties Difficulty { get; set; }
         public int Cols { get; set; } = 4;
         public bool StopBtnEnabled { get; set; } = false;
-        SoundPlayer Player { get; set; }
         
 
         public BettingGameViewModel(MainViewModel parent, Difficulties diff)
@@ -57,7 +55,6 @@ namespace UnusArmatusLattro.ViewModels
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0";
-            //SendToDatabase = new sendToDatabase(this);
             FinishGame = new FinishGame(this);
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
@@ -73,27 +70,29 @@ namespace UnusArmatusLattro.ViewModels
 
 
             int value = random.Next(1, 8);
-            int num = int.Parse(SlotMachine[CurrentSlot].number);
+            int num = SlotMachine[CurrentSlot].Number;
 
             while (num == value)
             {
                 value = random.Next(1, 8);
             }
             Symbol enumValue = (Symbol)value;
-            SlotMachine[CurrentSlot].number = value.ToString();
+            SlotMachine[CurrentSlot].Number = value;
             SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
 
         }
         private void GenerateDictionary()
         {
-            Symbols = new Dictionary<Symbol, string>();
-            Symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
-            Symbols.Add(Symbol.Lemon, "/Resources/Images/lemon.png");
-            Symbols.Add(Symbol.Grapes, "/Resources/Images/grapes.png");
-            Symbols.Add(Symbol.Banana, "/Resources/Images/banana.png");
-            Symbols.Add(Symbol.Apple, "/Resources/Images/apple.png");
-            Symbols.Add(Symbol.Strawberry, "/Resources/Images/strawberry.png");
-            Symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
+            Symbols = new Dictionary<Symbol, string>
+            {
+                { Symbol.Cherry, "/Resources/Images/cherries.png" },
+                { Symbol.Lemon, "/Resources/Images/lemon.png" },
+                { Symbol.Grapes, "/Resources/Images/grapes.png" },
+                { Symbol.Banana, "/Resources/Images/banana.png" },
+                { Symbol.Apple, "/Resources/Images/apple.png" },
+                { Symbol.Strawberry, "/Resources/Images/strawberry.png" },
+                { Symbol.Bandit, "/Resources/Images/bandit.png" }
+            };
         }
 
         private void FillSlots()
@@ -105,7 +104,7 @@ namespace UnusArmatusLattro.ViewModels
                 int value = (int)enumValue;
                 Slots temp = new Slots()
                 {
-                    number = value.ToString(),
+                    Number = value,
                     ImageSource = Symbols[enumValue]
                 };
                 SlotMachine.Add(temp);
@@ -134,7 +133,7 @@ namespace UnusArmatusLattro.ViewModels
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-                if (SlotMachine[CurrentSlot].number == $"{(int)Symbol.Bandit}")
+                if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
                 {
                     
                     Timer.Stop();
@@ -166,7 +165,7 @@ namespace UnusArmatusLattro.ViewModels
                     }
 
                     ScoreToAdd = $"+{winnings}";
-                    Wallet = Wallet + winnings;
+                    Wallet += winnings;
                     NewRound();
 
                     if (Wallet == 0)
@@ -210,19 +209,19 @@ namespace UnusArmatusLattro.ViewModels
 
         private int CalculateScore()
         {
-            Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
+            Dictionary<int, int> scoreDictionary = new Dictionary<int, int>();
             int tempBet = int.Parse(CurrentBet);
-            scoreDictionary.Add("1", 0);
-            scoreDictionary.Add("2", 0);
-            scoreDictionary.Add("3", 0);
-            scoreDictionary.Add("4", 0);
-            scoreDictionary.Add("5", 0);
-            scoreDictionary.Add("6", 0);
+            scoreDictionary.Add(1, 0);
+            scoreDictionary.Add(2, 0);
+            scoreDictionary.Add(3, 0);
+            scoreDictionary.Add(4, 0);
+            scoreDictionary.Add(5, 0);
+            scoreDictionary.Add(6, 0);
 
             for (int i = 1; i < scoreDictionary.Count + 1; i++)
             {
-                var currentCount = SlotMachine.Where(t => t.number == $"{i}");
-                scoreDictionary[$"{i}"] = currentCount.Count();
+                var currentCount = SlotMachine.Where(t => t.Number == i);
+                scoreDictionary[i] = currentCount.Count();
             }
 
             bool hasPair = false;
@@ -240,7 +239,7 @@ namespace UnusArmatusLattro.ViewModels
                     {
                         hasPair = true;
                     }
-                    tempScore += int.Parse(item.Key) * tempBet;
+                    tempScore += item.Key * tempBet;
                 }
                 else if (item.Value == Cols)
                 {
@@ -249,11 +248,11 @@ namespace UnusArmatusLattro.ViewModels
                 else if (item.Value == 3)
                 {
                     hasThreeOfAKind = true;
-                    tempScore += int.Parse(item.Key) * tempBet + 100;
+                    tempScore += item.Key * tempBet + 100;
                 }
                 else if (item.Value == 4)
                 {
-                    tempScore += int.Parse(item.Key) * tempBet + 1000;
+                    tempScore += item.Key * tempBet + 1000;
                 }
             }
 
@@ -268,7 +267,7 @@ namespace UnusArmatusLattro.ViewModels
         public void SendUser()
         {
             User user = new User(User, int.Parse(Score));
-            Repo.sendUser(user, Difficulty);
+            Repo.SendUser(user, Difficulty);
         }
 
         public bool ConfirmBet(String bet, string wallet)
@@ -326,30 +325,15 @@ namespace UnusArmatusLattro.ViewModels
 
         public void Playeffect(Sounds sounds)
         {
-            
-            System.IO.Stream sound;
-            
-            switch (sounds)
+            System.IO.Stream sound = sounds switch
             {
-                case Sounds.Bandit:
-                    sound = Resources.Resource1.sm64_whomp;
-                    break;
-                case Sounds.Lever:
-                    sound = Resources.Resource1.LeverPush;
-                    break;
-                case Sounds.Cash:
-                    sound = Resources.Resource1.win;
-                    break;
-                case Sounds.Jackpot:
-                    sound = Resources.Resource1.jackpot;
-                    break;
-                case Sounds.Stop:
-                    sound = Resources.Resource1.LeverPull;
-                    break;
-                default:
-                    sound = null;
-                    break;
-            }
+                Sounds.Bandit => Resources.Resource1.sm64_whomp,
+                Sounds.Lever => Resources.Resource1.LeverPush,
+                Sounds.Cash => Resources.Resource1.win,
+                Sounds.Jackpot => Resources.Resource1.jackpot,
+                Sounds.Stop => Resources.Resource1.LeverPull,
+                _ => null,
+            };
             SoundPlayer player = new SoundPlayer(sound);
             player.Play();
         }

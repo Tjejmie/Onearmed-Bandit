@@ -11,7 +11,7 @@ namespace UnusArmatusLattro.Commands
     public class BetCommand : ICommand
     {
         public event EventHandler CanExecuteChanged { add { } remove { } }
-        private BettingGameViewModel gameViewModel;
+        private readonly BettingGameViewModel gameViewModel;
         
 
         public BetCommand(BettingGameViewModel gameViewModel)

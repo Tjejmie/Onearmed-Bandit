@@ -21,15 +21,15 @@ namespace UnusArmatusLattro.Views
     {
 
 
-        public string number
+        public int Number
         {
-            get { return (string)GetValue(numberProperty); }
+            get { return (int)GetValue(numberProperty); }
             set { SetValue(numberProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for number.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty numberProperty =
-            DependencyProperty.Register("number", typeof(string), typeof(Slots), new PropertyMetadata("1"));
+            DependencyProperty.Register("Number", typeof(int), typeof(Slots), new PropertyMetadata(1));
 
 
 

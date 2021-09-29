@@ -23,15 +23,12 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<Slots> SlotMachine { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
-        public ICommand sendToDatabase { get; }
         public ICommand Home { get; }
-        public Dictionary<Symbol, string> symbols { get; set; }
+        public Dictionary<Symbol, string> Symbols { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string Score { get; set; }
-        public LeverButton LeverObj { get; set; } = new LeverButton();
         public int RemainingSpins { get; set; } = 10;
         public string GameOverState { get; set; } = "Visible";
-        public string ShowScoreToAdd { get; set; } = "Hidden";
         private int CurrentSlot { get; set; } = 0;
         public DispatcherTimer Timer { get; set; }
         public bool IsGameOver { get; set; }
@@ -40,7 +37,7 @@ namespace UnusArmatusLattro.ViewModels
         public string ScoreToAdd { get; set; }
         public string SpinnToAdd { get; set; }
         public int Cols { get; set; }
-        private Dictionary<int, int> ScoreDictionary = new Dictionary<int, int>() {
+        private readonly Dictionary<int, int> ScoreDictionary = new Dictionary<int, int>() {
             { 1, 0 },
             { 2, 0 },
             { 3, 0 },
@@ -59,7 +56,6 @@ namespace UnusArmatusLattro.ViewModels
             GetHighscores();
             Spin = new SpinCommand(this);
             Score = "0";
-            sendToDatabase = new sendToDatabase(this);
             Timer = new DispatcherTimer();
             Timer.Tick += new EventHandler(OnTimedEvent);
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
@@ -74,27 +70,29 @@ namespace UnusArmatusLattro.ViewModels
             
             
                 int value = random.Next(1, 8);
-                int num = int.Parse(SlotMachine[CurrentSlot].number);
+                int num = SlotMachine[CurrentSlot].Number;
                 
                 while (num == value)
                 {
                     value = random.Next(1, 8);
                 }
                 var enumValue = (Symbol)value;
-                SlotMachine[CurrentSlot].number = value.ToString();
-                SlotMachine[CurrentSlot].ImageSource = symbols[enumValue];
+                SlotMachine[CurrentSlot].Number = value;
+                SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
             
         }
     private void GenerateDictionary()
         {
-            symbols = new Dictionary<Symbol, string>();
-            symbols.Add(Symbol.Cherry, "/Resources/Images/cherries.png");
-            symbols.Add(Symbol.Lemon, "/Resources/Images/lemon.png");
-            symbols.Add(Symbol.Grapes, "/Resources/Images/grapes.png");
-            symbols.Add(Symbol.Banana, "/Resources/Images/banana.png");
-            symbols.Add(Symbol.Apple, "/Resources/Images/apple.png");
-            symbols.Add(Symbol.Strawberry, "/Resources/Images/strawberry.png");
-            symbols.Add(Symbol.Bandit, "/Resources/Images/bandit.png");
+            Symbols = new Dictionary<Symbol, string>
+            {
+                { Symbol.Cherry, "/Resources/Images/cherries.png" },
+                { Symbol.Lemon, "/Resources/Images/lemon.png" },
+                { Symbol.Grapes, "/Resources/Images/grapes.png" },
+                { Symbol.Banana, "/Resources/Images/banana.png" },
+                { Symbol.Apple, "/Resources/Images/apple.png" },
+                { Symbol.Strawberry, "/Resources/Images/strawberry.png" },
+                { Symbol.Bandit, "/Resources/Images/bandit.png" }
+            };
         }
 
         public async void FillSlots()
@@ -108,8 +106,8 @@ namespace UnusArmatusLattro.ViewModels
                 var enumValue = (Symbol)random.Next(1, 8);
                 int value = (int)enumValue;
                 Slots temp = new Slots() {
-                    number = value.ToString(),
-                    ImageSource = symbols[enumValue]
+                    Number = value,
+                    ImageSource = Symbols[enumValue]
                 };
                 SlotMachine.Add(temp);
             }
@@ -157,7 +155,7 @@ namespace UnusArmatusLattro.ViewModels
             if (!IsGameOver)
             {
                 SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-                if(SlotMachine[CurrentSlot].number == $"{(int)Symbol.Bandit}")
+                if(SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
                 {
                     Timer.Stop();
                     RemainingSpins--;
@@ -227,7 +225,7 @@ namespace UnusArmatusLattro.ViewModels
         {
             for (int i = 1; i < ScoreDictionary.Count + 1; i++)
             {
-                var currentCount = SlotMachine.Where(t => t.number == $"{i}");
+                var currentCount = SlotMachine.Where(t => t.Number == i);
                 ScoreDictionary[i] = currentCount.Count();
             }
         }
@@ -299,30 +297,15 @@ namespace UnusArmatusLattro.ViewModels
 
         public void Playeffect(Sounds sounds)
         {
-
-            System.IO.Stream sound;
-
-            switch (sounds)
+            System.IO.Stream sound = sounds switch
             {
-                case Sounds.Bandit:
-                    sound = Resources.Resource1.sm64_whomp;
-                    break;
-                case Sounds.Lever:
-                    sound = Resources.Resource1.LeverPush;
-                    break;
-                case Sounds.Cash:
-                    sound = Resources.Resource1.win;
-                    break;
-                case Sounds.Jackpot:
-                    sound = Resources.Resource1.jackpot;
-                    break;
-                case Sounds.Stop:
-                    sound = Resources.Resource1.LeverPull;
-                    break;
-                default:
-                    sound = null;
-                    break;
-            }
+                Sounds.Bandit => Resources.Resource1.sm64_whomp,
+                Sounds.Lever => Resources.Resource1.LeverPush,
+                Sounds.Cash => Resources.Resource1.win,
+                Sounds.Jackpot => Resources.Resource1.jackpot,
+                Sounds.Stop => Resources.Resource1.LeverPull,
+                _ => null,
+            };
             SoundPlayer player = new SoundPlayer(sound);
             player.Play();
         }

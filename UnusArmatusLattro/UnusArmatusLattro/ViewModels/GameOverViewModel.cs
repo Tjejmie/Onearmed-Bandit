@@ -20,7 +20,7 @@ namespace UnusArmatusLattro.ViewModels
         public Difficulties Difficulty { get; set; }
         public UserRepository Repo { get; set; } = new UserRepository();
         public string User { get; set; }
-        public ICommand sendToDatabase { get; }
+        public ICommand SendToDatabase { get; }
         public bool InputAccepted { get; set; } = true;
         public ICommand Home { get; }
 
@@ -32,7 +32,7 @@ namespace UnusArmatusLattro.ViewModels
             Points = score;
             GetHighscores();
             User = "";
-            sendToDatabase = new sendToDatabase(this);
+            SendToDatabase = new SendToDatabaseCommand(this);
             GameOver();
             Home = new GoToHomeCommand(this);
         }
@@ -70,7 +70,7 @@ namespace UnusArmatusLattro.ViewModels
             if (User != "")
             {
                 User user = new User(User, int.Parse(Points));
-                Repo.sendUser(user, Difficulty);
+                Repo.SendUser(user, Difficulty);
                 InputAccepted = false;
             }
         }

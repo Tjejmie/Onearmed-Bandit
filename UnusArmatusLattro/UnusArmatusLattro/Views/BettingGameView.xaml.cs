@@ -23,8 +23,8 @@ namespace UnusArmatusLattro.Views
     public partial class BettingGameView : UserControl
     {
         bool isRunning;
-        Storyboard story = new Storyboard();
-        Storyboard LeverStory = new Storyboard();
+        readonly Storyboard story = new Storyboard();
+        readonly Storyboard LeverStory = new Storyboard();
         public BettingGameView()
         {
             InitializeComponent();
@@ -33,23 +33,27 @@ namespace UnusArmatusLattro.Views
 
         private void GenerateStoryboards()
         {
-            ColorAnimation color = new ColorAnimation();
-            color.From = Colors.LightPink;
-            color.To = Colors.Red;
-            color.Duration = TimeSpan.FromSeconds(.2);
-            color.RepeatBehavior = RepeatBehavior.Forever;
-            color.AutoReverse = true;
+            ColorAnimation color = new ColorAnimation
+            {
+                From = Colors.LightPink,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             story.Children.Add(color);
             Storyboard.SetTarget(color, StopBorder);
             Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
 
-            ColorAnimation leverColor = new ColorAnimation();
-            leverColor.From = Colors.LightPink;
-            leverColor.To = Colors.Red;
-            leverColor.Duration = TimeSpan.FromSeconds(.2);
-            leverColor.RepeatBehavior = RepeatBehavior.Forever;
-            leverColor.AutoReverse = true;
+            ColorAnimation leverColor = new ColorAnimation
+            {
+                From = Colors.LightPink,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             LeverStory.Children.Add(leverColor);
             Storyboard.SetTarget(leverColor, Lever);

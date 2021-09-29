@@ -10,8 +10,8 @@ namespace UnusArmatusLattro.Commands
     {
         public event EventHandler CanExecuteChanged { add { } remove { } }
 
-        private GameViewModel gameViewModel;
-        private BettingGameViewModel bettingGameViewModel;
+        private readonly GameViewModel gameViewModel;
+        private readonly BettingGameViewModel bettingGameViewModel;
 
         public SpinCommand(BettingGameViewModel bettingGameViewModel)
         {

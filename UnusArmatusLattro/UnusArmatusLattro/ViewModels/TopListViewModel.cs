@@ -8,6 +8,6 @@ namespace UnusArmatusLattro.ViewModels
 
     public class TopListViewModel : BaseViewModel
     {
-        UserRepository db = new UserRepository();
+
     }
 }

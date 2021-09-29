@@ -10,21 +10,16 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png" />
         </Grid.Background>
-
-
         <Grid.Resources>
             <Style TargetType="{x:Type Label}">
-                
                 <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Margin" Value="0,10,0,0"/>
                 <Setter Property="MinHeight" Value="40"/>
-
             </Style>
         </Grid.Resources>
-        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*" />
             <ColumnDefinition Width="15*" />
@@ -41,17 +36,13 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
-        <!--<ContentControl Content="{Binding SelectedView}"/>-->
         <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center">
             <TextBlock Margin="10,0,10,0" Padding="10" > 
         <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
                    <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
                 </Hyperlink>
             </TextBlock>
-
         </StackPanel>
-
-
         <Label Content="Highscore Easy" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
         <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Easy}">
             <ItemsControl.ItemsPanel>
@@ -60,7 +51,6 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-
         <Label Content="Highscore Normal" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
         <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White"  Margin="3" Grid.Column="2" Grid.Row="3" ItemsSource="{Binding Normal}">
             <ItemsControl.ItemsPanel>
@@ -69,31 +59,21 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-
         <Label Content="Highscore Hard" Grid.Column="3" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
         <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Hard}">
-
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
                     <UniformGrid Background="White" Columns="1" Rows="10" Height="300" Width="415"/>
-
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
         </ItemsControl>
         <Label Content="Highscore Betting" Grid.Column="4" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center"></Label>
         <ItemsControl BorderBrush="Black" BorderThickness="4" Background="White" Margin="3" Grid.Column="4" Grid.Row="3" ItemsSource="{Binding Betting}">
-            
-
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-
                     <UniformGrid Background="White" Columns="1" Rows="10" Height="300" Width="415"/>
-
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-
         </ItemsControl>
     </Grid>
 </UserControl>

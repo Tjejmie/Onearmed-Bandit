@@ -16,7 +16,6 @@ namespace UnusArmatusLattro.Repositories
         {
             string stmt = $"select * from highscore_{difficulty} order by points desc limit 10";
 
-
             using var conn = new NpgsqlConnection(connectionString);
             conn.Open();
             using var command = new NpgsqlCommand(stmt, conn);
@@ -32,16 +31,13 @@ namespace UnusArmatusLattro.Repositories
                     UserId = (int)reader["id"],
                     Name = (string)reader["name"],
                     Points = (int)reader["points"],
-                   
-
                 };
                 users.Add(user);
-
             }
             return users;
         }
 
-        public void sendUser(User user, Difficulties difficulty)
+        public void SendUser(User user, Difficulties difficulty)
         {
             try
             {
@@ -60,7 +56,6 @@ namespace UnusArmatusLattro.Repositories
             catch (PostgresException Ex)
             {
                 string errorCode = Ex.SqlState;
-                var test = Ex.Message;
                 throw new Exception(errorCode);
             }
 
