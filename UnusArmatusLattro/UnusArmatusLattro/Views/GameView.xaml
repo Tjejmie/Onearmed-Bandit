@@ -9,14 +9,14 @@
              d:DesignHeight="700" d:DesignWidth="1500">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="{x:Type Button}">
+            <Style x:Key="BaseButtonStyle" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="#F8E779" />
                 <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontSize" Value="28" />
                 <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="MinHeight" Value="40"/>
-                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -30,16 +30,32 @@
                                 </Trigger>
 
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Foreground" Value="#9c8e43"/>
+                                    <Setter Property="Foreground" Value="#9c8e43" />
                                 </Trigger>
-
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SecondaryButtonStyle" BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#CA8BD5" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#DFB8E2" />
+                                </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
             <Style TargetType="{x:Type ToggleButton}">
-                <Setter Property="Background" Value="#F8E779" />
+                <Setter Property="Background" Value="#CA8BD5" />
                 <Setter Property="Foreground" Value="Black" />
                 <Setter Property="FontSize" Value="28" />
                 <Setter Property="FontFamily" Value="{StaticResource PS2P}"/>
@@ -55,7 +71,7 @@
 
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#FDF1B0" />
+                                    <Setter Property="Background" Value="#DFB8E2" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -71,12 +87,12 @@
             <ColumnDefinition Width="203*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            
+
             <RowDefinition Height="35*" />
             <RowDefinition Height="36*" />
             <RowDefinition Height="29*" />
         </Grid.RowDefinitions>
-        
+
 
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/GameWall.png"/>
@@ -161,11 +177,11 @@
 
                 <!--</Border>-->
             </Popup>
-            
+
 
         </Grid>
 
-        
+
         <TextBlock Name="ScoreAddBox" Grid.Column="1" Grid.Row="1"  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="200" FontSize="130" TextAlignment="Center">
             <TextBlock.Text>
                 <Binding Path="ScoreToAdd" NotifyOnTargetUpdated="True"></Binding>
@@ -180,13 +196,24 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-        <!--<TextBox Text="{Binding User}" Grid.Column="3" Grid.Row="1" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
 
-        </TextBox>
-        <Button Width="200" Grid.Column="3" Grid.Row="1" Height="30" Command="{Binding sendToDatabase}" Visibility="{Binding NewHighScore}">
-            skicka
-        </Button>-->
-        <!--<Label Content="Highscore" Grid.Column="4" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>-->
+
+        <TextBlock  Foreground="Red" Name="SpinnAddBox" Grid.Column="1" Grid.Row="2"  Opacity="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="53" Height="53" FontSize="30" TextAlignment="Center" Margin="0,0,54,32" FontWeight="Bold">
+            <TextBlock.Text>
+                <Binding Path="SpinnToAdd" NotifyOnTargetUpdated="True"></Binding>
+            </TextBlock.Text>
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.Target="{Binding ElementName=SpinnAddBox}" Storyboard.TargetProperty="(TextBlock.Opacity)" From="1" To="0" Duration="0:0:1" Completed="DoubleAnimation_Completed_2"></DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+
+
 
         <Grid Grid.Column="4" Grid.RowSpan="3">
             <Grid.RowDefinitions>
@@ -205,8 +232,8 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </Grid>
-        
-        
+
+
         <Canvas Margin="0,0,0,110" Name="LeverCanvas" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
             <!--<ContentControl Content="{Binding LeverObj}">-->
             <!--</ContentControl>-->
@@ -216,16 +243,16 @@
                         <BeginStoryboard>
                             <Storyboard>
                                 <DoubleAnimation Storyboard.TargetName="Lever" Storyboard.TargetProperty="(Canvas.Top)" From="0" To="{Binding ElementName=LeverCanvas, Path=ActualHeight}" AccelerationRatio=".5" Duration="0:0:1" AutoReverse="true" Completed="DoubleAnimation_Completed">
-                                    
+
                                 </DoubleAnimation>
                             </Storyboard>
                         </BeginStoryboard>
                     </EventTrigger>
                 </Ellipse.Triggers>
-                
+
             </Ellipse>
         </Canvas>
-        
+
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
@@ -242,8 +269,12 @@
                 <RowDefinition Height="32*"/>
                 <RowDefinition Height="13*"/>
             </Grid.RowDefinitions>
-            
-            <Button Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
+
+            <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Name="Border" BorderBrush="Pink" BorderThickness="5" CornerRadius="20" Margin="0,10,0,0">
+                <Button Style="{StaticResource BaseButtonStyle}" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
+            </Border>
+
+
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Score: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
                 <TextBlock Text="{Binding Score}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
@@ -253,7 +284,7 @@
                 <TextBlock Text="{Binding RemainingSpins}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black">
                 </TextBlock>
             </StackPanel>
-            <Button Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem"/>
+            <Button Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem"/>
             <Border Grid.Column="5" Grid.Row="1" CornerRadius="20">
                 <ToggleButton x:Name="TogglePopupButton">
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">

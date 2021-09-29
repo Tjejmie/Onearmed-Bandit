@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UnusArmatusLattro.Commands;
 using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Views
@@ -20,7 +21,6 @@ namespace UnusArmatusLattro.Views
     public partial class StartView : UserControl
     {
         MainWindow mainWindow;
-
         public StartView()
         {
             InitializeComponent();

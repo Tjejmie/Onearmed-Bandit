@@ -11,13 +11,12 @@ namespace UnusArmatusLattro.ViewModels
     {
      
         private readonly MainViewModel parent;
-  
+
 
         public StartViewModel(MainViewModel parent)
         {
             this.parent = parent;
             ChangeView = new ChangeViewCommand(this);
-           
         }
         public ICommand ChangeView { get; set; }
         

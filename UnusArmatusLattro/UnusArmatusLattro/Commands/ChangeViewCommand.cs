@@ -10,7 +10,7 @@ namespace UnusArmatusLattro.Commands
 {
     public class ChangeViewCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged { add { } remove { } }
         private StartViewModel baseViewModel;
         
 

@@ -8,7 +8,7 @@ namespace UnusArmatusLattro.Commands
 {
     public class GameOverCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged { add { } remove { } }
         public GameOverViewModel baseViewModel;
 
         public GameOverCommand(GameOverViewModel gameOverViewModel)
@@ -26,9 +26,7 @@ namespace UnusArmatusLattro.Commands
                 switch (parameter)
                 {
                     
-                    case Data.GoToView.Exit:
-                        Environment.Exit(0);
-                        break;
+                    
                     case Data.GoToView.SpinGame:
                         baseViewModel.SpinGame();
                         break;

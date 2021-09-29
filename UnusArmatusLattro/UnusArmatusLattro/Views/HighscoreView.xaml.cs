@@ -19,9 +19,6 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class HighscoreView : UserControl
     {
-
-
-
         public int Score
         {
             get { return (int)GetValue(ScoreProperty); }
@@ -32,18 +29,15 @@ namespace UnusArmatusLattro.Views
         public static readonly DependencyProperty ScoreProperty =
             DependencyProperty.Register("Score", typeof(int), typeof(HighscoreView), new PropertyMetadata(0));
 
-
-
-        public string Name
+        public new string Name
         {
             get { return (string)GetValue(NameProperty); }
             set { SetValue(NameProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Name.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty NameProperty =
+        public static new readonly DependencyProperty NameProperty =
             DependencyProperty.Register("Name", typeof(string), typeof(HighscoreView), new PropertyMetadata(""));
-
 
         public HighscoreView()
         {

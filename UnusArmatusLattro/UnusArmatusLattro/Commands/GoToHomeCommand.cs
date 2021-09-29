@@ -8,12 +8,18 @@ namespace UnusArmatusLattro.Commands
 {
     public class GoToHomeCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged { add { } remove { } }
         private BettingGameViewModel bettingGameViewModel;
         private GameViewModel gameViewModel;
         private SpinGameViewModel spinGameViewModel;
         private RulesViewModel rulesViewModel;
         private MainMenuHighScoreViewModel mainMenuHighScoreViewModel;
+        private GameOverViewModel gameOverViewModel;
+
+        public GoToHomeCommand(GameOverViewModel gameOverViewModel)
+        {
+            this.gameOverViewModel = gameOverViewModel;
+        }
 
         public GoToHomeCommand(SpinGameViewModel spinGameViewModel)
         {
@@ -37,6 +43,8 @@ namespace UnusArmatusLattro.Commands
         {
             this.mainMenuHighScoreViewModel = mainMenuHighScoreViewModel;
         }
+
+
         public bool CanExecute(object parameter) => true;
        
 
@@ -61,7 +69,10 @@ namespace UnusArmatusLattro.Commands
             else if (mainMenuHighScoreViewModel != null)
             {
                 mainMenuHighScoreViewModel.GoHome();
-
+            }
+            else if (gameOverViewModel != null)
+            {
+                gameOverViewModel.GoHome();
             }
 
         }

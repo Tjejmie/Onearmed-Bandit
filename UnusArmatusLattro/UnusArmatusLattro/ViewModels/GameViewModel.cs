@@ -23,7 +23,6 @@ namespace UnusArmatusLattro.ViewModels
         public ObservableCollection<Slots> SlotMachine { get; set; }
         public ObservableCollection<HighscoreView> HighScores { get; set; }
         private static readonly Random random = new Random();
-        public ICommand Spin { get; }
         public ICommand sendToDatabase { get; }
         public ICommand Home { get; }
         public Dictionary<Symbol, string> symbols { get; set; }
@@ -39,7 +38,16 @@ namespace UnusArmatusLattro.ViewModels
         public Difficulties Difficulty { get; set; }
         public bool StopBtnEnabled { get; set; } = false;
         public string ScoreToAdd { get; set; }
+        public string SpinnToAdd { get; set; }
         public int Cols { get; set; }
+        private Dictionary<int, int> ScoreDictionary = new Dictionary<int, int>() {
+            { 1, 0 },
+            { 2, 0 },
+            { 3, 0 },
+            { 4, 0 },
+            { 5, 0 },
+            { 6, 0 },
+            };
         public GameViewModel(MainViewModel parent, Difficulties diff)
         {
             this.parent = parent;
@@ -214,73 +222,70 @@ namespace UnusArmatusLattro.ViewModels
             GoToGameOver();
         }
 
+    #region Score calculation
+        private void FillScoreDictionary()
+        {
+            for (int i = 1; i < ScoreDictionary.Count + 1; i++)
+            {
+                var currentCount = SlotMachine.Where(t => t.number == $"{i}");
+                ScoreDictionary[i] = currentCount.Count();
+            }
+        }
+
+        private int GetPairScore()
+        {
+            int temp = 0;
+            bool hasPairAlready = false;
+            foreach (var pair in ScoreDictionary)
+            {
+                if (pair.Value == 2)
+                {
+                    if (hasPairAlready)
+                    {
+                        RemainingSpins++;
+                        SpinnToAdd = $"+1";
+                    }
+                    temp += pair.Key * 100;
+                    hasPairAlready = true;
+                }
+            }
+
+            return temp;
+        }
+
+        private int GetTripletScore() => ScoreDictionary.ContainsValue(3) ? (ScoreDictionary.FirstOrDefault(t => t.Value == 3).Key * 1000) : 0;
+        private int GetQuadScore() => ScoreDictionary.ContainsValue(4) ? (ScoreDictionary.First(t => t.Value == 4).Key * 10000) : 0;
+        private bool Jackpot() =>  ScoreDictionary.ContainsValue(Cols);
+        private bool HasFullHouse() => ScoreDictionary.ContainsValue(2) && ScoreDictionary.ContainsValue(3);
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public int CalculateScore()
         {
-            Dictionary<string, int> scoreDictionary = new Dictionary<string, int>();
-            scoreDictionary.Add("1", 0);
-            scoreDictionary.Add("2", 0);
-            scoreDictionary.Add("3", 0);
-            scoreDictionary.Add("4", 0);
-            scoreDictionary.Add("5", 0);
-            scoreDictionary.Add("6", 0);
-            scoreDictionary.Add("7", 0);
+            FillScoreDictionary();
 
-            for (int i = 1; i < scoreDictionary.Count+1; i++)
-            {
-                var currentCount = SlotMachine.Where(t => t.number == $"{i}");
-                scoreDictionary[$"{i}"] = currentCount.Count();
-            }
+            if (Jackpot())
+                return 1000000;
 
-            bool hasPair = false;
-            bool hasThreeOfAKind = false;
-            int tempScore = 0;
-            foreach (var item in scoreDictionary)
-            {
-                if(item.Value == 2)
-                {
-                    if (hasPair)
-                    {
-                        RemainingSpins++;
-                        tempScore += int.Parse(item.Key) * 100;
-                    }
-                    else
-                    {
-                        hasPair = true;
-                    }
+            int tempScore = GetPairScore();
+            tempScore += GetTripletScore();
 
-                    if (Difficulty != Difficulties.Hard)
-                    {
-                        tempScore += int.Parse(item.Key) * 100;
-                    }
-                }
-                else if (item.Value == Cols)
-                {
-                    return 1000000;
-                }
-                else if (item.Value == 3)
-                {
-                    hasThreeOfAKind = true;
-                    tempScore += int.Parse(item.Key) * 1000;
-                }
-                else if (item.Value == 4)
-                {
-                    tempScore += int.Parse(item.Key) * 10000;
-                }
-            }
+            if (Difficulty == Difficulties.Hard)
+                tempScore += GetQuadScore();
 
-            if(hasPair && hasThreeOfAKind)
+            if(HasFullHouse())
             {
                 RemainingSpins++;
+                SpinnToAdd = $"+1";
                 return tempScore * 2;
             }
 
             return tempScore;
-
         }
+
+    #endregion
 
         public void StartTimer()
         {

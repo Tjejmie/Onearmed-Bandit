@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Media.Animation;
 using UnusArmatusLattro.Data;
 using UnusArmatusLattro.ViewModels;
 
@@ -20,37 +14,45 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameView : UserControl
     {
+        Storyboard buttonStory = new Storyboard();
+        Storyboard leverStory = new Storyboard();
         bool isRunning;
+
         public GameView()
         {
             InitializeComponent();
-
+            SetColorButton();
+            SetColorLever();
         }
 
+        private void SetColorLever()
+        {
+            ColorAnimation color = new ColorAnimation();
+            color.From = Colors.Yellow;
+            color.To = Colors.Red;
+            color.Duration = TimeSpan.FromSeconds(.2);
+            color.RepeatBehavior = RepeatBehavior.Forever;
+            color.AutoReverse = true;
 
+            leverStory.Children.Add(color);
+            Storyboard.SetTarget(color, Lever);
+            Storyboard.SetTargetProperty(color, new PropertyPath("(Ellipse.Stroke).(SolidColorBrush.Color)"));
+            leverStory.Begin();
+        }
 
-        //private void LeverCanvas_DragOver(object sender, DragEventArgs e)
-        //{
-        //    object data = e.Data.GetData(DataFormats.Serializable);
-        //    //if (data is LeverButton btn)
-        //    //{
+        private void SetColorButton()
+        {
+            ColorAnimation color = new ColorAnimation();
+            color.From = Colors.LightPink;
+            color.To = Colors.Red;
+            color.Duration = TimeSpan.FromSeconds(.2);
+            color.RepeatBehavior = RepeatBehavior.Forever;
+            color.AutoReverse = true;
 
-        //    //    Point dropPosition = e.GetPosition(LeverCanvas);
-
-        //    //    Canvas.SetTop(btn, e.GetPosition(LeverCanvas).Y);
-
-
-        //    //}
-        //    Canvas.SetTop(Lever, e.GetPosition(LeverCanvas).Y);
-        //}
-
-        //private void Lever_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    if (e.LeftButton == MouseButtonState.Pressed)
-        //    {
-        //        DragDrop.DoDragDrop(this, new DataObject(DataFormats.Serializable, this), DragDropEffects.Move);
-        //    }
-        //}
+            buttonStory.Children.Add(color);
+            Storyboard.SetTarget(color, Border);
+            Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
+        }
 
         private void Lever_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -67,12 +69,11 @@ namespace UnusArmatusLattro.Views
                     if (gameViewModel.ScoreToAdd != null)
                     {
                         gameViewModel.StartTimer();
-                        
+
                     }
-                        gameViewModel.ScoreToAdd = "";       
+                    gameViewModel.ScoreToAdd = "";
                 }
             }
-            
         }
 
         private void DoubleAnimation_Completed(object sender, EventArgs e)
@@ -84,7 +85,7 @@ namespace UnusArmatusLattro.Views
 
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Canvas.SetLeft(Lever, LeverCanvas.ActualWidth /2 - Lever.Width/2);
+            Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
             Canvas.SetTop(Lever, 0);
         }
 
@@ -97,6 +98,26 @@ namespace UnusArmatusLattro.Views
         {
             GameViewModel gameViewModel = (GameViewModel)DataContext;
             gameViewModel.Playeffect(Sounds.Lever);
+            buttonStory.Begin();
+            leverStory.Stop();
+        }
+
+
+        private void DoubleAnimation_Completed_2(object sender, EventArgs e)
+        {
+            if (isRunning)
+            {
+                GameViewModel gameViewModel = (GameViewModel)DataContext;
+                if (gameViewModel != null)
+                {
+                    if (gameViewModel.SpinnToAdd != null)
+                    {
+                        gameViewModel.StartTimer();
+
+                    }
+                    gameViewModel.SpinnToAdd = "";
+                }
+            }
         }
     }
 }
