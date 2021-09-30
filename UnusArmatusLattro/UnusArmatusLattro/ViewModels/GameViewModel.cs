@@ -137,27 +137,31 @@ namespace UnusArmatusLattro.ViewModels
         /// </summary>
         public void StopSlot()
         {
-            Playeffect(Sounds.Stop);
+            if (StopBtnEnabled)
+            {
+                Playeffect(Sounds.Stop);
 
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-            SlotMachine[CurrentSlot].BorderSlot = 2;
-            if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
-            {
-                BanditHit();
-            }
-            else
-            {
-                CurrentSlot++;
-                if (CurrentSlot == SlotMachine.Count)
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+                SlotMachine[CurrentSlot].BorderSlot = 2;
+                if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
                 {
-                    RoundEnd();
+                    BanditHit();
                 }
                 else
                 {
-                    SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                    SlotMachine[CurrentSlot].BorderSlot = 4;
+                    CurrentSlot++;
+                    if (CurrentSlot == SlotMachine.Count)
+                    {
+                        RoundEnd();
+                    }
+                    else
+                    {
+                        SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                        SlotMachine[CurrentSlot].BorderSlot = 4;
+                    }
                 }
             }
+            
         }
 
        
