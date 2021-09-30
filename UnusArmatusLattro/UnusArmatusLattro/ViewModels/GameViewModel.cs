@@ -35,6 +35,7 @@ namespace UnusArmatusLattro.ViewModels
         public string ScoreToAdd { get; set; }
         public string SpinnToAdd { get; set; }
         public int NumberOfSlots { get; set; }
+
         private readonly Dictionary<int, int> ScoreDictionary = new Dictionary<int, int>() {
             { 1, 0 },
             { 2, 0 },
@@ -74,7 +75,7 @@ namespace UnusArmatusLattro.ViewModels
             SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
 
         }
-    private void GenerateDictionary()
+        private void GenerateDictionary()
         {
             Symbols = new Dictionary<Symbol, string>
             {
@@ -88,6 +89,9 @@ namespace UnusArmatusLattro.ViewModels
             };
         }
 
+        /// <summary>
+        /// Fyller slots i slotmaskinen
+        /// </summary>
         public async void FillSlots()
         {
             StopBtnEnabled = false;
@@ -108,6 +112,9 @@ namespace UnusArmatusLattro.ViewModels
             SlotMachine[CurrentSlot].BorderSlot = 4;
         }
 
+        /// <summary>
+        /// Fyller slots beroende på vilken svårighetsgrad man valt
+        /// </summary>
         public void FillSlotsByDifficulty()
         {
             switch (Difficulty)
@@ -125,7 +132,125 @@ namespace UnusArmatusLattro.ViewModels
                     break;
             }
         }
+        /// <summary>
+        /// Metod som körs när man trycker på stopknappen
+        /// </summary>
+        public void StopSlot()
+        {
+            Playeffect(Sounds.Stop);
 
+            SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+            SlotMachine[CurrentSlot].BorderSlot = 2;
+            if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
+            {
+                BanditHit();
+            }
+            else
+            {
+                CurrentSlot++;
+                if (CurrentSlot == SlotMachine.Count)
+                {
+                    RoundEnd();
+                }
+                else
+                {
+                    SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                    SlotMachine[CurrentSlot].BorderSlot = 4;
+                }
+            }
+        }
+
+       
+        #region Score calculation
+        private void FillScoreDictionary()
+        {
+            for (int i = 1; i < ScoreDictionary.Count + 1; i++)
+            {
+                var currentCount = SlotMachine.Where(t => t.Number == i);
+                ScoreDictionary[i] = currentCount.Count();
+            }
+        }
+
+        /// <summary>
+        /// Räknar ut par
+        /// </summary>
+        /// <returns></returns>
+        private int GetPairScore()
+        {
+            int score = 0;
+            bool hasPairAlready = false;
+            foreach (var pair in ScoreDictionary)
+            {
+                if (pair.Value == 2)
+                {
+                    if (hasPairAlready)
+                    {
+                        RemainingSpins++;
+                        SpinnToAdd = $"+1";
+                    }
+                    score += pair.Key * 100;
+                    hasPairAlready = true;
+                }
+            }
+
+            return score;
+        }
+
+        private int GetTripletScore() => ScoreDictionary.ContainsValue(3) ? (ScoreDictionary.FirstOrDefault(t => t.Value == 3).Key * 1000) : 0;
+        private int GetQuadScore() => ScoreDictionary.ContainsValue(4) ? (ScoreDictionary.First(t => t.Value == 4).Key * 10000) : 0;
+        private bool Jackpot() => ScoreDictionary.ContainsValue(NumberOfSlots);
+        private bool HasFullHouse() => ScoreDictionary.ContainsValue(2) && ScoreDictionary.ContainsValue(3);
+
+        /// <summary>
+        /// Räknar ut den toala poängen
+        /// </summary>
+        /// <returns>poängen</returns>
+        public int CalculateScore()
+        {
+            FillScoreDictionary();
+
+            if (Jackpot())
+                return 1000000;
+
+            int score = GetPairScore();
+            score += GetTripletScore();
+
+            if (Difficulty == Difficulties.Hard)
+                score += GetQuadScore();
+
+            if (HasFullHouse())
+            {
+                RemainingSpins++;
+                SpinnToAdd = $"+1";
+                return score * 2;
+            }
+
+            return score;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Metod som körs när man träffar banditen
+        /// </summary>
+        private void BanditHit()
+        {
+            Timer.Stop();
+            RemainingSpins--;
+            ScoreToAdd = $"El bandito";
+            Playeffect(Sounds.Bandit);
+            CurrentSlot = 0;
+
+            if (RemainingSpins == 0)
+                GameOver();
+            else
+            {
+                FillSlots();
+            }
+        }
+        /// <summary>
+        /// Hämtar highscore från databasen
+        /// </summary>
         public void GetHighscores()
         {
             HighScores = new ObservableCollection<HighscoreView>();
@@ -142,22 +267,9 @@ namespace UnusArmatusLattro.ViewModels
             }
         }
 
-        private void BanditHit()
-        {
-            Timer.Stop();
-            RemainingSpins--;
-            ScoreToAdd = $"El bandito";
-            Playeffect(Sounds.Bandit);
-            CurrentSlot = 0;
-
-            if (RemainingSpins == 0)
-                GameOver();
-            else
-            {
-                FillSlots();
-            }
-        }
-
+        /// <summary>
+        /// Metod som körs efter varje runda
+        /// </summary>
         private void RoundEnd()
         {
             Timer.Stop();
@@ -185,30 +297,6 @@ namespace UnusArmatusLattro.ViewModels
             }
         }
 
-        public void StopSlot()
-        {
-            Playeffect(Sounds.Stop);
-
-            SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-            SlotMachine[CurrentSlot].BorderSlot = 2;
-            if (SlotMachine[CurrentSlot].Number == (int)Symbol.Bandit)
-            {
-                BanditHit();
-            }
-            else
-            {
-                CurrentSlot++;
-                if (CurrentSlot == SlotMachine.Count)
-                {
-                    RoundEnd();
-                }
-                else
-                {
-                    SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                    SlotMachine[CurrentSlot].BorderSlot = 4;
-                }
-            }
-        }
         public void GoToGameOver()
         {
             parent.CurrentViewModel = new GameOverViewModel(parent, Score, Difficulty);
@@ -219,71 +307,6 @@ namespace UnusArmatusLattro.ViewModels
             Timer.Stop();
             GoToGameOver();
         }
-
-    #region Score calculation
-        private void FillScoreDictionary()
-        {
-            for (int i = 1; i < ScoreDictionary.Count + 1; i++)
-            {
-                var currentCount = SlotMachine.Where(t => t.Number == i);
-                ScoreDictionary[i] = currentCount.Count();
-            }
-        }
-
-        private int GetPairScore()
-        {
-            int score = 0;
-            bool hasPairAlready = false;
-            foreach (var pair in ScoreDictionary)
-            {
-                if (pair.Value == 2)
-                {
-                    if (hasPairAlready)
-                    {
-                        RemainingSpins++;
-                        SpinnToAdd = $"+1";
-                    }
-                    score += pair.Key * 100;
-                    hasPairAlready = true;
-                }
-            }
-
-            return score;
-        }
-
-        private int GetTripletScore() => ScoreDictionary.ContainsValue(3) ? (ScoreDictionary.FirstOrDefault(t => t.Value == 3).Key * 1000) : 0;
-        private int GetQuadScore() => ScoreDictionary.ContainsValue(4) ? (ScoreDictionary.First(t => t.Value == 4).Key * 10000) : 0;
-        private bool Jackpot() =>  ScoreDictionary.ContainsValue(NumberOfSlots);
-        private bool HasFullHouse() => ScoreDictionary.ContainsValue(2) && ScoreDictionary.ContainsValue(3);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public int CalculateScore()
-        {
-            FillScoreDictionary();
-
-            if (Jackpot())
-                return 1000000;
-
-            int score = GetPairScore();
-            score += GetTripletScore();
-
-            if (Difficulty == Difficulties.Hard)
-                score += GetQuadScore();
-
-            if(HasFullHouse())
-            {
-                RemainingSpins++;
-                SpinnToAdd = $"+1";
-                return score * 2;
-            }
-
-            return score;
-        }
-
-    #endregion
 
         public void StartTimer()
         {
@@ -297,6 +320,10 @@ namespace UnusArmatusLattro.ViewModels
             parent.CurrentViewModel = new StartViewModel(parent);
         }
 
+        /// <summary>
+        /// Metod för ljudeffekter, spelar upp det ljudet man säger åt den att spela upp
+        /// </summary>
+        /// <param name="sounds"></param>
         public void Playeffect(Sounds sounds)
         {
             System.IO.Stream sound = sounds switch

@@ -25,6 +25,9 @@ namespace UnusArmatusLattro.Views
             SetColorLever();
         }
 
+        /// <summary>
+        /// Blinkande effekt runt spaken
+        /// </summary>
         private void SetColorLever()
         {
             ColorAnimation color = new ColorAnimation
@@ -41,7 +44,9 @@ namespace UnusArmatusLattro.Views
             Storyboard.SetTargetProperty(color, new PropertyPath("(Ellipse.Stroke).(SolidColorBrush.Color)"));
             leverStory.Begin();
         }
-
+        /// <summary>
+        /// Blinkande effekt runt stopknappen
+        /// </summary>
         private void SetColorButton()
         {
             ColorAnimation color = new ColorAnimation
@@ -63,6 +68,11 @@ namespace UnusArmatusLattro.Views
             Canvas.SetTop(Lever, 300);
         }
 
+        /// <summary>
+        /// Nollställer ScoreToAdd och startar timern
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             if (isRunning)
@@ -86,7 +96,11 @@ namespace UnusArmatusLattro.Views
             gameViewModel.StartTimer();
             isRunning = true;
         }
-
+        /// <summary>
+        /// Gör spaken dynamisk, placerar den i mitten på canvasen oavsett upplösning
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
@@ -106,7 +120,11 @@ namespace UnusArmatusLattro.Views
             leverStory.Stop();
         }
 
-
+        /// <summary>
+        ///  Nollställer SpinToAdd om spelet inte över
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed_2(object sender, EventArgs e)
         {
             if (isRunning)

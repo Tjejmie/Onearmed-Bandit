@@ -56,24 +56,6 @@ namespace UnusArmatusLattro.ViewModels
             Timer.Interval = TimeSpan.FromMilliseconds((int)diff);
         }
 
-        /// <summary>
-        /// Genererar en slumpad bild på den aktiva slotten och ser till att det ej blir två irad
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="e"></param>
-        private void OnTimedEvent(Object source, EventArgs e) 
-        {
-            int value = random.Next(1, 8);
-            while (SlotMachine[CurrentSlot].Number == value)
-            {
-                value = random.Next(1, 8);
-            }
-            Symbol enumValue = (Symbol)value;
-            SlotMachine[CurrentSlot].Number = value;
-            SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
-        }
-
-
         private void GenerateSymbolsDictionary()
         {
             Symbols = new Dictionary<Symbol, string>
@@ -87,6 +69,7 @@ namespace UnusArmatusLattro.ViewModels
                 { Symbol.Bandit, "/Resources/Images/bandit.png" }
             };
         }
+
         /// <summary>
         /// Fyller slots i slotmaskinen
         /// </summary>
@@ -105,55 +88,99 @@ namespace UnusArmatusLattro.ViewModels
             }
         }
 
-        public void GetHighscores()
+        /// <summary>
+        /// Genererar en slumpad bild på den aktiva slotten och ser till att det ej blir två irad
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void OnTimedEvent(Object source, EventArgs e) 
         {
-            HighScores = new ObservableCollection<HighscoreView>();
-            List<User> highscoreList = Repo.GetUsers(Difficulty);
-
-            foreach (var user in highscoreList)
+            int value = random.Next(1, 8);
+            while (SlotMachine[CurrentSlot].Number == value)
             {
-                HighscoreView player = new HighscoreView
-                {
-                    Name = user.UserName,
-                    Score = user.Points
-                };
-                HighScores.Add(player);
+                value = random.Next(1, 8);
             }
+            Symbol enumValue = (Symbol)value;
+            SlotMachine[CurrentSlot].Number = value;
+            SlotMachine[CurrentSlot].ImageSource = Symbols[enumValue];
         }
-
-        private void BanditHit()
+        public void StartTimer()
         {
-            Timer.Stop();
-            ScoreToAdd = $"El bandito";
+            Timer.Start();
+        }
+        /// <summary>
+        /// Startar ny runda om man har pengar kvar, annars gameover
+        /// </summary>
+
+        private void NewRound()
+        {
             CurrentSlot = 0;
-            NewRound();
-            PlayEffect(Sounds.Bandit);
-            if (Wallet == 0)
+
+            if (Wallet <= 0)
+            {
                 GameOver();
-            return;
+            }
+            else
+            {
+                CurrentBet = "";
+                BettingEnabled = true;
+                BetLabel = "Lägg ett bet";
+                StopBtnEnabled = false;
+                Timer.Stop();
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
+                SlotMachine[CurrentSlot].BorderSlot = 2;
+            }
         }
 
-        private void RoundEnd()
+        /// <summary>
+        /// Metod för ljudeffekter, spelar upp det ljudet man säger åt den att spela upp
+        /// </summary>
+        /// <param name="sounds"></param>
+        public void PlayEffect(Sounds sounds)
         {
-            int winnings = CalculateScore();
-
-            if (winnings >= 1000000)
+            System.IO.Stream sound = sounds switch
             {
-                PlayEffect(Sounds.Jackpot);
-            }
-            else if (winnings > 0)
-            {
-                PlayEffect(Sounds.Cash);
-            }
-
-            ScoreToAdd = $"+{winnings}";
-            Wallet += winnings;
-            NewRound();
-
-            if (Wallet == 0)
-                GameOver();
+                Sounds.Bandit => Resources.Resource1.sm64_whomp,
+                Sounds.Lever => Resources.Resource1.LeverPush,
+                Sounds.Cash => Resources.Resource1.win,
+                Sounds.Jackpot => Resources.Resource1.jackpot,
+                Sounds.Stop => Resources.Resource1.LeverPull,
+                _ => null,
+            };
+            SoundPlayer player = new SoundPlayer(sound);
+            player.Play();
         }
 
+        /// <summary>
+        /// Metod som kontrollerar om man lagt ett godkänt bet
+        /// </summary>
+        /// <param name="bet"></param>
+        /// <param name="wallet"></param>
+        /// <returns>returnerar godkänt bet eller inte</returns>
+        public bool ConfirmBet(String bet, string wallet)
+        {
+            if (bet == "")
+            {
+                return false;
+            }
+            int currentBet = int.Parse(bet);
+            if (currentBet != 0 && currentBet <= int.Parse(wallet))
+            {
+                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
+                SlotMachine[CurrentSlot].BorderSlot = 4;
+                Wallet -= currentBet;
+                BettingEnabled = false;
+                BetLabel = "Lagt bet";
+                StopBtnEnabled = true;
+                Timer.Start();
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Metod som körs när man trycker på stopknappen (StopSlotCommand)
+        /// </summary>
         public void StopSlot()
         {
             PlayEffect(Sounds.Stop);
@@ -178,18 +205,10 @@ namespace UnusArmatusLattro.ViewModels
                 }
             }
         }
-
-        public void GoToGameOver()
-        {
-            parent.CurrentViewModel = new GameOverViewModel(parent, $"{Wallet}", Difficulty);
-        }
-
-        public void GameOver()
-        {
-            Timer.Stop();
-            GoToGameOver();
-        }
-
+        /// <summary>
+        /// Metod som räknar ut poängen
+        /// </summary>
+        /// <returns></returns>
         private int CalculateScore()
         {
             Dictionary<int, int> scoreDictionary = new Dictionary<int, int>();
@@ -247,71 +266,89 @@ namespace UnusArmatusLattro.ViewModels
             return tempScore;
         }
 
-        public bool ConfirmBet(String bet, string wallet)
+        /// <summary>
+        /// Metod som körs när man träffar banditen
+        /// </summary>
+        private void BanditHit()
         {
-            if (bet == "")
-            {
-                return false;
-            }
-            int currentBet = int.Parse(bet);
-            if (currentBet != 0 && currentBet <= int.Parse(wallet))
-            {
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Blue;
-                SlotMachine[CurrentSlot].BorderSlot = 4;
-                Wallet -= currentBet;
-                BettingEnabled = false;
-                BetLabel = "Lagt bet";
-                StopBtnEnabled = true;
-                Timer.Start();
-                return true;
-            }
-            return false;
-
-        }
-        private void NewRound()
-        {
+            Timer.Stop();
+            ScoreToAdd = $"El bandito";
             CurrentSlot = 0;
-
-            if (Wallet <= 0)
-            {
+            NewRound();
+            PlayEffect(Sounds.Bandit);
+            if (Wallet == 0)
                 GameOver();
-            }
-            else
-            {
-                CurrentBet = "";
-                BettingEnabled = true;
-                BetLabel = "Lägg ett bet";
-                StopBtnEnabled = false;
-                Timer.Stop();
-                SlotMachine[CurrentSlot].BorderColor = Brushes.Gray;
-                SlotMachine[CurrentSlot].BorderSlot = 2;
-            }
+            return;
         }
 
-        public void StartTimer()
+        /// <summary>
+        /// Metod som körs efter varje runda
+        /// </summary>
+        private void RoundEnd()
         {
-            Timer.Start();
+            int winnings = CalculateScore();
+
+            if (winnings >= 1000000)
+            {
+                PlayEffect(Sounds.Jackpot);
+            }
+            else if (winnings > 0)
+            {
+                PlayEffect(Sounds.Cash);
+            }
+
+            ScoreToAdd = $"+{winnings}";
+            Wallet += winnings;
+            NewRound();
+
+            if (Wallet == 0)
+                GameOver();
         }
 
+        /// <summary>
+        /// Hämtar highscorelista från databasen
+        /// </summary>
+        public void GetHighscores()
+        {
+            HighScores = new ObservableCollection<HighscoreView>();
+            List<User> highscoreList = Repo.GetUsers(Difficulty);
+
+            foreach (var user in highscoreList)
+            {
+                HighscoreView player = new HighscoreView
+                {
+                    Name = user.UserName,
+                    Score = user.Points
+                };
+                HighScores.Add(player);
+            }
+        }
+
+        /// <summary>
+        /// Byter från spelvyn till gameovervyn
+        /// </summary>
+        public void GoToGameOver()
+        {
+            parent.CurrentViewModel = new GameOverViewModel(parent, $"{Wallet}", Difficulty);
+        }
+
+        /// <summary>
+        /// Metod som körs när man får gameover
+        /// </summary>
+        public void GameOver()
+        {
+            Timer.Stop();
+            GoToGameOver();
+        }
+
+        /// <summary>
+        /// Metod för att gå till startmenyn
+        /// </summary>
         public void GoHome()
         {
             parent.CurrentViewModel = new StartViewModel(parent);
         }
 
-        public void PlayEffect(Sounds sounds)
-        {
-            System.IO.Stream sound = sounds switch
-            {
-                Sounds.Bandit => Resources.Resource1.sm64_whomp,
-                Sounds.Lever => Resources.Resource1.LeverPush,
-                Sounds.Cash => Resources.Resource1.win,
-                Sounds.Jackpot => Resources.Resource1.jackpot,
-                Sounds.Stop => Resources.Resource1.LeverPull,
-                _ => null,
-            };
-            SoundPlayer player = new SoundPlayer(sound);
-            player.Play();
-        }
     }
 }
 

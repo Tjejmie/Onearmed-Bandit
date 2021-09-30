@@ -21,6 +21,10 @@ namespace UnusArmatusLattro.Views
     public partial class GameOverView : UserControl
     {
         readonly Storyboard story = new Storyboard();
+
+        /// <summary>
+        /// Generarar blinkande effekt runt textboxen
+        /// </summary>
         public GameOverView()
         {
             InitializeComponent();
@@ -52,6 +56,11 @@ namespace UnusArmatusLattro.Views
             story.Stop();
         }
 
+        /// <summary>
+        /// Kontrollerar att inmatningen endast innehåller bokstäver och/eller mellanslag
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HighScorePreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^A-Za-z ]+");

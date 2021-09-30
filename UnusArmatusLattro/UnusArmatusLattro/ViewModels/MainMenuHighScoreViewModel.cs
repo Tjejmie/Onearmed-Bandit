@@ -21,12 +21,17 @@ namespace UnusArmatusLattro.ViewModels
         private readonly MainViewModel parent;
         public ICommand Home { get; }
 
+        /// <summary>
+        /// Visar highscorelista utifrån svårighetsgrad och spel
+        /// </summary>
+        /// <param name="difficulty"></param>
+        /// <returns></returns>
         public ObservableCollection<HighscoreView> GetHighscores(Data.Difficulties difficulty)
         {
             ObservableCollection<HighscoreView> highscoreViews = new ObservableCollection<HighscoreView>();
-            List<User> templist = Repo.GetUsers(difficulty);
+            List<User> highscoreList = Repo.GetUsers(difficulty);
 
-            foreach (var user in templist)
+            foreach (var user in highscoreList)
             {
                 HighscoreView player = new HighscoreView
                 {

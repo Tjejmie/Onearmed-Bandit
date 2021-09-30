@@ -31,6 +31,9 @@ namespace UnusArmatusLattro.Views
             GenerateStoryboards();
         }
 
+        /// <summary>
+        /// Metod som genererar blinkande effekter
+        /// </summary>
         private void GenerateStoryboards()
         {
             ColorAnimation color = new ColorAnimation
@@ -60,6 +63,11 @@ namespace UnusArmatusLattro.Views
             Storyboard.SetTargetProperty(leverColor, new PropertyPath("(Ellipse.Stroke).(SolidColorBrush.Color)"));
         }
 
+        /// <summary>
+        /// Sätter fokus för bettingTextbox samt nollställer ScoreToAdd-label om spelet inte över
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             BettingBox.Focus();
@@ -72,6 +80,11 @@ namespace UnusArmatusLattro.Views
             }
         }
 
+        /// <summary>
+        /// Metod som körs när spak-animationen är klar, kontrollerar om man lagt ett godkänt bet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
@@ -87,6 +100,11 @@ namespace UnusArmatusLattro.Views
             }
         }
 
+        /// <summary>
+        /// Gör spaken dynamisk, placerar den i mitten på canvasen oavsett upplösning
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
@@ -114,7 +132,11 @@ namespace UnusArmatusLattro.Views
             gameViewModel.PlayEffect(Data.Sounds.Lever);
             isRunning = true;
         }
-
+        /// <summary>
+        /// Kontrollerar att man bara kan skriva in siffror
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HighScorePreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -134,6 +156,11 @@ namespace UnusArmatusLattro.Views
                 story.Stop();
         }
 
+        /// <summary>
+        /// Kontrollerar om man lagt ett godkänt bet, startar isåfall animationen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BettingBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (BettingBox.Text == "")

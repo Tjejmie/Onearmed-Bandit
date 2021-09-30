@@ -45,7 +45,10 @@ namespace UnusArmatusLattro.Commands
         }
 
         public bool CanExecute(object parameter) => true;
-       
+       /// <summary>
+       /// Gå till startmenyn "hem" beroende på vilken vy man befinner sig i
+       /// </summary>
+       /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
             if (bettingGameViewModel != null)

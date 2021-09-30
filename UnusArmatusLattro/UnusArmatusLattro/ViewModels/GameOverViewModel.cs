@@ -23,7 +23,9 @@ namespace UnusArmatusLattro.ViewModels
         public UserRepository Repo { get; set; } = new UserRepository();
         public string UserName { get; set; }
         public bool InputAccepted { get; set; } = true;
-        
+        public string TextboxLabel { get; set; }
+        public string DisplayInputField { get; set; }
+
 
         public GameOverViewModel(MainViewModel parent, string score, Difficulties diff)
         {
@@ -35,9 +37,12 @@ namespace UnusArmatusLattro.ViewModels
             Points = score;
             GetHighscores();
             UserName = "";
-            GameOver();
+            IsHighScore(int.Parse(Points));
         }
 
+        /// <summary>
+        /// Metod för att kunna välja att spela igen
+        /// </summary>
         public void PlayAgain()
         {
             if (Difficulty != Difficulties.Betting)
@@ -50,6 +55,9 @@ namespace UnusArmatusLattro.ViewModels
             }    
         }
 
+        /// <summary>
+        /// Metod för att hämta highscore från databasen
+        /// </summary>
         public void GetHighscores()
         {
             HighScores = new ObservableCollection<HighscoreView>();
@@ -65,6 +73,40 @@ namespace UnusArmatusLattro.ViewModels
                 HighScores.Add(player);
             }
         }
+
+        /// <summary>
+        /// Kontrollerar om man kvalificerar sig på highscorelistan
+        /// </summary>
+        /// <param name="score"></param>
+        /// <returns></returns>
+        private void IsHighScore(int score)
+        {
+            foreach (var highScore in HighScores)
+            {
+                if (score > highScore.Score)
+                {
+                    TextboxLabel = "Namn:";
+                    DisplayInputField = "Visible";
+                    return;
+                }
+                else
+                {
+                    TextboxLabel = "Oh no, du fick tyvärr inte plats på topplistan";
+                    DisplayInputField = "Hidden";
+                }
+            }
+            if (HighScores.Count < 10)
+            {
+                TextboxLabel = "Namn:";
+                DisplayInputField = "Visible";
+                return;
+            }
+            return;
+        }
+
+        /// <summary>
+        /// Metod som skickar spelaren till highscore om textrutan inte är tom 
+        /// </summary>
         public void SendUser()
         {
             if (UserName != "")
@@ -74,27 +116,8 @@ namespace UnusArmatusLattro.ViewModels
                 InputAccepted = false;
             }
         }
-        private bool IsHighScore(int score)
-        {
-            foreach (var highScore in HighScores)
-            {
-                if (score > highScore.Score)
-                {
-                    return true;
-                }
-            }
-            if (HighScores.Count < 10)
-            {
-                return true;
-            }
-            return false;
-        }
 
-        private void GameOver()
-        {
-            IsHighScore(int.Parse(Points));
-        }
-
+  
         public void GoHome()
         {
             parent.CurrentViewModel = new StartViewModel(parent);
