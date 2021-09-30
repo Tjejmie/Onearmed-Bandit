@@ -23,12 +23,10 @@
                             <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#FDF1B0" />
                                 </Trigger>
-
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="#9c8e43" />
                                 </Trigger>
@@ -87,12 +85,10 @@
             <ColumnDefinition Width="203*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-
             <RowDefinition Height="35*" />
             <RowDefinition Height="36*" />
             <RowDefinition Height="29*" />
         </Grid.RowDefinitions>
-
 
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/GameWall.png"/>
@@ -112,7 +108,7 @@
             <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SlotMachine}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="{Binding Cols}" Rows="1" Height="auto" Width="auto"/>
+                        <UniformGrid Columns="{Binding NumberOfSlots}" Rows="1" Height="auto" Width="auto"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
@@ -124,9 +120,7 @@
                         <RowDefinition Height="4*"/>
                         <RowDefinition Height="5*"/>
                     </Grid.RowDefinitions>
-
                     <Rectangle Grid.RowSpan="3" Stroke="Black" StrokeThickness="5" Width="740" Height="400" Fill="#f0d9f2" RadiusX="20" RadiusY="20"/>
-
                     <TextBlock Grid.Row="0" FontSize="20" TextDecorations="Underline" HorizontalAlignment="Center" Margin="0,10" FontFamily="{StaticResource PS2P}">Instruktioner</TextBlock>
                     <TextBlock Grid.Row="1" FontSize="17" Margin="15">
                     1. Klicka på cirkeln till höger för att starta maskinen<LineBreak/>
@@ -170,17 +164,10 @@
                             <Label HorizontalAlignment="Center" FontSize="25">Bandit</Label>
                         </StackPanel>
                     </StackPanel>
-                    <Button Margin="10" Click="Button_Click" Width="50" Height="50" HorizontalAlignment="Right">X</Button>
-
+                    <Button Style="{StaticResource BaseButtonStyle}" Margin="10" Click="Button_Click" Width="50" Height="50" HorizontalAlignment="Right">X</Button>
                 </Grid>
-
-
-                <!--</Border>-->
             </Popup>
-
-
         </Grid>
-
 
         <TextBlock Name="ScoreAddBox" Grid.Column="1" Grid.Row="1"  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="200" FontSize="130" TextAlignment="Center">
             <TextBlock.Text>
@@ -197,7 +184,6 @@
             </TextBlock.Triggers>
         </TextBlock>
 
-
         <TextBlock  Foreground="Red" Name="SpinnAddBox" Grid.Column="1" Grid.Row="2"  Opacity="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="53" Height="53" FontSize="30" TextAlignment="Center" Margin="0,0,54,32" FontWeight="Bold">
             <TextBlock.Text>
                 <Binding Path="SpinnToAdd" NotifyOnTargetUpdated="True"></Binding>
@@ -212,8 +198,6 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-
-
 
         <Grid Grid.Column="4" Grid.RowSpan="3">
             <Grid.RowDefinitions>
@@ -233,10 +217,7 @@
             </ItemsControl>
         </Grid>
 
-
         <Canvas Margin="0,0,0,110" Name="LeverCanvas" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" SizeChanged="LeverCanvas_SizeChanged">
-            <!--<ContentControl Content="{Binding LeverObj}">-->
-            <!--</ContentControl>-->
             <Ellipse Stroke="Black" StrokeThickness="5" Width="100" Height="100" Fill="Red" Name="Lever" Canvas.Left="0" Canvas.Top="0" Cursor="Hand" MouseDown="Lever_MouseDown">
                 <Ellipse.Triggers>
                     <EventTrigger RoutedEvent="Ellipse.MouseDown">
@@ -249,7 +230,6 @@
                         </BeginStoryboard>
                     </EventTrigger>
                 </Ellipse.Triggers>
-
             </Ellipse>
         </Canvas>
 
@@ -270,10 +250,9 @@
                 <RowDefinition Height="13*"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Name="Border" BorderBrush="Pink" BorderThickness="5" CornerRadius="20" Margin="0,10,0,0">
+            <Border Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Name="Border" BorderBrush="Transparent" BorderThickness="5" CornerRadius="20" Margin="0,10,0,0">
                 <Button Style="{StaticResource BaseButtonStyle}" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop"/>
             </Border>
-
 
             <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
                 <TextBlock Text="Score: " FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
@@ -294,5 +273,4 @@
             </Border>
         </Grid>
     </Grid>
-
 </UserControl>

@@ -14,8 +14,8 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameView : UserControl
     {
-        Storyboard buttonStory = new Storyboard();
-        Storyboard leverStory = new Storyboard();
+        readonly Storyboard buttonStory = new Storyboard();
+        readonly Storyboard leverStory = new Storyboard();
         bool isRunning;
 
         public GameView()
@@ -25,29 +25,38 @@ namespace UnusArmatusLattro.Views
             SetColorLever();
         }
 
+        /// <summary>
+        /// Blinkande effekt runt spaken
+        /// </summary>
         private void SetColorLever()
         {
-            ColorAnimation color = new ColorAnimation();
-            color.From = Colors.Yellow;
-            color.To = Colors.Red;
-            color.Duration = TimeSpan.FromSeconds(.2);
-            color.RepeatBehavior = RepeatBehavior.Forever;
-            color.AutoReverse = true;
+            ColorAnimation color = new ColorAnimation
+            {
+                From = Colors.Yellow,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             leverStory.Children.Add(color);
             Storyboard.SetTarget(color, Lever);
             Storyboard.SetTargetProperty(color, new PropertyPath("(Ellipse.Stroke).(SolidColorBrush.Color)"));
             leverStory.Begin();
         }
-
+        /// <summary>
+        /// Blinkande effekt runt stopknappen
+        /// </summary>
         private void SetColorButton()
         {
-            ColorAnimation color = new ColorAnimation();
-            color.From = Colors.LightPink;
-            color.To = Colors.Red;
-            color.Duration = TimeSpan.FromSeconds(.2);
-            color.RepeatBehavior = RepeatBehavior.Forever;
-            color.AutoReverse = true;
+            ColorAnimation color = new ColorAnimation
+            {
+                From = Colors.LightPink,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             buttonStory.Children.Add(color);
             Storyboard.SetTarget(color, Border);
@@ -59,6 +68,11 @@ namespace UnusArmatusLattro.Views
             Canvas.SetTop(Lever, 300);
         }
 
+        /// <summary>
+        /// Nollställer ScoreToAdd och startar timern
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             if (isRunning)
@@ -66,7 +80,7 @@ namespace UnusArmatusLattro.Views
                 GameViewModel gameViewModel = (GameViewModel)DataContext;
                 if (gameViewModel != null)
                 {
-                    if (gameViewModel.ScoreToAdd != null)
+                    if (gameViewModel.ScoreToAdd != null && gameViewModel.ScoreToAdd != "")
                     {
                         gameViewModel.StartTimer();
 
@@ -82,7 +96,11 @@ namespace UnusArmatusLattro.Views
             gameViewModel.StartTimer();
             isRunning = true;
         }
-
+        /// <summary>
+        /// Gör spaken dynamisk, placerar den i mitten på canvasen oavsett upplösning
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
@@ -102,7 +120,11 @@ namespace UnusArmatusLattro.Views
             leverStory.Stop();
         }
 
-
+        /// <summary>
+        ///  Nollställer SpinToAdd om spelet inte över
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed_2(object sender, EventArgs e)
         {
             if (isRunning)

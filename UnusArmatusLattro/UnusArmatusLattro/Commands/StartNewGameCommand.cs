@@ -8,7 +8,7 @@ namespace UnusArmatusLattro.Commands
 {
     public class StartNewGameCommand : ICommand
     {
-        private SpinGameViewModel spinGameViewModel;
+        private readonly SpinGameViewModel spinGameViewModel;
 
         public StartNewGameCommand(SpinGameViewModel spinGameViewModel)
         {

@@ -22,7 +22,6 @@
                             <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#FDF1B0" />
@@ -38,19 +37,17 @@
             </Style>
             <Style x:Key="SecondaryButtonStyle" BasedOn="{StaticResource BaseButtonStyle}" TargetType="{x:Type Button}">
                 <Setter Property="Background" Value="#CA8BD5" />
-                
+
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#DFB8E2" />
                                 </Trigger>
-
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="#9c8e43" />
                                 </Trigger>
@@ -73,12 +70,10 @@
                             <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#DFB8E2" />
                                 </Trigger>
-
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -102,7 +97,7 @@
         </Grid.Background>
 
         <TextBlock Grid.Column="2" VerticalAlignment="Bottom" FontSize="15" HorizontalAlignment="Center" Padding="5" FontFamily="{StaticResource PS2P}">Bekräfta bet</TextBlock>
-        
+
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
@@ -121,9 +116,7 @@
                         <RowDefinition Height="6*"/>
                         <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-
                     <Rectangle Grid.RowSpan="3" Stroke="Black" StrokeThickness="5" Width="740" Height="400" Fill="#f0d9f2" RadiusX="20" RadiusY="20"/>
-
                     <TextBlock Grid.Row="0" FontSize="20" TextDecorations="Underline" HorizontalAlignment="Center" Margin="0,10" FontFamily="{StaticResource PS2P}">Instruktioner</TextBlock>
                     <TextBlock Grid.Row="1" FontSize="17" Margin="15">
                     1. Fyll i textfältet med ditt bet. Bettet får aldrig överstiga din budget, du får heller inte betta 0. <LineBreak/>
@@ -174,13 +167,11 @@
             <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SlotMachine}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="{Binding Cols}" Rows="1" Height="auto" Width="auto"/>
-
+                        <UniformGrid Columns="{Binding NumberOfSlots}" Rows="1" Height="auto" Width="auto"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </Grid>
-
 
         <TextBlock Name="ScoreAddBox" Grid.Column="1" Grid.Row="1"  Opacity="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="600" Height="200" FontSize="130" TextAlignment="Center">
             <TextBlock.Text>
@@ -196,18 +187,10 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-        <!--<TextBox Text="{Binding User}" Grid.Column="3" Grid.Row="1" Margin="0,0,0,0" FontSize="20" Width="200" VerticalAlignment="top" HorizontalAlignment="Center" FontFamily="calibri-bold" FontWeight="Black" Visibility="{Binding NewHighScore}">
-
-        </TextBox>
-        <Button Width="200" Grid.Column="3" Grid.Row="1" Height="30" Command="{Binding sendToDatabase}" Visibility="{Binding NewHighScore}">
-            skicka
-        </Button>-->
-        <!--<Label Content="Highscore" Grid.Column="4" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"></Label>-->
 
         <Grid Grid.Column="4" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="28*"/>
-                
                 <RowDefinition Height="83*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -222,7 +205,6 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </Grid>
-
 
         <Grid Grid.Column="4" Grid.Row="2">
             <Grid.RowDefinitions>
@@ -255,7 +237,6 @@
         </Canvas>
 
         <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="25*"/>
@@ -277,10 +258,13 @@
             <Border x:Name="StopBorder" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" BorderBrush="Transparent" BorderThickness="5" CornerRadius="20">
                 <Button Name="StopButton" Style="{StaticResource BaseButtonStyle}" Command="{Binding Spin}" Cursor="Hand" IsEnabled="{Binding StopBtnEnabled}" Content="Stop" IsEnabledChanged="Button_IsEnabledChanged"/>
             </Border>
-            <StackPanel Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
-                <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
-                <TextBlock Text=":-" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
-            </StackPanel>
+            <Viewbox  Grid.Column="1" Grid.Row="3" Stretch="Uniform" StretchDirection="DownOnly">
+                <StackPanel  VerticalAlignment="Center" Margin="10" Orientation="Horizontal">
+                <TextBlock Text="Saldo:  " FontSize="28" FontFamily="calibri-bold" FontWeight="Black" />
+                    <TextBlock Name="Wallet" Text="{Binding Wallet}" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
+                    <TextBlock Text=":-" FontSize="28" FontFamily="calibri-bold" FontWeight="Black"/>
+                </StackPanel>
+            </Viewbox>
             <StackPanel Name="BettingPanel" Grid.Column="5" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Orientation="Horizontal" >
                 <TextBlock Text="Bet: " FontSize="20" FontFamily="calibri-bold" FontWeight="Black" VerticalAlignment="Center"></TextBlock>
                 <Border BorderThickness="5" BorderBrush="Black" CornerRadius="10">
@@ -291,25 +275,23 @@
 
             <Popup Name="BettingPopup" PlacementTarget="{Binding ElementName=BettingPanel}" Placement="Top" Grid.Column="4" Grid.Row="1" AllowsTransparency="true" IsOpen="false">
                 <Grid Width="250" Height="125" Background="Transparent">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Rectangle Grid.RowSpan="3" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="5" Width="250" Height="125" Fill="#f0d9f2" RadiusX="20" RadiusY="20"/>
-                <Button Grid.Column="1" Panel.ZIndex="10" Style="{StaticResource BaseButtonStyle}" Margin="10" Width="40" Height="40" FontSize="20" HorizontalAlignment="Right" Click="BettingPopupButton" Cursor="Hand">X</Button>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.RowSpan="3" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="5" Width="250" Height="125" Fill="#f0d9f2" RadiusX="20" RadiusY="20"/>
+                    <Button Grid.Column="1" Panel.ZIndex="10" Style="{StaticResource BaseButtonStyle}" Margin="10" Width="40" Height="40" FontSize="20" HorizontalAlignment="Right" Click="BettingPopupButton" Cursor="Hand">X</Button>
                     <TextBlock Grid.RowSpan="2" FontSize="20" TextWrapping="Wrap" Padding="10">
-                        Betta minst 1 och max dina nuvarande pengar
+                        Betta minst 1:- och max dina nuvarande pengar
                     </TextBlock>
                 </Grid>
             </Popup>
-            
 
             <Button Style="{StaticResource SecondaryButtonStyle}" Grid.Column="1" Grid.Row="1" Command="{Binding Home}" Cursor="Hand" Content="Hem" />
         </Grid>
     </Grid>
-
 </UserControl>

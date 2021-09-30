@@ -6,34 +6,30 @@ using UnusArmatusLattro.ViewModels;
 
 namespace UnusArmatusLattro.Commands
 {
-    class SpinCommand : ICommand
+    class StopSlotCommand : ICommand
     {
         public event EventHandler CanExecuteChanged { add { } remove { } }
+        private readonly GameViewModel gameViewModel;
+        private readonly BettingGameViewModel bettingGameViewModel;
 
-        private GameViewModel gameViewModel;
-        private BettingGameViewModel bettingGameViewModel;
-
-        public SpinCommand(BettingGameViewModel bettingGameViewModel)
+        public StopSlotCommand(BettingGameViewModel bettingGameViewModel)
         {
             this.bettingGameViewModel = bettingGameViewModel;
         }
 
-        public SpinCommand(GameViewModel gameViewModel)
+        public StopSlotCommand(GameViewModel gameViewModel)
         {
             this.gameViewModel = gameViewModel;
         }
         
-
         public bool CanExecute(object parameter) => true;
 
         public void Execute(object parameter)
         {
-
             if (gameViewModel != null)
-                gameViewModel.SpinSlots();
+                gameViewModel.StopSlot();
             else
-                bettingGameViewModel.SpinSlots();
-                
+                bettingGameViewModel.StopSlot();
         }
     }
 }

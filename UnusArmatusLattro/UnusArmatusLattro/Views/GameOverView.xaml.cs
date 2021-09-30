@@ -20,21 +20,25 @@ namespace UnusArmatusLattro.Views
     /// </summary>
     public partial class GameOverView : UserControl
     {
-        Storyboard story = new Storyboard();
+        readonly Storyboard story = new Storyboard();
+
+        /// <summary>
+        /// Generarar blinkande effekt runt textboxen
+        /// </summary>
         public GameOverView()
         {
             InitializeComponent();
-            ColorAnimation color = new ColorAnimation();
-            color.From = Colors.LightPink;
-            color.To = Colors.Red;
-            color.Duration = TimeSpan.FromSeconds(.2);
-            color.RepeatBehavior = RepeatBehavior.Forever;
-            color.AutoReverse = true;
-            
+            ColorAnimation color = new ColorAnimation
+            {
+                From = Colors.LightPink,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
             story.Children.Add(color);
             Storyboard.SetTarget(color, Border);
             Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
-
         }
 
         private void Load(object sender, RoutedEventArgs e)
@@ -52,6 +56,11 @@ namespace UnusArmatusLattro.Views
             story.Stop();
         }
 
+        /// <summary>
+        /// Kontrollerar att inmatningen endast innehåller bokstäver och/eller mellanslag
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HighScorePreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^A-Za-z ]+");

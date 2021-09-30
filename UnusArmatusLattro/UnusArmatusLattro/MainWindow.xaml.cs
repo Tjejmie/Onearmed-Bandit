@@ -37,11 +37,15 @@ namespace UnusArmatusLattro
 
         public void BackgroundMusic()
         {
-            var timeline = new MediaTimeline(new Uri("Resources/MP3/Las Vegas Casino Music Video_ For Night Game of Poker, Blackjack, Roulette Wheel & Slots.mp3", UriKind.Relative));
-            timeline.RepeatBehavior = RepeatBehavior.Forever;
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.Volume = 0.05f;
-            mediaPlayer.Clock = timeline.CreateClock();
+            var timeline = new MediaTimeline(new Uri("Resources/MP3/Las Vegas Casino Music Video_ For Night Game of Poker, Blackjack, Roulette Wheel & Slots.mp3", UriKind.Relative))
+            {
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+            mediaPlayer = new MediaPlayer
+            {
+                Volume = 0.05f,
+                Clock = timeline.CreateClock()
+            };
             mediaPlayer.Clock.Controller.Begin();
         }
 

@@ -9,12 +9,12 @@ namespace UnusArmatusLattro.Commands
     public class GoToHomeCommand : ICommand
     {
         public event EventHandler CanExecuteChanged { add { } remove { } }
-        private BettingGameViewModel bettingGameViewModel;
-        private GameViewModel gameViewModel;
-        private SpinGameViewModel spinGameViewModel;
-        private RulesViewModel rulesViewModel;
-        private MainMenuHighScoreViewModel mainMenuHighScoreViewModel;
-        private GameOverViewModel gameOverViewModel;
+        private readonly BettingGameViewModel bettingGameViewModel;
+        private readonly GameViewModel gameViewModel;
+        private readonly SpinGameViewModel spinGameViewModel;
+        private readonly RulesViewModel rulesViewModel;
+        private readonly MainMenuHighScoreViewModel mainMenuHighScoreViewModel;
+        private readonly GameOverViewModel gameOverViewModel;
 
         public GoToHomeCommand(GameOverViewModel gameOverViewModel)
         {
@@ -44,10 +44,11 @@ namespace UnusArmatusLattro.Commands
             this.mainMenuHighScoreViewModel = mainMenuHighScoreViewModel;
         }
 
-
         public bool CanExecute(object parameter) => true;
-       
-
+       /// <summary>
+       /// Gå till startmenyn "hem" beroende på vilken vy man befinner sig i
+       /// </summary>
+       /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
             if (bettingGameViewModel != null)
@@ -74,7 +75,6 @@ namespace UnusArmatusLattro.Commands
             {
                 gameOverViewModel.GoHome();
             }
-
         }
     }
 }

@@ -21,25 +21,26 @@ namespace UnusArmatusLattro.ViewModels
         private readonly MainViewModel parent;
         public ICommand Home { get; }
 
+        /// <summary>
+        /// Visar highscorelista utifrån svårighetsgrad och spel
+        /// </summary>
+        /// <param name="difficulty"></param>
+        /// <returns></returns>
         public ObservableCollection<HighscoreView> GetHighscores(Data.Difficulties difficulty)
         {
             ObservableCollection<HighscoreView> highscoreViews = new ObservableCollection<HighscoreView>();
-            List<Username> templist = Repo.GetUsers(difficulty);
+            List<User> highscoreList = Repo.GetUsers(difficulty);
 
-            foreach (var user in templist)
+            foreach (var user in highscoreList)
             {
-                HighscoreView temp = new HighscoreView
+                HighscoreView player = new HighscoreView
                 {
-                    Name = user.Name,
+                    Name = user.UserName,
                     Score = user.Points
                 };
-                highscoreViews.Add(temp);
+                highscoreViews.Add(player);
             }
-
             return highscoreViews;
-
-
-
         }
         public MainMenuHighScoreViewModel(MainViewModel parent)
         {
@@ -49,7 +50,6 @@ namespace UnusArmatusLattro.ViewModels
             Betting = GetHighscores(Data.Difficulties.Betting);
             this.parent = parent;
             Home = new GoToHomeCommand(this);
-            
         }
 
         public void GoHome()

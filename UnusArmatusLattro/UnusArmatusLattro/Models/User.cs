@@ -16,8 +16,5 @@ namespace UnusArmatusLattro.Models
             UserName = userName;
             Points = points;
         }
-
     }
-
-    
 }

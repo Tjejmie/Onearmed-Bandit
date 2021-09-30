@@ -11,10 +11,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-            <TextBlock Text="{Binding Name, RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Column="0" FontSize="20" Margin="20,0,0,0"></TextBlock>
+        <TextBlock Text="{Binding Name, RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Column="0" FontSize="20" Margin="20,0,0,0"></TextBlock>
         <TextBlock Text="{Binding Score, RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Column="1" FontSize="20" FontWeight="Bold"></TextBlock>
-        
-        
     </Grid>
 </UserControl>

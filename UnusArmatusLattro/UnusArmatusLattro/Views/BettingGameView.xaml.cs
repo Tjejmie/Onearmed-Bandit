@@ -23,39 +23,51 @@ namespace UnusArmatusLattro.Views
     public partial class BettingGameView : UserControl
     {
         bool isRunning;
-        Storyboard story = new Storyboard();
-        Storyboard LeverStory = new Storyboard();
+        readonly Storyboard story = new Storyboard();
+        readonly Storyboard LeverStory = new Storyboard();
         public BettingGameView()
         {
             InitializeComponent();
             GenerateStoryboards();
         }
 
+        /// <summary>
+        /// Metod som genererar blinkande effekter
+        /// </summary>
         private void GenerateStoryboards()
         {
-            ColorAnimation color = new ColorAnimation();
-            color.From = Colors.LightPink;
-            color.To = Colors.Red;
-            color.Duration = TimeSpan.FromSeconds(.2);
-            color.RepeatBehavior = RepeatBehavior.Forever;
-            color.AutoReverse = true;
+            ColorAnimation color = new ColorAnimation
+            {
+                From = Colors.LightPink,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             story.Children.Add(color);
             Storyboard.SetTarget(color, StopBorder);
             Storyboard.SetTargetProperty(color, new PropertyPath("(Border.BorderBrush).(SolidColorBrush.Color)"));
 
-            ColorAnimation leverColor = new ColorAnimation();
-            leverColor.From = Colors.LightPink;
-            leverColor.To = Colors.Red;
-            leverColor.Duration = TimeSpan.FromSeconds(.2);
-            leverColor.RepeatBehavior = RepeatBehavior.Forever;
-            leverColor.AutoReverse = true;
+            ColorAnimation leverColor = new ColorAnimation
+            {
+                From = Colors.LightPink,
+                To = Colors.Red,
+                Duration = TimeSpan.FromSeconds(.2),
+                RepeatBehavior = RepeatBehavior.Forever,
+                AutoReverse = true
+            };
 
             LeverStory.Children.Add(leverColor);
             Storyboard.SetTarget(leverColor, Lever);
             Storyboard.SetTargetProperty(leverColor, new PropertyPath("(Ellipse.Stroke).(SolidColorBrush.Color)"));
         }
 
+        /// <summary>
+        /// Sätter fokus för bettingTextbox samt nollställer ScoreToAdd-label om spelet inte över
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed2(object sender, EventArgs e)
         {
             BettingBox.Focus();
@@ -68,6 +80,11 @@ namespace UnusArmatusLattro.Views
             }
         }
 
+        /// <summary>
+        /// Metod som körs när spak-animationen är klar, kontrollerar om man lagt ett godkänt bet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DoubleAnimation_Completed(object sender, EventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
@@ -83,6 +100,11 @@ namespace UnusArmatusLattro.Views
             }
         }
 
+        /// <summary>
+        /// Gör spaken dynamisk, placerar den i mitten på canvasen oavsett upplösning
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeverCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Canvas.SetLeft(Lever, LeverCanvas.ActualWidth / 2 - Lever.Width / 2);
@@ -107,10 +129,14 @@ namespace UnusArmatusLattro.Views
         private void Lever_MouseDown(object sender, MouseButtonEventArgs e)
         {
             BettingGameViewModel gameViewModel = (BettingGameViewModel)DataContext;
-            gameViewModel.Playeffect(Data.Sounds.Lever);
+            gameViewModel.PlayEffect(Data.Sounds.Lever);
             isRunning = true;
         }
-
+        /// <summary>
+        /// Kontrollerar att man bara kan skriva in siffror
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HighScorePreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -130,6 +156,11 @@ namespace UnusArmatusLattro.Views
                 story.Stop();
         }
 
+        /// <summary>
+        /// Kontrollerar om man lagt ett godkänt bet, startar isåfall animationen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BettingBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (BettingBox.Text == "")

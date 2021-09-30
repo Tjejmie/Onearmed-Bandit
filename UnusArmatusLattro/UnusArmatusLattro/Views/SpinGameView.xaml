@@ -7,7 +7,7 @@
              xmlns:datan="clr-namespace:UnusArmatusLattro.Data"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1520">
-    <Grid >
+    <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Resources/Images/WallpaperStart.png"/>
         </Grid.Background>
@@ -23,7 +23,6 @@
             <RowDefinition Height="30*" />
             <RowDefinition Height="50*" />
             <RowDefinition Height="5*" />
-       
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="{x:Type Button}">
@@ -40,30 +39,21 @@
                             <Border CornerRadius="15" BorderThickness="5" BorderBrush="Black" Background="{TemplateBinding Background}">
                                 <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                             </Border>
-
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#EDD2EF" />
                                 </Trigger>
-
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Style>
         </Grid.Resources>
-      
-        <!--<ContentControl Content="{Binding SelectedView}"/>-->
-
         <TextBlock Margin="10,0,10,0" Padding="10" > 
         <Hyperlink Command="{Binding Home}" Foreground="#000000" TextDecorations="None">
                    <Image Source="/Resources/Images/baseline_arrow_back_black_24dp.png" VerticalAlignment="Center"/>
                 </Hyperlink>
-                
         </TextBlock>
-
-
-
         <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Top" Height="100" Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Easy}" Cursor="Hand">
             Easy
         </Button>
@@ -73,11 +63,5 @@
         <Button Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Height="100"  Command="{Binding SpinView}" CommandParameter="{x:Static datan:Difficulties.Hard}" Cursor="Hand">
             Hard
         </Button>
-
-
-      
-
-        
-
     </Grid>
 </UserControl>
